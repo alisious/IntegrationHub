@@ -1,0 +1,104 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+   <soap:Body>
+      <ns2:wyszukajPodstawoweDaneOsobyResponse xmlns:ns2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+         <znalezioneOsoby>
+            <znalezionaOsoba>
+               <osobaId>2915819472640346459</osobaId>
+               <numerPesel>73020916558</numerPesel>
+               <czyPeselAnulowany>false</czyPeselAnulowany>
+               <imiePierwsze>JACEK</imiePierwsze>
+               <nazwisko>KORPUSIK</nazwisko>
+               <nazwiskoRodowe>KORPUSIK</nazwiskoRodowe>
+               <obywatelstwo kod="500">POLSKIE</obywatelstwo>
+               <plec>MEZCZYZNA</plec>
+               <miejsceUrodzenia>DZIAŁDOWO</miejsceUrodzenia>
+               <dataUrodzenia>19730209</dataUrodzenia>
+               <imieMatki>MIROSŁAWA</imieMatki>
+               <imieOjca>JAN</imieOjca>
+               <nazwiskoRodoweMatki>IZDEBSKA</nazwiskoRodoweMatki>
+               <nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca>
+               <danePobytuStalego>
+                  <numerDomu>9</numerDomu>
+                  <gmina kt="1432055">ŁOMIANKI</gmina>
+                  <miejscowoscDzielnica>
+                     <kodTerytorialny>0005144</kodTerytorialny>
+                     <nazwaMiejscowosci>KIEŁPIN</nazwaMiejscowosci>
+                  </miejscowoscDzielnica>
+                  <ulica symbolUlicy="000514424412">
+                     <cecha>UL.</cecha>
+                     <nazwaPierwsza>WIŚNIOWA</nazwaPierwsza>
+                  </ulica>
+                  <wojewodztwo woj="14">MAZOWIECKIE</wojewodztwo>
+                  <komentarz xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                  <dataOd>20120508</dataOd>
+               </danePobytuStalego>
+               <czyZyje>true</czyZyje>
+            </znalezionaOsoba>
+            <znalezionaOsoba>
+               <osobaId>476475002159456798</osobaId>
+               <numerPesel>73090203451</numerPesel>
+               <czyPeselAnulowany>false</czyPeselAnulowany>
+               <imiePierwsze>JACEK</imiePierwsze>
+               <nazwisko>KORPUSIK</nazwisko>
+               <nazwiskoRodowe>KORPUSIK</nazwiskoRodowe>
+               <obywatelstwo kod="500">POLSKIE</obywatelstwo>
+               <plec>MEZCZYZNA</plec>
+               <miejsceUrodzenia>OLSZTYN</miejsceUrodzenia>
+               <dataUrodzenia>19730902</dataUrodzenia>
+               <imieMatki>TERESA</imieMatki>
+               <imieOjca>HENRYK</imieOjca>
+               <nazwiskoRodoweMatki>KOZIOŁ</nazwiskoRodoweMatki>
+               <nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca>
+               <danePobytuStalego>
+                  <numerDomu>42</numerDomu>
+                  <gmina kt="2814042">DYWITY</gmina>
+                  <miejscowoscDzielnica>
+                     <kodTerytorialny>0473069</kodTerytorialny>
+                     <nazwaMiejscowosci>RÓŻNOWO</nazwaMiejscowosci>
+                  </miejscowoscDzielnica>
+                  <ulica/>
+                  <wojewodztwo woj="28">WARMIŃSKO-MAZURSKIE</wojewodztwo>
+                  <komentarz xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                  <dataOd>19940721</dataOd>
+               </danePobytuStalego>
+               <czyZyje>true</czyZyje>
+            </znalezionaOsoba>
+            <znalezionaOsoba>
+               <osobaId>8501857946124445553</osobaId>
+               <numerPesel>83102803775</numerPesel>
+               <czyPeselAnulowany>false</czyPeselAnulowany>
+               <imiePierwsze>JACEK</imiePierwsze>
+               <nazwisko>KORPUSIK</nazwisko>
+               <nazwiskoRodowe>KORPUSIK</nazwiskoRodowe>
+               <obywatelstwo kod="500">POLSKIE</obywatelstwo>
+               <plec>MEZCZYZNA</plec>
+               <miejsceUrodzenia>KĘTRZYN</miejsceUrodzenia>
+               <dataUrodzenia>19831028</dataUrodzenia>
+               <imieMatki>MARIA</imieMatki>
+               <imieOjca>JERZY</imieOjca>
+               <nazwiskoRodoweMatki>MICHAŁEK</nazwiskoRodoweMatki>
+               <nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca>
+               <danePobytuStalego>
+                  <numerDomu>6</numerDomu>
+                  <gmina kt="2808011">KĘTRZYN</gmina>
+                  <kodPocztowy>11400</kodPocztowy>
+                  <numerLokalu>19</numerLokalu>
+                  <miejscowoscDzielnica>
+                     <kodTerytorialny>0964710</kodTerytorialny>
+                     <nazwaMiejscowosci>KĘTRZYN</nazwaMiejscowosci>
+                  </miejscowoscDzielnica>
+                  <ulica symbolUlicy="096471005948">
+                     <cecha>UL.</cecha>
+                     <nazwaPierwsza>GÓRNA</nazwaPierwsza>
+                  </ulica>
+                  <wojewodztwo woj="28">WARMIŃSKO-MAZURSKIE</wojewodztwo>
+                  <komentarz xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                  <dataOd>19831103</dataOd>
+               </danePobytuStalego>
+               <czyZyje>true</czyZyje>
+            </znalezionaOsoba>
+         </znalezioneOsoby>
+      </ns2:wyszukajPodstawoweDaneOsobyResponse>
+   </soap:Body>
+</soap:Envelope>

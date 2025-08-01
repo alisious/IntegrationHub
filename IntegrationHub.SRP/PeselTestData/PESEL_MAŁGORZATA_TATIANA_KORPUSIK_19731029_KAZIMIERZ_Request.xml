@@ -1,0 +1,41 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pes="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <pes:wyszukajPodstawoweDaneOsoby>
+         <!--Optional:-->
+         <requestId>1111</requestId>
+         <kryteriaWyszukiwania>
+            <kryteriumImienia>
+                <!--Optional:-->
+               <imiePierwsze>MAŁGORZATA</imiePierwsze>
+               <!--Optional:-->
+               <imieDrugie>TATIANA</imieDrugie>
+               <innyZapis>false</innyZapis>
+               <zakres>DANE_AKTUALNE</zakres>
+            </kryteriumImienia>
+            <!--Optional:-->
+            <kryteriumNazwiska>
+               <!--Optional:-->
+               <nazwisko>KORPUSIK</nazwisko>
+               <dowolneNazwisko>true</dowolneNazwisko>
+               <!--Optional:-->
+               <dowolnyCzlonNazwiska>?</dowolnyCzlonNazwiska>
+               <innyZapis>true</innyZapis>
+               <zakres>DANE_AKTUALNE</zakres>
+            </kryteriumNazwiska>
+            <!--Optional:-->
+            <kryteriumDanychUrodzenia>
+                 <!--Optional:-->
+               <dataUrodzenia>
+                  <!--You have a CHOICE of the next 2 items at this level-->
+                   <!--Optional:-->
+                  <kryteriumDaty>19731029</kryteriumDaty>
+               </dataUrodzenia>
+               <!--Optional:-->
+               <imieOjca>KAZIMIERZ</imieOjca>
+                <zakres>DANE_AKTUALNE</zakres>
+            </kryteriumDanychUrodzenia>
+            </kryteriaWyszukiwania>
+      </pes:wyszukajPodstawoweDaneOsoby>
+   </soapenv:Body>
+</soapenv:Envelope>

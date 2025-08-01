@@ -1,0 +1,15 @@
+{
+  "providerId": "Microsoft.Tools.ServiceModel.Svcutil",
+  "version": "8.0.0",
+  "options": {
+    "inputs": [
+      "../../../../../srp-wsdl/pl/gov/msw/srp/v3_0/uslugi/pesel/Wyszukiwanie.wsdl"
+    ],
+    "namespaceMappings": [
+      "*, IntegrationHub.SRP.PESEL.SoapClient"
+    ],
+    "outputFile": "WyszukiwanieReference.cs",
+    "targetFramework": "net9.0",
+    "typeReuseMode": "All"
+  }
+}

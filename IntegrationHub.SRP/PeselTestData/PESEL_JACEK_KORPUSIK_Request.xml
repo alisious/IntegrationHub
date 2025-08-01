@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pes="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <pes:wyszukajPodstawoweDaneOsoby>
+         <!--Optional:-->
+         <requestId>1111</requestId>
+         <kryteriaWyszukiwania>
+            <kryteriumImienia>
+                <!--Optional:-->
+               <imiePierwsze>JACEK</imiePierwsze>
+                <innyZapis>false</innyZapis>
+               <zakres>DANE_AKTUALNE</zakres>
+            </kryteriumImienia>
+            <!--Optional:-->
+            <kryteriumNazwiska>
+               <!--Optional:-->
+               <nazwisko>KORPUSIK</nazwisko>
+               <dowolneNazwisko>false</dowolneNazwisko>
+               <innyZapis>true</innyZapis>
+               <zakres>DANE_AKTUALNE</zakres>
+            </kryteriumNazwiska>
+            <!--Optional:-->
+         </kryteriaWyszukiwania>
+      </pes:wyszukajPodstawoweDaneOsoby>
+   </soapenv:Body>
+</soapenv:Envelope>

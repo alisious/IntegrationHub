@@ -1,0 +1,8 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+   <soap:Body>
+      <ns2:wyszukajPodstawoweDaneOsobyResponse xmlns:ns2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+         <znalezioneOsoby/>
+      </ns2:wyszukajPodstawoweDaneOsobyResponse>
+   </soap:Body>
+</soap:Envelope>

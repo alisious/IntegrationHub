@@ -1,0 +1,41 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+  <soap:Body>
+    <ns2:wyszukajPodstawoweDaneOsobyResponse xmlns:ns2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+    <znalezioneOsoby>
+      <znalezionaOsoba>
+        <osobaId>2915819472640346459</osobaId>
+        <numerPesel>73020916558</numerPesel>
+        <czyPeselAnulowany>false</czyPeselAnulowany>
+        <imiePierwsze>JACEK</imiePierwsze>
+        <nazwisko>KORPUSIK</nazwisko>
+        <nazwiskoRodowe>KORPUSIK</nazwiskoRodowe>
+        <obywatelstwo kod="500">POLSKIE</obywatelstwo>
+        <plec>MEZCZYZNA</plec>
+        <miejsceUrodzenia>DZIA&#321;DOWO</miejsceUrodzenia>
+        <dataUrodzenia>19730209</dataUrodzenia>
+        <imieMatki>MIROS&#321;AWA</imieMatki>
+        <imieOjca>JAN</imieOjca>
+        <nazwiskoRodoweMatki>IZDEBSKA</nazwiskoRodoweMatki>
+        <nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca>
+        <danePobytuStalego>
+          <numerDomu>9</numerDomu>
+          <gmina kt="1432055">&#321;OMIANKI</gmina>
+          <miejscowoscDzielnica>
+            <kodTerytorialny>0005144</kodTerytorialny>
+            <nazwaMiejscowosci>KIE&#321;PIN</nazwaMiejscowosci>
+          </miejscowoscDzielnica>
+          <ulica symbolUlicy="000514424412">
+            <cecha>UL.</cecha>
+            <nazwaPierwsza>WI&#346;NIOWA</nazwaPierwsza>
+          </ulica>
+          <wojewodztwo woj="14">MAZOWIECKIE</wojewodztwo>
+          <komentarz xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <dataOd>20120508</dataOd>
+        </danePobytuStalego>
+        <czyZyje>true</czyZyje>
+      </znalezionaOsoba>
+</znalezioneOsoby>
+  </ns2:wyszukajPodstawoweDaneOsobyResponse>
+  </soap:Body>
+</soap:Envelope>

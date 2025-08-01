@@ -1,0 +1,18 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+   <soap:Body>
+      <soap:Fault>
+         <faultcode>soap:Server</faultcode>
+         <faultstring>Błąd: [cin:ka:130626103920] Bledy weryfikacji KMD:  Kod: [150413044208] opis: [Znaleziono więcej niż (50) rekordów! Zawęź kryteria wyszukiwania!],  bledow [1]</faultstring>
+         <detail>
+            <ns2:bladTechniczny xmlns:ns2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+               <kod>150413044208</kod>
+               <opis>Błąd: [cin:ka:130626103920] Bledy weryfikacji KMD:  Kod: [150413044208] opis: [Znaleziono więcej niż (50) rekordów! Zawęź kryteria wyszukiwania!],  bledow [1]</opis>
+               <opisTechniczny>Błąd: [cin:ka:130626103920] Bledy weryfikacji KMD:  Kod: [150413044208] opis: [Znaleziono więcej niż (50) rekordów! Zawęź kryteria wyszukiwania!],  bledow [1]
+Data i czas: Tue Dec 10 10:16:24 CET 2024
+Serwer: ws01:ws01-srp</opisTechniczny>
+            </ns2:bladTechniczny>
+         </detail>
+      </soap:Fault>
+   </soap:Body>
+</soap:Envelope>
