@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+	<xsd:include schemaLocation="kmd_wspolne.xsd"/>
+
+	<xsd:simpleType name="Imie">
+		<xsd:annotation>
+			<xsd:documentation>Imię jednowyrazowe (pierwsze lub drugie).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:minLength value="1"/>
+            <xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ZapisImieniaOut">
+		<xsd:annotation>
+			<xsd:documentation>Imię jednowyrazowe (pierwsze lub drugie).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--Znaki poza zakresem -->
+	<xsd:complexType name="Imiona">
+		<xsd:annotation>
+			<xsd:documentation>Imiona osoby.
+Element zawiera dowolną liczbę imion w porządku wystąpienia, oraz opcjonalną
+alternatywną formę zapisu brzmienia imion.
+Alternatywna forma brzmienia traktowana jest przez organy państwowe równorzędnie z formą podstawową brzmienia imion.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:ZapisImion">
+				<xsd:sequence>
+					<xsd:element name="innyZapis" type="kmd:ZapisImion" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Alternatywna forma zapisu brzmienia imion, jeśli osoba posiada w dokumentach
+więcej niż jedną formę.
+</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Nazwisko">
+		<xsd:annotation>
+			<xsd:documentation>Zawiera nazwisko osoby w formie sekwencji wyrazów zawartej w jednym polu.
+Element zawiera dowolną liczbę wyrazów w porządku wystąpienia, oraz opcjonalną
+alternatywną formę zapisu brzmienia nazwiska.
+Alternatywna forma brzmienia traktowana jest przez organy państwowe równorzędnie z formą podstawową
+brzmienia nazwiska.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiska" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Podstawowa forma zapisu brzmienia nazwiska.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="innyZapis" type="kmd:ZapisNazwiska" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Alternatywna forma zapisu brzmienia nazwiska, jeśli osoba posiada w dokumentach
+więcej niż jedną formę.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ZapisImion">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól imienia.
+Warunki poprawności i zależności wartości pól:
+1.Jeśli wypełnione imionaKolejne to musi być wypełnione imieDrugie;
+2.Jeśli wypełnione imieDrugie to musi być wypełnione imiePierwsze.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="imiePierwsze" type="kmd:Imie" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Imię – pierwsze osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieDrugie" type="kmd:Imie" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię – drugie osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imionaKolejne" type="kmd:ImionaKolejne" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię trzecie i kolejne imiona osoby rozdzielone znakiem spacji.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ZapisNazwiska">
+		<xsd:annotation>
+			<xsd:documentation>Typ definiujący podstawowy lub alternatywny zapis nazwiska.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="300"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ImieOut">
+		<xsd:annotation>
+			<xsd:documentation>Imię jednowyrazowe (pierwsze lub drugie).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ImionaOut">
+		<xsd:annotation>
+			<xsd:documentation>Imiona osoby.
+				Element zawiera dowolną liczbę imion w porządku wystąpienia, oraz opcjonalną
+				alternatywną formę zapisu brzmienia imion.
+				Alternatywna forma brzmienia traktowana jest przez organy państwowe równorzędnie z formą podstawową brzmienia imion.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:ZapisImionOut">
+				<xsd:sequence>
+					<xsd:element name="innyZapis" type="kmd:ZapisImionOut" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Alternatywna forma zapisu brzmienia imion, jeśli osoba posiada w dokumentach
+								więcej niż jedną formę.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="NazwiskoOut">
+		<xsd:annotation>
+			<xsd:documentation>Zawiera nazwisko osoby w formie sekwencji wyrazów zawartej w jednym polu.
+				Element zawiera dowolną liczbę wyrazów w porządku wystąpienia, oraz opcjonalną
+				alternatywną formę zapisu brzmienia nazwiska.
+				Alternatywna forma brzmienia traktowana jest przez organy państwowe równorzędnie z formą podstawową
+				brzmienia nazwiska.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiskaOut" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Podstawowa forma zapisu brzmienia nazwiska.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="innyZapis" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Alternatywna forma zapisu brzmienia nazwiska, jeśli osoba posiada w dokumentach
+						więcej niż jedną formę.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ZapisImionOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól imienia.
+				Warunki poprawności i zależności wartości pól:
+				1.Jeśli wypełnione imionaKolejne to musi być wypełnione imieDrugie;
+				2.Jeśli wypełnione imieDrugie to musi być wypełnione imiePierwsze.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="imiePierwsze" type="kmd:ImieOut" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Imię – pierwsze osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieDrugie" type="kmd:ImieOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię – drugie osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imionaKolejne" type="kmd:ImionaKolejne" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię trzecie i kolejne imiona osoby rozdzielone znakiem spacji.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ZapisNazwiskaOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ definiujący podstawowy lub alternatywny zapis nazwiska.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="300"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Pesel">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający numer osoby w Powszechnym Elektronicznym Systemie Ewidencji Ludności.
+				Warunki poprawności i zależności wartości pól:
+				1.Zawiera tylko cyfry;
+				2.Sprawdzenie poprawności cyfry kontrolnej poprzez pomnożenie każdej cyfry w numerze PESEL przez jej wagę, to znaczy:
+				1 pozycja razy jeden, 2 razy trzy, 3 razy siedem, 4 razy dziewięć, 5 razy jeden, 6 razy trzy, 7 razy siedem,
+				8 razy dziewięć, 9 razy jeden i 10 razy trzy, a następnie przez sumowanie wyniku mnożenia, podzielenie modulo 10 i odjęcie wyniku od 10.
+				Powstała liczba powinna być zgodna z 11. cyfrą PESELA.
+				3.Pozycje od 7 do 10 nie mogą być jednocześnie zerami.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{11}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ImionaKolejne">
+		<xsd:annotation>
+			<xsd:documentation>Imiona kolejne, jeśli osoba posiada więcej niż dwa imiona. Wszystkie imiona kolejne przechowyane są w jednym polu i oddzielone spacjami.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="200"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

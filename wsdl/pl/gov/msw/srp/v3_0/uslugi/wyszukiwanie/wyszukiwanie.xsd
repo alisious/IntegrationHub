@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" version="3.0">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../domena/kmd/kmd.xsd"/>
+    <xsd:complexType name="WartoscKryterium">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy do przekazywania atrybutów służących do budowy zapytania wyszukiwania zaawansowanego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="kryterium" type="wys:NazwaKryterium"/>
+            <xsd:element name="operator" type="wys:Operator">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję rodzaj porównania atrybutu, oraz jego wartości.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wartosc" type="wys:KryteriumTekstowe" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję wartość szukanego atrybutu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="RodzajZleceniaWyszukiwania">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa rodzaje rejestrów państwowych dostępnych w zleceniach wyszukiwania.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PESEL_WYSZUKIWANIE_OSOB">
+                <xsd:annotation>
+                    <xsd:documentation>Kryteria zlecenia służące wyszukiwaniu osób.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DOWODY_WYSZUKIWANIE_DOWODOW">
+                <xsd:annotation>
+                    <xsd:documentation>Kryteria zlecenia służące wyszukiwaniu dowodów osobistych.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DOWODY_WYSZUKIWANIE_WNIOSKOW">
+                <xsd:annotation>
+                    <xsd:documentation>Kryteria zlecenia służące wyszukiwaniu wniosków o wydanie dowodów osobistych.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="StatusZleceniaWyszukiwania">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa możliwe statusy zlecenia wyszukiwania asynchronicznego. Dostępne są:BLAD_REALIZACJI - wystąpił błąd realizacji zlecenia asynchronicznego. Szczegóły błędu uzyskać można odpowiednią usługą systemu zlecającego służącą pobieraniu wyniku wyszukania. Możliwe jest usunięcie danych zlecenia zakończonego błędem.OCZEKUJACE - zlecenie znajduje się w kolejce oczekujących na wykonanie. Możliwe jest anulowanie zlecenia oczekującego.W_REALIZACJI - zlecenie jest aktualnie w trakcie realizacji.ZREALIZOWANE - realizacja zlecenia wyszukania asynchronicznego zakończona sukcesem. Listę znalezionych elementów pobrać można odpowiednią usługą systemu zlecającego służącą pobieraniu wyników wyszukania. Możliwe jest usunięcie danych zlecenia zrealizowanego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BLAD_REALIZACJI">
+                <xsd:annotation>
+                    <xsd:documentation>Wystąpił błąd realizacji zlecenia asynchronicznego. Szczegóły błędu uzyskać można odpowiednią usługą systemu zlecającego służącą pobieraniu wyniku wyszukania. Możliwe jest usunięcie danych zlecenia zakończonego błędem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="W_REALIZACJI">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie jest aktualnie w trakcie realizacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="OCZEKUJACE">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie znajduje się w kolejce oczekujących na wykonanie. Możliwe jest anulowanie zlecenia oczekującego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZREALIZOWANE">
+                <xsd:annotation>
+                    <xsd:documentation>Realizacja zlecenia wyszukania asynchronicznego zakończona sukcesem. Listę znalezionych elementów pobrać można odpowiednią usługą systemu zlecającego służącą pobieraniu wyników wyszukania. Możliwe jest usunięcie danych zlecenia zrealizowanego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="KryteriumZaawansowane">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy do przekazywania listy atrybutów służących do budowy zapytania wyszukiwania zaawansowanego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="skladowa" type="wys:SkladowaKryterium" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr zawiera wartości z których budowane jest zaawansowane kryterium do wyszukiwania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="KryteriumDaty">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania definicji kryterium daty, w przypadku tego kryterium oznacza użycie dokładnie takiej daty jaka została podana.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="4"/>
+            <xsd:maxLength value="8"/>
+            <xsd:pattern value="[0-9][0-9\*]*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TypParametru">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa rodzaj atrybutu po jakim następuje wyszukiwanie (DATA, LICZBA, TEKST, WARTOSC LOGICZNA).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="DATA">
+                <xsd:annotation>
+                    <xsd:documentation>Typ parametru typu DATE.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="LICZBA">
+                <xsd:annotation>
+                    <xsd:documentation>Typ parametru typu liczbowego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="TEKST">
+                <xsd:annotation>
+                    <xsd:documentation>Typ parametru typu tekstowego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WARTOSC_LOGICZNA">
+                <xsd:annotation>
+                    <xsd:documentation>Typ parametru typu BOOLEAN.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaKryterium">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy do przekazania nazwy kryterium zaawansowanego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="KryteriumPrzedzialDat">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania definicji kryterium daty, w przypadku tego kryterium oznacza użycie zakresu dat od do ( &gt;= x &lt;=, x &gt;= , x &lt;=). W przypadku podania wartości datyOd, oraz datyDo zakres dat zostanie użyty &gt;= x &lt;=, w przypadku podania samej wartości datyOd zostanie użyty zakres &gt;= x, w przypadku użycia samej wartości datyDo zostanie użyty zakres x &lt;=.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="dataOd" type="kmd:Data">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr oznacza ograniczenie do minimalnej daty w wyszukiwanych wartościach.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataDo" type="kmd:Data">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr oznacza ograniczenie do maksymalnej daty w wyszukiwanych wartościach.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumPrzedzialDatICzasu">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania definicji kryterium daty i czasu, w przypadku tego kryterium oznacza użycie zakresu dat od do ( &gt;= x &lt;=, x &gt;= , x &lt;=). W przypadku podania wartości datyOd, oraz datyDo zakres dat zostanie użyty &gt;= x &lt;=, w przypadku podania samej wartości datyOd zostanie użyty zakres &gt;= x, w przypadku użycia samej wartości datyDo zostanie użyty zakres x &lt;=.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="dataOd" type="kmd:DataICzas">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr oznacza ograniczenie do minimalnej daty w wyszukiwanych wartościach.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataDo" type="kmd:DataICzas">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr oznacza ograniczenie do maksymalnej daty w wyszukiwanych wartościach.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="Nawias">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy rodzaj uzytego nawiasu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="OTWIERAJACY"/>
+            <xsd:enumeration value="ZAMYKAJACY"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="ListaKryteriow">
+        <xsd:annotation>
+            <xsd:documentation>Typ zawiera listę kryteriów wyszukiwania zaawansowanego. Zawiera liczbę kryteriów, oraz listę kryteriów.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaKryteriow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr określa liczbę występujących kryterium wyszukiwania zaawansowanego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kryterium" type="wys:Kryterium" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr zawiera listę kryteriów wyszukiwania zaawansowanego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="IdZlecenia">
+        <xsd:annotation>
+            <xsd:documentation>Identyfikator zlecenia wyszukiwania w rejestrach PESEL, OEWIUDO.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:long"/>
+    </xsd:simpleType>
+    <xsd:complexType name="SkladowaKryterium">
+        <xsd:annotation>
+            <xsd:documentation>Typ reprezentujący składowa kryterium zaawansowanego. Składowa może być wartością kryterium, łącznikiem lub nawiasem.Przekazane do usługi składowe kryteria muszą być poprawnym wyrażeniem logicznym. Tzn. liczba otwartych nawiasów musi być równa liczbie nawiasów zamkniętych, poszczególne kryteria muszą być połączone łącznikami itp.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice>
+            <xsd:element name="kryterium" type="wys:WartoscKryterium">
+                <xsd:annotation>
+                    <xsd:documentation>Wartość kryterium.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nawias" type="wys:Nawias">
+                <xsd:annotation>
+                    <xsd:documentation>Nawias służący grupowaniu kryteriów.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="lacznik" type="wys:Lacznik">
+                <xsd:annotation>
+                    <xsd:documentation>Łącznik łączący wartości kryteriów.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:simpleType name="KryteriumTekstowe">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania wartości kryterium tekstowego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="300"/>
+            <xsd:pattern value="[^\*\s].*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KryteriumTekstoweZGwiazdka">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania wartości kryterium tekstowego. Dopuszcza znak * na początku</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="300"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania wartości kryterium tekstowego. Dopuszcza znak * na początku bez spacji na poczatku</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="300"/>
+            <xsd:pattern value="[^\s].*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KryteriumLiczbowe">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania wartości kryterium liczbowego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="30"/>
+            <xsd:pattern value="[0-9][0-9\*]*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="RodzajWyszukiwaniaWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do określenia rodzaju wyszukiwanego wniosku.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="TYLKO_MOJE"/>
+            <xsd:enumeration value="TYLKO_Z_EUSLUGI"/>
+            <xsd:enumeration value="WSZYSTKIE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="KryteriumStatusuBledu">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania wartości kryterium statusu błedu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="errorStatus" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium zakończenia zmiany błędem..</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZlecenieWyszukiwania">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisuję zlecenie wyszukiwania asynchronicznego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idZlecenia" type="wys:IdZlecenia">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję identyfikator zlecenia wyszukania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="operator" type="kmd:IdentyfikatorUzytkownika">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję identyfikator operatora jaki zarejestrował zlecenie w rejestrze.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaInstytucji" type="kmd:NazwaInstytucji">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa instytucji operatora, który wprowadził zlecenie do systemu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="rodzajZlecenia" type="wys:RodzajZleceniaWyszukiwania">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję rodzaj rejestru w jakim wykonywane jest zlecenie.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="opis" type="kmd:KrotkiTekst" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr zawiera krótki opis tekstowy zlecenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="status" type="wys:StatusZleceniaWyszukiwania">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję status w jakim znajduję się zlecenie.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czasZlecenia" type="kmd:Czas">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr przedstawia czas rejestracji zlecenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czasRozpoczeciaRealizacji" type="kmd:Czas" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr przedstawia czas rozpoczęcia wykonywania zlecenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czasZakonczeniaRealizacji" type="kmd:Czas" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr przedstawia czas zakończenia wykonywania operacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="Lacznik">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisuję rodzaj połączenia używany do łączenia zapytań kryterium zaawansowanego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ALTERNATYWA">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr łączący zdania  "OR"</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KONIUNKCJA">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr łączący zdania "AND"</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Operator">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisuję wszystkie możliwe operatory jakie mogą zostać użyte w kryterium zaawansowanym.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ROWNY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości równe.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ROZNY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości różne od.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WIEKSZY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości większe od.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WIEKSZY_LUB_ROWNY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości większe lub równe.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="MNIEJSZY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości mniejsze od.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="MNIEJSZY_LUB_ROWNY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości mniejsze lub równe.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PUSTY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości puste.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIE_PUSTY">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium opisujące wartości nie puste.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="KryteriumDat">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania definicji kryteriów dat. Kryterium może być użyte do porównania dokładnie jednej daty (kryteriumDaty), lub też zakresu dat (kryteriumPrzedzialDat).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice>
+            <xsd:element name="kryteriumPrzedzialDat" type="wys:KryteriumPrzedzialDat">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr używany jest do wyszukiwania po zakresie dat od do.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kryteriumDaty" type="wys:KryteriumDaty" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr używany jest do wyszukiwania po konkretnej dacie.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumDatICzasu">
+        <xsd:annotation>
+            <xsd:documentation>Typ używany do przekazywania definicji kryteriów dat. Kryterium może być użyte do porównania dokładnie jednej daty (kryteriumDaty), lub też zakresu dat (kryteriumPrzedzialDat).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice>
+            <xsd:element name="kryteriumPrzedzialDatICzasu" type="wys:KryteriumPrzedzialDatICzasu">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr używany jest do wyszukiwania po zakresie dat od do.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kryteriumDaty" type="wys:KryteriumDaty" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr używany jest do wyszukiwania po konkretnej dacie.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+    <xsd:complexType name="Kryterium">
+        <xsd:annotation>
+            <xsd:documentation>Typ zawiera informację o kryterium wyszukiwania zaawansowanego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwa" type="wys:NazwaKryterium">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję nazwę kryterium wyszukiwania zaawansowanego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="opis" type="kmd:KrotkiTekst" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr zawiera opis kryterium wyszukiwania zaawansowanego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="typ" type="wys:TypParametru">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr opisuję typ atrybutu po jakim następuję wyszukiwanie.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

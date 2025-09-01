@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+    <xsd:include schemaLocation="kmd_slowniki.xsd"/>
+    <xsd:simpleType name="LiniaAdresu">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera 1 linię adresu korespondenycjnego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="AdresKrajowy">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera dane adresu krajowego zgodnie z art.26 ustawy o ewidencji ludności
+                z 24 września 2010r.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="adresZameldowaniaId" type="xsd:integer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Unikalny identyfikator</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerDomu" type="kmd:NumerDomu" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gmina" type="kmd:Gmina" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę gminy z kodem terytorialnym.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="kmd:KodPocztowy" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="kmd:NumerLokalu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowoscDzielnica" type="kmd:Miejscowosc" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem miejscowości i kodem terytorialnym
+                        ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="kmd:Ulica" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze słownikiem TERYT (plik ULIC) wraz z
+                        kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wojewodztwo" type="kmd:Wojewodztwo" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę województwa z kodem województwa ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="komentarz" type="kmd:Komentarz" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera komentarz.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AdresKrajowyOut">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera dane adresu krajowego zgodnie z art.26 ustawy o ewidencji ludności
+                z 24 września 2010r.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="adresZameldowaniaId" type="xsd:integer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Unikalny identyfikator</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerDomu" type="kmd:NumerDomuOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gmina" type="kmd:GminaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę gminy z kodem terytorialnym.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="kmd:KodPocztowy" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="kmd:NumerLokaluOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowoscDzielnica" type="kmd:MiejscowoscOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem miejscowości i kodem terytorialnym
+                        ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="kmd:UlicaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze słownikiem TERYT (plik ULIC) wraz z
+                        kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wojewodztwo" type="kmd:WojewodztwoOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę województwa z kodem województwa ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="komentarz" type="kmd:Komentarz" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera komentarz.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AdresKrajowyDzieckaOut">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera dane adresu krajowego zgodnie z art.26 ustawy o ewidencji ludności
+                z 24 września 2010r.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDomu" type="kmd:NumerDomuOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="kmd:KodPocztowy" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="kmd:NumerLokaluOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowoscDzielnica" type="kmd:MiejscowoscOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem miejscowości i kodem terytorialnym
+                        ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="kmd:UlicaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze słownikiem TERYT (plik ULIC) wraz z
+                        kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wojewodztwo" type="kmd:WojewodztwoOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę województwa z kodem województwa ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="powiat" type="kmd:PowiatOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę powiatu z kodem powiatu ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gmina" type="kmd:GminaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę gminy z kodem terytorialnym.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AdresDoKorespondencji">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera dane adresu pocztowego i/lub adresu poczty elektronicznej do korespondencji.
+                Adres pocztowy umieszczony jest w polach linia1-linia4, przy czym:
+                1.Jeśli wypełniona linia4 to musi być wypełniona linia3;
+                2.Jeśli wypełniona linia3 to musi być wypełniona linia2.
+                2.Jeśli wypełniona linia2 to musi być wypełniona linia1.
+                Adres poczty elektronicznej umieszczony jest w polu eMail.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="eMail" type="kmd:PocztaElektroniczna" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Adres do korespondencji elektronicznej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="linia1" type="kmd:LiniaAdresu" minOccurs="0"/>
+            <xsd:element name="linia2" type="kmd:LiniaAdresu" minOccurs="0"/>
+            <xsd:element name="linia3" type="kmd:LiniaAdresu" minOccurs="0"/>
+            <xsd:element name="linia4" type="kmd:LiniaAdresu" minOccurs="0"/>
+            <xsd:element name="nazwaKraju" type="kmd:NazwaKraju" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa kraju</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="KodPocztowy">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający kod pocztowy. Może zawierać tylko cyfry.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{5}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerDomu">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający numer domu. Może zawierać cyfry i litery oraz znaki: ukośnik, spacja,
+                myślnik, kropka.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerDomuOut">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający numer domu. Może zawierać cyfry i litery oraz znaki: ukośnik, spacja,
+                myślnik, kropka.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerLokalu">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający numer lokalu. Może zawierać cyfry i litery oraz znaki: ukośnik, spacja,
+                myślnik, kropka.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1" />
+            <xsd:maxLength value="20"/>
+            <xsd:pattern
+                    value="[ \.'\-/:\)\(_a-ząćęłńóśźżA-Z0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞĀĂĄĆĈĊČĎĐĒĔĖĘĚĜĞĠĢĤĦĨĪĬĮİĲĴĶĹĻĽĿŁŃŅŇŊŌŎŐŒŔŖŘŚŜŞŠŢŤŦŨŪŬŮŰŲŴŶŸŹŻŽƁƂƄƆƇƉƊƋƎƏƐƑƓƔƖƗƘƜƝƟƠƢƤƦƧƩƪƬƮƯƱƲƳƵƷƸƻƼƾƿǀǁǂǃǄǇǊǍǏǑǓǕǗǙǛǞǠǢǤǦǨǪǬǮǱǴǶǷǸǺǼǾȀȂȄȆȈȊȌȎȐȒȔȖȘȚȜȞȠȢȤȦȨȪȬȮȰȲȺȻȽȾɁɃɄɅɆɈɊɌɎḀḂḄḆḈḊḌḎḐḒḔḖḘḚḜḞḠḢḤḦḨḪḬḮḰḲḴḶḸḺḼḾṀṂṄṆṈṊṌṎṐṒṔṖṘṚṜṞṠṢṤṦṨṪṬṮṰṲṴṶṸṺṼṾẀẂẄẆẈẊẌẎẐẒẔẞẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỺỼỾЌE̋G̈A̋S̋U̇]+[+\.'\-/:\)\(\?_a-zA-Z0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞĀĂĄĆĈĊČĎĐĒĔĖĘĚĜĞĠĢĤĦĨĪĬĮİĲĴĶĹĻĽĿŁŃŅŇŊŌŎŐŒŔŖŘŚŜŞŠŢŤŦŨŪŬŮŰŲŴŶŸŹŻŽƁƂƄƆƇƉƊƋƎƏƐƑƓƔƖƗƘƜƝƟƠƢƤƦƧƩƪƬƮƯƱƲƳƵƷƸƻƼƾƿǀǁǂǃǄǇǊǍǏǑǓǕǗǙǛǞǠǢǤǦǨǪǬǮǱǴǶǷǸǺǼǾȀȂȄȆȈȊȌȎȐȒȔȖȘȚȜȞȠȢȤȦȨȪȬȮȰȲȺȻȽȾɁɃɄɅɆɈɊɌɎḀḂḄḆḈḊḌḎḐḒḔḖḘḚḜḞḠḢḤḦḨḪḬḮḰḲḴḶḸḺḼḾṀṂṄṆṈṊṌṎṐṒṔṖṘṚṜṞṠṢṤṦṨṪṬṮṰṲṴṶṸṺṼṾẀẂẄẆẈẊẌẎẐẒẔẞẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỺỼỾЌE̋G̈A̋S̋U̇]*\*?">
+            </xsd:pattern>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerLokaluOut">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający numer lokalu. Może zawierać cyfry i litery oraz znaki: ukośnik, spacja,
+                myślnik, kropka.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="20"/>
+            <xsd:pattern
+                    value="[ \.'\-/:\)\(_a-ząćęłńóśźżA-Z0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞĀĂĄĆĈĊČĎĐĒĔĖĘĚĜĞĠĢĤĦĨĪĬĮİĲĴĶĹĻĽĿŁŃŅŇŊŌŎŐŒŔŖŘŚŜŞŠŢŤŦŨŪŬŮŰŲŴŶŸŹŻŽƁƂƄƆƇƉƊƋƎƏƐƑƓƔƖƗƘƜƝƟƠƢƤƦƧƩƪƬƮƯƱƲƳƵƷƸƻƼƾƿǀǁǂǃǄǇǊǍǏǑǓǕǗǙǛǞǠǢǤǦǨǪǬǮǱǴǶǷǸǺǼǾȀȂȄȆȈȊȌȎȐȒȔȖȘȚȜȞȠȢȤȦȨȪȬȮȰȲȺȻȽȾɁɃɄɅɆɈɊɌɎḀḂḄḆḈḊḌḎḐḒḔḖḘḚḜḞḠḢḤḦḨḪḬḮḰḲḴḶḸḺḼḾṀṂṄṆṈṊṌṎṐṒṔṖṘṚṜṞṠṢṤṦṨṪṬṮṰṲṴṶṸṺṼṾẀẂẄẆẈẊẌẎẐẒẔẞẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỺỼỾЌE̋G̈A̋S̋U̇]+[+\.'\-/:\)\(\?_a-zA-Z0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞĀĂĄĆĈĊČĎĐĒĔĖĘĚĜĞĠĢĤĦĨĪĬĮİĲĴĶĹĻĽĿŁŃŅŇŊŌŎŐŒŔŖŘŚŜŞŠŢŤŦŨŪŬŮŰŲŴŶŸŹŻŽƁƂƄƆƇƉƊƋƎƏƐƑƓƔƖƗƘƜƝƟƠƢƤƦƧƩƪƬƮƯƱƲƳƵƷƸƻƼƾƿǀǁǂǃǄǇǊǍǏǑǓǕǗǙǛǞǠǢǤǦǨǪǬǮǱǴǶǷǸǺǼǾȀȂȄȆȈȊȌȎȐȒȔȖȘȚȜȞȠȢȤȦȨȪȬȮȰȲȺȻȽȾɁɃɄɅɆɈɊɌɎḀḂḄḆḈḊḌḎḐḒḔḖḘḚḜḞḠḢḤḦḨḪḬḮḰḲḴḶḸḺḼḾṀṂṄṆṈṊṌṎṐṒṔṖṘṚṜṞṠṢṤṦṨṪṬṮṰṲṴṶṸṺṼṾẀẂẄẆẈẊẌẎẐẒẔẞẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỺỼỾЌE̋G̈A̋S̋U̇]*\*?">
+            </xsd:pattern>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PocztaElektroniczna">
+        <xsd:annotation>
+            <xsd:documentation>Adres poczty elektronicznej.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="3"/>
+            <xsd:maxLength value="225"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerTelefonu">
+        <xsd:annotation>
+            <xsd:documentation>Numer telefonu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:minLength value="9"/>
+            <xsd:maxLength value="13"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

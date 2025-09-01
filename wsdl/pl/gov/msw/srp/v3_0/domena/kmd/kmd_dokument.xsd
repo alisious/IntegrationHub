@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+	<xsd:include schemaLocation="kmd_czas.xsd"/>
+	<xsd:include schemaLocation="kmd_wspolne.xsd"/>
+	<xsd:complexType name="DaneDokumentuTozsamosci">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól podstawowych danych dokumentu podróży lub innego dokumentu potwierdzającego tożsamość cudzoziemca.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="adnotacje" type="kmd:OpisNieformalny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dane opisowe dokumentu tożsamości, o ile nie są dostępne seria i numer.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataWaznosci" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności dokumentu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriaINumer" type="kmd:SeriaINumer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dokumentu.
+Dla innego dokumentu potwierdzającego tożsamość cudzoziemca dokument może nie zawierać tych danych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneDokumentu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól podstawowych danych polskiego dokumentu potwierdzającego tożsamość (paszportu lub dowodu osobistego).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataWaznosci" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności dokumentu tożsamości.
+Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriaINumer" type="kmd:SeriaINumer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dokumentu.
+Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="SeriaINumer">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający serię i numer dokumentu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="DaneDokumentuTozsamosciOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól podstawowych danych dokumentu podróży lub innego dokumentu potwierdzającego tożsamość cudzoziemca.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="adnotacje" type="kmd:OpisNieformalny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dane opisowe dokumentu tożsamości, o ile nie są dostępne seria i numer.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataWaznosci" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności dokumentu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriaINumer" type="kmd:SeriaINumerOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dokumentu.
+						Dla innego dokumentu potwierdzającego tożsamość cudzoziemca dokument może nie zawierać tych danych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PodstawoweDaneDokumentuOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól podstawowych danych polskiego dokumentu potwierdzającego tożsamość (paszportu lub dowodu osobistego).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataWaznosci" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności dokumentu tożsamości.
+						Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriaINumer" type="kmd:SeriaINumerOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dokumentu.
+						Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="SeriaINumerOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający serię i numer dokumentu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NumerSprawy">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający numer sprawy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SygnaturaPisma">
+		<xsd:annotation>
+			<xsd:documentation>Typ okreslajacy sygnature pisma.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+</xsd:schema>

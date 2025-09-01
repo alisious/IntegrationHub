@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/subskrypcje/parametry/pobieranie_subskrypcji/"
+            version="3.0"
+            xmlns:par="http://msw.gov.pl/srp/v3_0/uslugi/subskrypcje/parametry/pobieranie_subskrypcji/"
+            xmlns:subskrypcje="http://msw.gov.pl/srp/v3_0/domena/subskrypcje/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/subskrypcje/" schemaLocation="../../../domena/subskrypcje/subskrypcje.xsd"/>
+
+</xsd:schema>

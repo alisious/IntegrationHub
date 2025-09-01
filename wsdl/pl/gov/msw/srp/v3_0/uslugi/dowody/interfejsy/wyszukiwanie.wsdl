@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="wyszukiwanie" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                    xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                    xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/">
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                        schemaLocation="../../../domena/kmd/kmd.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/"
+                        schemaLocation="../parametry/parametry.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/"
+                        schemaLocation="../parametry/wyszukiwanie.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                        schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/"
+                        schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+
+            <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+            <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+
+            <xsd:element name="wyszukajDowodyPoIdOsoby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriumWyszukiwania" type="xsd_1:KryteriumDlaDowoduPoIdOsoby">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria wyszukiwania dowodu osobistego po identyfikatorze osoby.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="wyszukajDowodyPoIdOsobyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="znalezioneDowody" type="xsd_1:ListaZnalezionychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania dowodów osobistych. Zawiera informacje o
+                                    wszystkich rekordach spełniających zadane kryteria.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="istniejaceDowody" type="xsd_1:ListaIstniejacychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Zawiera isteniające dowody osobiste nie przekazane w znalezionych
+                                    dowodach.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="wyszukajDowodPoSeriaNumer">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriumWyszukiwania" type="xsd_1:KryteriumSeriaNumerDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria wyszukiwania dowodu osobistego po seria i numer(pisanych
+                                    razem).
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="wyszukajDowodPoSeriaNumerResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="znalezioneDowody" type="xsd_1:ListaZnalezionychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania dowodu osobistego po seria i numer(pisanych
+                                    razem). Może istnieć maksymalnie 1 dokument o podanych parametrach.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="istniejaceDowody" type="xsd_1:ListaIstniejacychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Zawiera isteniające dowody osobiste nie przekazane w znalezionych
+                                    dowodach.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyBlednyBlankiet" type="xsd:boolean" default="false">
+                            <xsd:annotation>
+                                <xsd:documentation>Zawiera winformację, czy istnieje błędy blankiet o takim numerze.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="wyszukajDowodPoSeriaNumerZGwiazdka">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriumWyszukiwania" type="xsd_1:KryteriumSeriaNumerDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria wyszukiwania dowodu osobistego po seria i numer (pisanych
+                                    razem) z gwiazdką.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="wyszukajDowodPoSeriaNumerZGwiazdkaResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="znalezioneDowody" type="xsd_1:ListaZnalezionychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania dowodów osobistych po seria i numer (pisanych razem) z gwiazdką. 
+                                    Zawiera informacje o wszystkich rekordach spełniających zadane kryteria.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="istniejaceDowody" type="xsd_1:ListaIstniejacychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Zawiera isteniające dowody osobiste nie przekazane w znalezionych
+                                    dowodach.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="wyszukajWnioski">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriaWyszukiwania" type="xsd_1:KryteriaWyszukiwaniaWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria wyszukiwania wniosków o dowód osobisty.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="wyszukajWnioskiResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="znalezioneWnioski" type="xsd_1:ListaZnalezionychWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania wniosków o dowody osobiste. Zawiera informacje o
+                                    wszystkich rekordach spełniających zadane kryteria.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="istniejaceWnioski" type="xsd_1:ListaIstniejacychWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania wniosków o dowody osobiste. Zawiera informacje o
+                                    rekordach które nie zostały ujęte w wyszukiwaniu.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="stacjonarnyWniosek" type="xsd_1:StacjonarnyWniosek" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania wniosków o dowody osobiste. Zawiera informacje o
+                                    rekordach które nie zostały ujęte w wyszukiwaniu. Dodawany jeśli wyszukiwanie na stacji mobilnej,
+                                    a znaleziono wniosek nie oznaczony jako mobilny.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="wyszukajDowodPoStatusie">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriumWyszukiwania" type="xsd_1:KryteriumStatusDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria wyszukiwania dowodu osobistego po statusie dowodu.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="wyszukajDowodPoStatusieResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="znalezioneDowody" type="xsd_1:ListaZnalezionychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania dowodów osobistych. Zawiera informacje o
+                                    wszystkich rekordach spełniających zadane kryteria.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="wyszukajDowodyDlaPrzyjeciaPuk">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriumWyszukiwania" type="xsd_1:KryteriumPrzyjeciePukDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria wyszukiwania dowodu osobistego dla masowego przyjęcia kopert z Puk..
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="wyszukajDowodyDlaPrzyjeciaPukResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="znalezioneDowody" type="xsd_1:ListaZnalezionychDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Wynik wyszukiwania dowodów osobistych. Zawiera informacje o
+                                    wszystkich rekordach spełniających zadane kryteria.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="bladTechnicznyFault">
+        <wsdl:part element="tns:bladTechniczny" name="fault8"/>
+    </wsdl:message>
+    <wsdl:message name="bladBiznesowyFault">
+        <wsdl:part element="tns:bladBiznesowy" name="fault9"/>
+    </wsdl:message>
+
+    <wsdl:message name="wyszukajDowodPoSeriaNumerZGwiazdkaRequest">
+        <wsdl:part element="tns:wyszukajDowodPoSeriaNumerZGwiazdka" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="wyszukajDowodPoSeriaNumerZGwiazdkaResponse">
+        <wsdl:part element="tns:wyszukajDowodPoSeriaNumerZGwiazdkaResponse" name="parameters"/>
+    </wsdl:message>
+    
+    <wsdl:message name="wyszukajDowodPoSeriaNumerRequest">
+        <wsdl:part element="tns:wyszukajDowodPoSeriaNumer" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="wyszukajDowodPoSeriaNumerResponse">
+        <wsdl:part element="tns:wyszukajDowodPoSeriaNumerResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="wyszukajWnioskiRequest">
+        <wsdl:part element="tns:wyszukajWnioski" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="wyszukajWnioskiResponse">
+        <wsdl:part element="tns:wyszukajWnioskiResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="wyszukajDowodPoStatusieRequest">
+        <wsdl:part element="tns:wyszukajDowodPoStatusie" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="wyszukajDowodPoStatusieResponse">
+        <wsdl:part element="tns:wyszukajDowodPoStatusieResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="wyszukajDowodyDlaPrzyjeciaPukRequest">
+        <wsdl:part element="tns:wyszukajDowodyDlaPrzyjeciaPuk" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="wyszukajDowodyDlaPrzyjeciaPukResponse">
+        <wsdl:part element="tns:wyszukajDowodyDlaPrzyjeciaPukResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="wyszukajDowodyPoIdOsobyRequest">
+        <wsdl:part element="tns:wyszukajDowodyPoIdOsoby" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="wyszukajDowodyPoIdOsobyResponse">
+        <wsdl:part element="tns:wyszukajDowodyPoIdOsobyResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:portType name="DowodyWyszukiwanie">
+        <wsdl:documentation>Interfejs zawiera zbiór usług umożliwiających wyszukiwanie rekordów w rejestrze RDO.
+        </wsdl:documentation>
+        <wsdl:operation name="wyszukajDowodPoSeriaNumer">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na wyszukanie dowodu osobistego w rejestrze RDO po
+                seri i numerze. Usługa wyszukuje i zwraca dowód spełniający warunek.
+            </wsdl:documentation>
+            <wsdl:input message="tns:wyszukajDowodPoSeriaNumerRequest"/>
+            <wsdl:output message="tns:wyszukajDowodPoSeriaNumerResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajDowodPoSeriaNumerZGwiazdka">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na wyszukanie dowodów osobistych w rejestrze RDO po
+                serii i numerze z gwiazdką. Usługa wyszukuje i zwraca dowody spełniające warunek.
+            </wsdl:documentation>
+            <wsdl:input message="tns:wyszukajDowodPoSeriaNumerZGwiazdkaRequest"/>
+            <wsdl:output message="tns:wyszukajDowodPoSeriaNumerZGwiazdkaResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajWnioski">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na wyszukanie danych wniosków o dowody osobiste w
+                rejestrze RDO. Usługa wyszukuje i zwraca listę rekordów spełniających zadane kryteria, zawierającą
+                numery i statusy znalezionych wniosków oraz identyfikatory ich właścicieli oraz informacje o dacie
+                urodzenia i płci właściciela. W celu pobrania szczegółowych danych wybranych osób należy wywołać
+                odpowiednią usługę interfejsu DowodyUdostepnianie.
+            </wsdl:documentation>
+            <wsdl:input message="tns:wyszukajWnioskiRequest"/>
+            <wsdl:output message="tns:wyszukajWnioskiResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajDowodPoStatusie">
+            <wsdl:documentation>Usługa pozwala wyszukiwać dowody po statusie.
+            </wsdl:documentation>
+            <wsdl:input message="tns:wyszukajDowodPoStatusieRequest"/>
+            <wsdl:output message="tns:wyszukajDowodPoStatusieResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajDowodyDlaPrzyjeciaPuk">
+            <wsdl:documentation>Usługa pozwala wyszukiwać dowody dla masowego przyjęcia kopert z Puk.
+            </wsdl:documentation>
+            <wsdl:input message="tns:wyszukajDowodyDlaPrzyjeciaPukRequest"/>
+            <wsdl:output message="tns:wyszukajDowodyDlaPrzyjeciaPukResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajDowodyPoIdOsoby">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na wyszukanie dowodu osobistego w rejestrze RDO po
+                identyfikatorze osoby. Usługa wyszukuje i zwraca dowody spełniające warunek.
+            </wsdl:documentation>
+            <wsdl:input message="tns:wyszukajDowodyPoIdOsobyRequest"/>
+            <wsdl:output message="tns:wyszukajDowodyPoIdOsobyResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+</wsdl:definitions>

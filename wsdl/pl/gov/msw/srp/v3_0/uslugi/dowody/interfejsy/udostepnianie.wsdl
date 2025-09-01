@@ -1,0 +1,1143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="udostepnianie" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/dowody/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                    xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                    xmlns:ubase="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianieBase/"
+                    xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                    xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianie/"
+                    xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/"
+                    xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/"
+                    xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/">
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                        schemaLocation="../../../domena/kmd/kmd.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianie/"
+                        schemaLocation="../parametry/udostepnianie.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                        schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/"
+                        schemaLocation="../parametry/parametry.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                        schemaLocation="../../../domena/dowody/dowody.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/"
+                        schemaLocation="../../../domena/pesel/pesel.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/"
+                        schemaLocation="../parametry/wyszukiwanie.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianieBase/"
+                        schemaLocation="../../../uslugi/dowody/parametry/udostepnianieBase.xsd"/>
+            <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+            <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+
+            <xsd:element name="udostepnijHistorieStatusuWniosku">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idWniosku" type="dow:IdWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Id wniosku</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijHistorieStatusuWnioskuResponse">
+                <xsd:complexType>
+                    <xsd:annotation>
+                        <xsd:documentation>Dane reprezentujące dane poprzednich statusów wniosku.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element name="numerWniosku" type="dow:NumerWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer wniosku na podstawie którego został wydany dowód.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idWniosku" type="dow:IdWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Id wniosku</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="listaPoprzednichStatusowWniosku" type="dow:DaneStatusuWniosku" minOccurs="0"
+                                     maxOccurs="unbounded">
+                            <xsd:annotation>
+                                <xsd:documentation>Pole okreslajace zestaw poprzednich statusów wniosku, wypelnione
+                                    jesli pole statusu wniosku kiedykolwiek bylo zmienione i posiada poprzednika.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneDowoduPoNumerze">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idDowodu" type="dow:IdDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer dowodu do pobrania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneDowoduPoNumerzeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dowod" type="dow:DaneDowodu" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Pełne dane dowodu tożsamości.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idWniosku" type="dow:IdWniosku" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Id wniosku</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="numerWniosku" type="dow:NumerWniosku" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer wniosku na podstawie którego został wydany dowód.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneDowoduPoId">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idDowodu" type="dow:IdDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer dowodu do pobrania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="udostepnijZdjecie" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy należy przekazywać w zwracanych
+                                    danych zawartość pola zdjęcie.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="udostepnijPodpis" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy należy przekazywać w zwracanych
+                                    danych zawartość pola podpis.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="udostepnijDaneTekstowe" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy należy przekazywać w zwracanych
+                                    danych zawartości pól tekstowych.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneDowoduPoIdResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dowod" type="dow:DaneDowodu" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Pełne dane dowodu tożsamości.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="dostepDoWykazuUniewaznionychDowodowPoSeriaINumer">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                            <xsd:annotation>
+                                <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="dostepDoWykazuUniewaznionychDowodowPoSeriaINumerResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dowodZnajdujeSieNaLiscie" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat czy dowód znajduje się na liście unieważnionych dowodów.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneDowodowPoNumerze">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaNumerowDowodow" type="xsd_2:ListaNumerowDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista numerów dowodów do zwrócenia.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneDowodowPoNumerzeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dowody" type="xsd_2:ListaDowodowZUdostepnianymiDanymi">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista pełnych danych z dowodów tożsamości.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWniosku">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ubase:udostepnijDaneWnioskuBase"/>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskuWS">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ubase:udostepnijDaneWnioskuBase"/>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskuResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="wniosek" type="dow:DaneWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane pobranego wniosku.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskuUkr">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby w rejestrze PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskuUkrResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="wniosek" type="dow:DaneWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane pobranego wniosku.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="daneFormularzaWnioskuUkr" type="dow:DaneFormularzaWnioskuUkr">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane specyficzne dla wniosku uchodźcy UKR.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskow">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ubase:udostepnijDaneWnioskowBase"/>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskowWS">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ubase:udostepnijDaneWnioskowBase"/>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneWnioskowResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="wnioski" type="xsd_2:ListaWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista pobranych wniosków.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneAktualnegoDowoduPoPesel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="numerPesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer pesel osoby, której dowód jest zwracany.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneAktualnegoDowoduPoPeselResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dowod" type="dow:DaneDowodu" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Aktualne dane dowodu tożsamości.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idWniosku" type="dow:IdWniosku" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Id wniosku</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="numerWniosku" type="dow:NumerWniosku" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer wniosku na podstawie którego został wydany dowód.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneAktualnychDowodowPoPesel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaNumerowPesel" type="xsd_2:ListaNumerowPesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista numerów pesel osób, których dowody mają zostać zwrócone.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneAktualnychDowodowPoPeselResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dowody" type="xsd_2:ListaDowodowZUdostepnianymiDanymi">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista aktualnych danych z dowodów tożsamości.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijStatusWniosku">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="numerWniosku" type="dow:NumerWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer wniosku</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijStatusWnioskuResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="statusWniosku" type="dow:StatusWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Status wniosku.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="statusDowodu" type="dow:StatusDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Status dowodu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataPrzyjeciaKopertyPuk" type="xsd:date" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data przyjęcia koperty z PUK.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataWydania" type="dow:Data" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data odbioru dokumentu przez obywatela.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijWniosekAktywnyPoPesel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer ewidencyjny osoby w rejestrze PESEL
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijWniosekAktywnyPoPeselResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="czyIstniejeWniosekAktywny" type="dow:CzyIstniejeWniosekAktywny">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość typu boolean wskazująca czy wybrana osoba posiada aktywny
+                                    wniosek.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="daneWniosku" type="dow:DaneWniosku" nillable="true">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane istniejącego i aktywnego wniosku.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="nazwaUrzeduWniosekAktywny" type="dow:NazwaUrzeduWniosekAktywny"
+                                     nillable="true">
+                            <xsd:annotation>
+                                <xsd:documentation>Nazwa urzędu w którym istnieje aktywny wniosek.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDowodAktywnyPoPesel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer ewidencyjny osoby w rejestrze PESEL.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDowodAktywnyPoPeselResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="czyIstniejeDowodAktywny" type="dow:CzyIstniejeDowodAktywny">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość typu boolean wskazująca czy wybrana osoba posiada aktywny
+                                    dowód osobisty.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="daneDowodu" type="dow:DaneDowodu" nillable="true">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane istniejącego i aktywnego dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="nazwaUrzeduDowodAktywny" type="dow:NazwaUrzeduDowodAktywny" nillable="true">
+                            <xsd:annotation>
+                                <xsd:documentation>Nazwa urzędu, w którym istnieje aktywny dowód osobisty.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijHistorieStatusuDowodu">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idDowodu" type="dow:IdDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijHistorieStatusuDowoduResponse">
+                <xsd:complexType>
+                    <xsd:annotation>
+                        <xsd:documentation>Dane reprezentujące dane poprzednich statusów wniosku.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="listaPoprzednichStatusowDowodu" type="dow:DaneStatusuDowodu" minOccurs="0"
+                                     maxOccurs="unbounded">
+                            <xsd:annotation>
+                                <xsd:documentation>Pole okreslajace zestaw poprzednich statusów dowodu, wypelnione jesli
+                                    pole statusu dowodu kiedykolwiek bylo zmienione i posiada poprzednika.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijOstatniDowodPoOsobaId">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby w rejestrze PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijOstatniDowodPoOsobaIdResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneDowodu" type="dow:DaneDowodu" nillable="true">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane ostatniego dowodu osobistego,
+                                    o ile taki istnieje.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijWnioskiWydanieDowoduOsobistego">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriaUdostepnianiaWnioski" type="xsd_2:kryteriaUdostepnianiaWnioski">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria udostępniania wniosków.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyWyszukiwanieZGwiazdka" type="xsd:boolean" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy wyszukiwanie stringów z gwiazdką.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyTeletransmisja" type="xsd:boolean" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy wyszukiwanie dotyczy teletransmisji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijWnioskiWydanieDowoduOsobistegoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaWnioskow" type="wys:ListaZnalezionychWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista znalezionych wniosków.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDowodyOsobiste">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kryteriaUdostepnianiaDowody" type="xsd_2:kryteriaUdostepnianiaDowody">
+                            <xsd:annotation>
+                                <xsd:documentation>Kryteria udostępniania dowodów.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyWyszukiwanieZGwiazdka" type="xsd:boolean" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy wyszukiwanie stringów z gwiazdką.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyTeletransmisja" type="xsd:boolean" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wartość true/false określająca czy wyszukiwanie dotyczy teletransmisji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDowodyOsobisteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDowodow" type="wys:ListaZnalezionychDowodowZUdostepnianymiDanymi">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista znalezionych dowodów.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="realizujUdostepnienieWnioskow">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ubase:realizujUdostepnienieWnioskowBase"/>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="realizujUdostepnienieWnioskowWS">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ubase:realizujUdostepnienieWnioskowBase"/>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="realizujUdostepnienieWnioskowResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaWnioskow" type="wys:ListaPelnychWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wybranych wniosków.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="realizujUdostepnienieDowodowOsobistych">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDowodow" type="wys:ListaDowodow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wybranych dowodów.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="zakresDanych" type="xsd_2:ZakresDanychDowod">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wybranych dowodów.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="realizujUdostepnienieDowodowOsobistychResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDowodow" type="wys:ListaPelnychDowodowZUdostepnianymiDanymi">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wybranych dowodów.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijPrzetwarzaneDane">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby w rejestrze PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijPrzetwarzaneDaneResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDowodow" type="wys:ListaPelnychDowodowZUdostepnianymiDanymi">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wybranych dowodów.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="listaWnioskow" type="wys:ListaPelnychWnioskow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wybranych wniosków.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneOstatnioOdebranegoDowoduPoPeselResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneDowodu" type="xsd_2:DaneOstatnioOdebranegoDowodu" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane ostatnio odebranego przez obywatela dowodu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel2">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel2Response">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="statusWarstwyEdo" type="dow:StatusWarstwyEdo" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Status warstwy elektronicznej.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataWaznosciZObwieszczenia" type="kmd:DataKalendarzowa" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data ważności z obwieszczenia.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="daneZawieszenia" type="dow:DaneZawieszenia" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane zawieszenia.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="daneCofnieciaZawieszenia" type="dow:DaneCofnieciaZawieszenia" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane cofnięcia zawieszenia.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="imie" type="dow:Imiona" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Imiona osoby wnioskujacej o wydanie dowodu osobistego</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="nazwisko" type="dow:Nazwisko" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Nazwisko osoby wnioskujacej o wydanie dowodu osobistego</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="numerEwidencyjny" type="dow:Pesel" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL osoby wnioskujacej o wydanie dowodu osobistego</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataUrodzenia" type="dow:Data" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data urodzenia posiadacza dowodu osobistego</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="nazwaWystawcyZDowodu" type="dow:NazwaWystawcyZDowodu" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Nazwa wystawcy w brzmieniu wydrukowanym na dowodzie osobistym</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataWaznosci" type="dow:Data" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data waznosci dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyWazny" type="xsd:boolean" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Informacja czy dowód jest ważny.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="przyczynaUniewaznienia" type="dow:PrzyczynaUniewaznienia" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Przyczyna uniewaznienia dowodu osobistego, wartosci zgodne z § 34 Rozporzadzenia.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="zdjecie" type="xsd:base64Binary" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Zdjecie z dowodu osobistego</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="zdjecieKolorowe" type="xsd:base64Binary" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Zdjęcie kolorowe.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijAktualneZdjecie">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="pesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="udostepnijAktualneZdjecieResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaZdjec" type="xsd_2:ListaZdjec" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista zdjęć.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="bladBiznesowyFault">
+        <wsdl:part element="tns:bladBiznesowy" name="fault4"/>
+    </wsdl:message>
+    <wsdl:message name="bladTechnicznyFault">
+        <wsdl:part element="tns:bladTechniczny" name="fault5"/>
+    </wsdl:message>
+    <wsdl:message name="dostepDoWykazuUniewaznionychDowodowPoSeriaINumerRequest">
+        <wsdl:part element="tns:dostepDoWykazuUniewaznionychDowodowPoSeriaINumer" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="dostepDoWykazuUniewaznionychDowodowPoSeriaINumerResponse">
+        <wsdl:part element="tns:dostepDoWykazuUniewaznionychDowodowPoSeriaINumerResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneDowoduPoNumerzeRequest">
+        <wsdl:part element="tns:udostepnijDaneDowoduPoNumerze" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneDowoduPoNumerzeResponse">
+        <wsdl:part element="tns:udostepnijDaneDowoduPoNumerzeResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneDowoduPoIdRequest">
+        <wsdl:part element="tns:udostepnijDaneDowoduPoId" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneDowoduPoIdResponse">
+        <wsdl:part element="tns:udostepnijDaneDowoduPoIdResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneDowodowPoNumerzeRequest">
+        <wsdl:part element="tns:udostepnijDaneDowodowPoNumerze" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneDowodowPoNumerzeResponse">
+        <wsdl:part element="tns:udostepnijDaneDowodowPoNumerzeResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneWnioskuRequest">
+        <wsdl:part element="tns:udostepnijDaneWniosku" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneWnioskuResponse">
+        <wsdl:part element="tns:udostepnijDaneWnioskuResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneWnioskowRequest">
+        <wsdl:part element="tns:udostepnijDaneWnioskow" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneWnioskowResponse">
+        <wsdl:part element="tns:udostepnijDaneWnioskowResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneAktualnegoDowoduPoPeselRequest">
+        <wsdl:part element="tns:udostepnijDaneAktualnegoDowoduPoPesel" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneAktualnegoDowoduPoPeselResponse">
+        <wsdl:part element="tns:udostepnijDaneAktualnegoDowoduPoPeselResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneAktualnychDowodowPoPeselRequest">
+        <wsdl:part element="tns:udostepnijDaneAktualnychDowodowPoPesel" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneAktualnychDowodowPoPeselResponse">
+        <wsdl:part element="tns:udostepnijDaneAktualnychDowodowPoPeselResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijStatusWnioskuRequest">
+        <wsdl:part element="tns:udostepnijStatusWniosku" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijStatusWnioskuResponse">
+        <wsdl:part element="tns:udostepnijStatusWnioskuResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijWniosekAktywnyPoPeselRequest">
+        <wsdl:part element="tns:udostepnijWniosekAktywnyPoPesel" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijWniosekAktywnyPoPeselResponse">
+        <wsdl:part element="tns:udostepnijWniosekAktywnyPoPeselResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijHistorieStatusuWnioskuRequest">
+        <wsdl:part element="tns:udostepnijHistorieStatusuWniosku" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijHistorieStatusuWnioskuResponse">
+        <wsdl:part element="tns:udostepnijHistorieStatusuWnioskuResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDowodAktywnyPoPeselRequest">
+        <wsdl:part element="tns:udostepnijDowodAktywnyPoPesel" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDowodAktywnyPoPeselResponse">
+        <wsdl:part element="tns:udostepnijDowodAktywnyPoPeselResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijHistorieStatusuDowoduRequest">
+        <wsdl:part element="tns:udostepnijHistorieStatusuDowodu" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijHistorieStatusuDowoduResponse">
+        <wsdl:part element="tns:udostepnijHistorieStatusuDowoduResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijOstatniDowodPoOsobaIdRequest">
+        <wsdl:part element="tns:udostepnijOstatniDowodPoOsobaId" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijOstatniDowodPoOsobaIdResponse">
+        <wsdl:part element="tns:udostepnijOstatniDowodPoOsobaIdResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijWnioskiWydanieDowoduOsobistegoRequest">
+        <wsdl:part element="tns:udostepnijWnioskiWydanieDowoduOsobistego" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijWnioskiWydanieDowoduOsobistegoResponse">
+        <wsdl:part element="tns:udostepnijWnioskiWydanieDowoduOsobistegoResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDowodyOsobisteRequest">
+        <wsdl:part element="tns:udostepnijDowodyOsobiste" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDowodyOsobisteResponse">
+        <wsdl:part element="tns:udostepnijDowodyOsobisteResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="realizujUdostepnienieDowodowOsobistychRequest">
+        <wsdl:part element="tns:realizujUdostepnienieDowodowOsobistych" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="realizujUdostepnienieDowodowOsobistychResponse">
+        <wsdl:part element="tns:realizujUdostepnienieDowodowOsobistychResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="realizujUdostepnienieWnioskowRequest">
+        <wsdl:part element="tns:realizujUdostepnienieWnioskow" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="realizujUdostepnienieWnioskowResponse">
+        <wsdl:part element="tns:realizujUdostepnienieWnioskowResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijPrzetwarzaneDaneRequest">
+        <wsdl:part element="tns:udostepnijPrzetwarzaneDane" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijPrzetwarzaneDaneResponse">
+        <wsdl:part element="tns:udostepnijPrzetwarzaneDaneResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneOstatnioOdebranegoDowoduPoPeselRequest">
+        <wsdl:part element="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPesel" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneOstatnioOdebranegoDowoduPoPeselResponse">
+        <wsdl:part element="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPeselResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel2Request">
+        <wsdl:part element="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPesel2" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel2Response">
+        <wsdl:part element="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPesel2Response" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijAktualneZdjecieRequest">
+        <wsdl:part element="tns:udostepnijAktualneZdjecie" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijAktualneZdjecieResponse">
+        <wsdl:part element="tns:udostepnijAktualneZdjecieResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:portType name="DowodyUdostepnianie">
+        <wsdl:documentation>Interfejs zawiera zbiór usług służących udostępnianiu danych z rejestru RDO.
+        </wsdl:documentation>
+        <wsdl:operation name="dostepDoWykazuUniewaznionychDowodowPoSeriaINumer">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service informacji czy
+                dowod osobisty znajduje się na wykazie unieważnionych dowodów.
+            </wsdl:documentation>
+            <wsdl:input message="tns:dostepDoWykazuUniewaznionychDowodowPoSeriaINumerRequest"/>
+            <wsdl:output message="tns:dostepDoWykazuUniewaznionychDowodowPoSeriaINumerResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneDowoduPoNumerze">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych
+                dowodu osobistego. Usługa pobiera i zwraca dane dowodu tożsamości , którego numer określony jest przez
+                jeden z parametrów wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneDowoduPoNumerzeRequest"/>
+            <wsdl:output message="tns:udostepnijDaneDowoduPoNumerzeResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneDowoduPoId">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych,
+                wyłącznie zdjęcia, podpisu lub danych dowodu osobistego z pominięciem danych bitmapowych. Usługa pobiera
+                i zwraca dane dowodu tożsamości, którego id określony jest przez jeden z parametrów wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneDowoduPoIdRequest"/>
+            <wsdl:output message="tns:udostepnijDaneDowoduPoIdResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneDowodowPoNumerze">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych
+                dowodów tożsamości. Usługa pobiera i zwraca dane dowodów tożsamości, lista numerów dokumentów do
+                pobrania określona jest przez jeden z parametrów wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneDowodowPoNumerzeRequest"/>
+            <wsdl:output message="tns:udostepnijDaneDowodowPoNumerzeResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneWniosku">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych
+                wniosku o wydanie dowodu osobistego. Numer wniosku do pobrania określony jest przez jeden z parametrów
+                wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneWnioskuRequest"/>
+            <wsdl:output message="tns:udostepnijDaneWnioskuResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneWnioskow">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych
+                wniosków o wydanie dowodówosobistych. Liste numerów wniosków do pobrania określona jest przez jeden z
+                parametrów wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneWnioskowRequest"/>
+            <wsdl:output message="tns:udostepnijDaneWnioskowResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneAktualnegoDowoduPoPesel">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych
+                dowodu osobistego. Usługa pobiera i zwraca dane dowodu tożsamości osoby, której numer pesel określony
+                jest przez jeden z parametrów wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneAktualnegoDowoduPoPeselRequest"/>
+            <wsdl:output message="tns:udostepnijDaneAktualnegoDowoduPoPeselResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneAktualnychDowodowPoPesel">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych
+                dowodów osobistych. Usługa pobiera i zwraca dane dowodów tożsamości osób, których numery pesel określone
+                są przez jeden z parametrów wywołania usługi.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneAktualnychDowodowPoPeselRequest"/>
+            <wsdl:output message="tns:udostepnijDaneAktualnychDowodowPoPeselResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijStatusWniosku">
+            <wsdl:documentation>Usługa pozawala systemowi zewnętrzemu na pobranie poprzez Web Service statusu wniosku.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijStatusWnioskuRequest"/>
+            <wsdl:output message="tns:udostepnijStatusWnioskuResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijWniosekAktywnyPoPesel">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu sprawdzić czy osoba z rejestru PESEL
+                posiada zarejestrowany i aktywny wniosek o wydanie dowodu osobistego.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijWniosekAktywnyPoPeselRequest"/>
+            <wsdl:output message="tns:udostepnijWniosekAktywnyPoPeselResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijHistorieStatusuWniosku">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu pobrać historię statusu wniosku o wydanie dowodu
+                osobistego.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijHistorieStatusuWnioskuRequest"/>
+            <wsdl:output message="tns:udostepnijHistorieStatusuWnioskuResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDowodAktywnyPoPesel">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu sprawdzić czy osoba z rejestru PESEL
+                posiada aktywny dowód osobisty.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDowodAktywnyPoPeselRequest"/>
+            <wsdl:output message="tns:udostepnijDowodAktywnyPoPeselResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijHistorieStatusuDowodu">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu pobrać historię statusu dowodu osobistego.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijHistorieStatusuDowoduRequest"/>
+            <wsdl:output message="tns:udostepnijHistorieStatusuDowoduResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijOstatniDowodPoOsobaId">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu pobrać ostatni dowód osobisty
+                dla osoby.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijOstatniDowodPoOsobaIdRequest"/>
+            <wsdl:output message="tns:udostepnijOstatniDowodPoOsobaIdResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijWnioskiWydanieDowoduOsobistego">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu znaleźć i udostępnić dane wniosków
+                na podstawie kryteriów: pesel, dane wniosku, dane osobowe.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijWnioskiWydanieDowoduOsobistegoRequest"/>
+            <wsdl:output message="tns:udostepnijWnioskiWydanieDowoduOsobistegoResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDowodyOsobiste">
+            <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu znaleźć i udostępnić dane dowodów
+                na podstawie kryteriów: pesel, dane dowodu, dane osobowe.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDowodyOsobisteRequest"/>
+            <wsdl:output message="tns:udostepnijDowodyOsobisteResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="realizujUdostepnienieDowodowOsobistych">
+            <wsdl:documentation>Usługa pozwala zrealizować usługę udostępniania danych.</wsdl:documentation>
+            <wsdl:input message="tns:realizujUdostepnienieDowodowOsobistychRequest"/>
+            <wsdl:output message="tns:realizujUdostepnienieDowodowOsobistychResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="realizujUdostepnienieWnioskow">
+            <wsdl:documentation>Usługa pozwala zrealizować usługę udostępniania danych.</wsdl:documentation>
+            <wsdl:input message="tns:realizujUdostepnienieWnioskowRequest"/>
+            <wsdl:output message="tns:realizujUdostepnienieWnioskowResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijPrzetwarzaneDane">
+            <wsdl:documentation>Usługa pozwala zrealizować usługę udostępniania danych.</wsdl:documentation>
+            <wsdl:input message="tns:udostepnijPrzetwarzaneDaneRequest"/>
+            <wsdl:output message="tns:udostepnijPrzetwarzaneDaneResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel">
+            <wsdl:documentation>Usługa zwraca dane ostatnio odebranego przez obywatela dowodu osobistego z podanym
+                numerem PESEL.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPeselRequest"/>
+            <wsdl:output message="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPeselResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel2">
+            <wsdl:documentation>Usługa zwraca dane ostatnio odebranego przez obywatela dowodu osobistego z podanym
+                numerem PESEL. Jest to uszczuplona wersja udostepnijDaneOstatnioOdebranegoDowoduPoPesel
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPesel2Request"/>
+            <wsdl:output message="tns:udostepnijDaneOstatnioOdebranegoDowoduPoPesel2Response"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijAktualneZdjecie">
+            <wsdl:documentation>
+                Usługa zwraca zdjęcie z ostatnio odebranego dowodu osobistego.
+                W przypadku, gdy algorytm wybierze więcej niż jeden ostatni dowód zostaną zwrócone zdjęcia z tych
+                dowodów.
+                W przypadku, gdy osoba nie posiada dowodu lub nie można stwierdzić, że dowód został odebrany odpowiedź
+                będzie pusta.
+            </wsdl:documentation>
+            <wsdl:input message="tns:udostepnijAktualneZdjecieRequest"/>
+            <wsdl:output message="tns:udostepnijAktualneZdjecieResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

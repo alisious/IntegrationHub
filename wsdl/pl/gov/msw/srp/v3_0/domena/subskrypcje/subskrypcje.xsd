@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:subskrypcje="http://msw.gov.pl/srp/v3_0/domena/subskrypcje/"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:auth="http://msw.gov.pl/srp/v3_0/domena/auth/"
+			xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+			targetNamespace="http://msw.gov.pl/srp/v3_0/domena/subskrypcje/">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../domena/kmd/kmd.xsd"/>
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/auth/" schemaLocation="../../domena/auth/auth.xsd"/>
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/" schemaLocation="../../domena/dowody/dowody.xsd"/>
+    <xsd:simpleType name="IdSubskrypcji">
+        <xsd:annotation>
+			<xsd:documentation>ID subskrypcji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer"></xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="RodzajSubskrypcji">
+		<xsd:annotation>
+			<xsd:documentation>Rodzaj subskrypcji - ze względu na dane zwracane przez subskrypcję.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="IdMonitorowanejAkcji">
+        <xsd:annotation>
+			<xsd:documentation>ID monitorowanej akcji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="MonitorowanaAkcja">
+		<xsd:annotation>
+			<xsd:documentation>Monitorowana akcja grupuje procesy, które są monitorowane.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="id" type="subskrypcje:IdMonitorowanejAkcji">
+				<xsd:annotation>
+					<xsd:documentation>ID monitorowanej akcji.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="nazwa" type="subskrypcje:OpisMonitorowanejAkcji">
+				<xsd:annotation>
+					<xsd:documentation>Nazwa monitorowanej akcji.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+		</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="OpisMonitorowanejAkcji">
+		<xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="TypFiltru">
+		<xsd:annotation>
+			<xsd:documentation>
+				Typ filtru np. wszystkie (monitorowane są wszystkie obiekty), gmina (monitorowane są wszystkie obiekty przypisane do gminy) i lista numerów
+				PESEL (podawana jest lista numerów PESEL do monitorowania).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ListaIdMonitorowanychAkcji">
+        <xsd:annotation>
+			<xsd:documentation>Lista ID monitorowanych akcji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+			<xsd:element name="monitorowanaAkcja" type="subskrypcje:IdMonitorowanejAkcji" maxOccurs="unbounded" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Lista ID monitorowanych akcji.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+		</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListaMonitorowanychAkcji">
+		<xsd:annotation>
+			<xsd:documentation>Lista danych monitorowanych akcji.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="monitorowanaAkcja" type="subskrypcje:MonitorowanaAkcja" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+		</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListaNumerowPesel">
+		<xsd:annotation>
+			<xsd:documentation>Lista numerów PESEL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="pesel" type="kmd:Pesel" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Lista numerów PESEL.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+		</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListaStatusow">
+        <xsd:annotation>
+            <xsd:documentation>Lista statusów.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="statusy" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Lista statusów.</xsd:documentation>
+                </xsd:annotation></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+	<xsd:complexType name="ListaDowodowOsobistych">
+		<xsd:annotation>
+			<xsd:documentation>Lista dowodów osobistych.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dowodyOsobiste" type="dow:DaneDowoduSubskrypcjaIn" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Lista danych dowodów osobistych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ListaDodanychDowodowOsobistych">
+		<xsd:annotation>
+			<xsd:documentation>Lista dowodów osobistych.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dowodyOsobiste" type="dow:DaneDowoduSubskrypcjaOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Lista danych dodanych dowodów osobistych.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+    <xsd:complexType name="PodstawoweDaneSubskrypcji">
+		<xsd:annotation>
+			<xsd:documentation>Podstawowe dane subskrypcji</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+				<xsd:annotation>
+					<xsd:documentation>ID subskrypcji.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rodzajSubskrypcji" type="subskrypcje:RodzajSubskrypcji">
+				<xsd:annotation>
+					<xsd:documentation>Rodzaj subskrypcji.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="typFiltru" type="subskrypcje:TypFiltru">
+				<xsd:annotation>
+					<xsd:documentation>Typ filtru.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wlasciciel" type="auth:IdUzytkownika">
+				<xsd:annotation>
+					<xsd:documentation>Właściciel subskrypcji (id użytkownika).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czyAktywna" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Informacja czy subskrypcja jest oznaczona jako aktywna.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="dataOd" type="kmd:DataKalendarzowa">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności - od kiedy subskrypcja może być pobierana.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="dataDo" type="kmd:DataKalendarzowa">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności - do kiedy subskrypcja może być pobierana.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="opisSubskrypcji" type="xsd:string" minOccurs="0" >
+                <xsd:annotation>
+                    <xsd:documentation>Opis subskrypcji.</xsd:documentation>
+                </xsd:annotation></xsd:element>
+		</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DaneSubskrypcji">
+		<xsd:annotation>
+			<xsd:documentation>Szczegółowe dane subskrypcji.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="subskrypcje:PodstawoweDaneSubskrypcji">
+				<xsd:sequence>
+					<xsd:element name="listaMonitorowanychAkcji" type="subskrypcje:ListaMonitorowanychAkcji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Lista monitorowanych akcji</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="listaNumerowPesel" type="subskrypcje:ListaNumerowPesel" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Krótka lista numerów PESEL przypisanych do subskrypcji. Kolejne strony tej listy można pobrać za pomocą oddzielnej usługi.</xsd:documentation>
+						</xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="statusy" type="subskrypcje:ListaStatusow" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Lista statusów wniosku lub dowodu osobistego.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="kodTeryt" type="xsd:string" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Kod terytorialny do którego jest ograniczona subskrypcja.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+					<xsd:element name="liczbaDniWstecz" type="xsd:integer" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Liczba dni wstecz, dla których ważna jest subskrypcja.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+                    <xsd:element name="dataUtworzenia" type="kmd:DataKalendarzowa">
+						<xsd:annotation>
+							<xsd:documentation>Data utworzenia subskrypcji.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="idUserTworzacy" type="xsd:integer">
+						<xsd:annotation>
+							<xsd:documentation>ID osoby która utworzyła subskrypcje.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="TagProcesu">
+    	<xsd:annotation>
+    		<xsd:documentation>Tag operacji.</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:restriction base="xsd:string">
+    		<xsd:minLength value="1"></xsd:minLength>
+    		<xsd:maxLength value="100"></xsd:maxLength>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ListaProcesow">
+		<xsd:annotation>
+			<xsd:documentation>Lista procesów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="proces" type="subskrypcje:TagProcesu" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Lista procesów.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+		</xsd:sequence>
+    </xsd:complexType>
+
+	<xsd:complexType name="ListaSeriiINumerowDokumentowTozsamosci">
+		<xsd:annotation>
+			<xsd:documentation>
+				Lista serii i numerów dowodów osobistych.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ListaSeriiINumerowDowodow">
+		<xsd:annotation>
+			<xsd:documentation>
+				Lista serii i numerów dowodów osobistych.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="seriaINumerDowodu" type="kmd:SeriaINumer" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

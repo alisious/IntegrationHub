@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:slw="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/parametry/" xmlns:slw_1="http://msw.gov.pl/srp/v3_0/domena/slowniki/" xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/parametry/" version="3.0">
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/slowniki/" schemaLocation="../../../domena/slowniki/slowniki.xsd"/>
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+
+</xsd:schema>

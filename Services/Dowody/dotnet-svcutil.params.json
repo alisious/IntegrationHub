@@ -1,0 +1,48 @@
+{
+  "providerId": "Microsoft.Tools.ServiceModel.Svcutil",
+  "version": "8.0.0",
+  "options": {
+    "inputs": [
+      "../../wsdl/org/w3/_2000/_09/xmldsig/xmldsig-core-schema.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/auth/auth.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/crs/crs.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/dowody/dowody.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_adres.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_czas.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_dokument.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_osoba.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_relacja.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_slowniki.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_ukr.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd_wspolne.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/kmd/kmd.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/pesel/pesel.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/slowniki/slowniki.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/subskrypcje/subskrypcje.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/domena/zleceniazewnetrzne/zlecenia.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/interfejsy/udostepnianie.wsdl",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/parametry/parametry.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/parametry/udostepnianie.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/parametry/udostepnianieBase.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/parametry/weryfikacja.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/dowody/Udostepnianie.wsdl",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/pesel/parametry/parametry.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/pesel/parametry/udostepnianie.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/pesel/parametry/weryfikacja.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/pesel/parametry/wyszukiwanie.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/pesel/udostepnianieDanych/udostepnianieDanych.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/slowniki/parametry/parametry.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/subskrypcje/parametry/pobieranie_subskrypcji.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/wspolne/wspolne.xsd",
+      "../../wsdl/pl/gov/msw/srp/v3_0/uslugi/wyszukiwanie/wyszukiwanie.xsd"
+    ],
+    "namespaceMappings": [
+      "*, IntegrationHub.SRP.Dowody.SoapClient"
+    ],
+    "outputFile": "DowodyUdostepnianie.cs",
+    "serializerMode": "DataContractSerializer",
+    "targetFramework": "net9.0",
+    "typeReuseMode": "All"
+  }
+}

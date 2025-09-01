@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+    <xsd:complexType name="DaneGraficzne">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:base64Binary">
+                <xsd:attribute name="typ" type="kmd:TypDanychGraficznych"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="DlugiTekst">
+        <xsd:annotation>
+            <xsd:documentation>Typ stosowany do przechowywania długich informacji tekstowych.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="512"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="ElementDanych">
+        <xsd:annotation>
+            <xsd:documentation>Komponent opisujący dane.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="system" type="kmd:System" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa systemu</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="typObiektu" type="kmd:NazwaElementuDanych" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa typu obiektu</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sekcja" type="kmd:NazwaElementuDanych" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa sekcji</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="podsekcja" type="kmd:NazwaElementuDanych" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa podsekcji</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaPola" type="kmd:NazwaElementuDanych" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa pola elementu danych</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="FormaUstaniaMalzenstwa">
+        <xsd:annotation>
+            <xsd:documentation>Zbiór dopuszczalnych wartości opisujących formę ustania małżeństwa.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ZGON WSPOLMALZONKA">
+                <xsd:annotation>
+                    <xsd:documentation>Zgon</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ROZWOD">
+                <xsd:annotation>
+                    <xsd:documentation>Rozwód</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UNIEWAZNIENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Unieważnienie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIEISTNIENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Nieistnienie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="IdentyfikatorUzytkownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający identyfikator użytkownika (login) systemu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="60"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KrotkiTekst">
+        <xsd:annotation>
+            <xsd:documentation>Typ stosowany do przechowywania krótkich informacji tekstowych.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="256"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaElementuDanych">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa elementu danych.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="255"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaInstytucji">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa instytucji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="250"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaWystawcy">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający dokładną nazwę wystawcy dokumentu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerAktuNieformalny">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający numer aktu wydanego przez organ stanu cywilnego lub inny
+                uprawniony organ, zapisany w sposób zgodny z pisownią na akcie.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="60"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerAktuNieformalnyOut">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający numer aktu wydanego przez organ stanu cywilnego lub inny
+                uprawniony organ, zapisany w sposób zgodny z pisownią na akcie.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="60"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="OpisNieformalny">
+        <xsd:annotation>
+            <xsd:documentation>Nieformalny opis dokumentu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="300"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Plik">
+        <xsd:annotation>
+            <xsd:documentation>Komponent opisujący plik.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwa" type="kmd:KrotkiTekst" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa pliku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="opis" type="kmd:DlugiTekst" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Opis.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dane" type="xsd:base64Binary" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="formatDanych" type="kmd:KrotkiTekst" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Format danych.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="System">
+        <xsd:annotation>
+            <xsd:documentation>Oznaczenie systemu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TypDanychGraficznych">
+        <xsd:annotation>
+            <xsd:documentation>Wartości wg. typów MIME dla danych graficznych.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="image/tiff"/>
+            <xsd:enumeration value="image/jpeg"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TypDanychBinarnych">
+        <xsd:annotation>
+            <xsd:documentation>Wartości wg. typów MIME dla danych binarnych.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Usluga">
+        <xsd:annotation>
+            <xsd:documentation>Komponent opisujący usługę.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwa" type="kmd:KrotkiTekst" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa usługi</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaKwalifikowana" type="xsd:QName" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa kwalifikowana usługi.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="ZnakiLacinskie">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera duże i małe znaki łacińskie wraz z wszystkimi dopuszczonymi modyfikatorami (akcentami), kropkę, myślnik, spację, przecinek, ukośnik.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ZnakiSRP">
+    	<xsd:annotation>
+    		<xsd:documentation>
+    			Zawiera ogólny zestaw dopuszczalnych w systemie znaków.
+    		</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:restriction base="xsd:string">
+    		<xsd:minLength value="1" />
+    		<xsd:pattern
+    			value="[ \.,'\-/:\)\(_a-ząćęłńóśźżA-Z0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞĀĂĄĆĈĊČĎĐĒĔĖĘĚĜĞĠĢĤĦĨĪĬĮİĲĴĶĹĻĽĿŁŃŅŇŊŌŎŐŒŔŖŘŚŜŞŠŢŤŦŨŪŬŮŰŲŴŶŸŹŻŽƁƂƄƆƇƉƊƋƎƏƐƑƓƔƖƗƘƜƝƟƠƢƤƦƧƩƪƬƮƯƱƲƳƵƷƸƻƼƾƿǀǁǂǃǄǇǊǍǏǑǓǕǗǙǛǞǠǢǤǦǨǪǬǮǱǴǶǷǸǺǼǾȀȂȄȆȈȊȌȎȐȒȔȖȘȚȜȞȠȢȤȦȨȪȬȮȰȲȺȻȽȾɁɃɄɅɆɈɊɌɎḀḂḄḆḈḊḌḎḐḒḔḖḘḚḜḞḠḢḤḦḨḪḬḮḰḲḴḶḸḺḼḾṀṂṄṆṈṊṌṎṐṒṔṖṘṚṜṞṠṢṤṦṨṪṬṮṰṲṴṶṸṺṼṾẀẂẄẆẈẊẌẎẐẒẔẞẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỺỼỾЌE̋G̈A̋S̋U̇]+[ \.'\-/:\)\(\?_a-zA-Z0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞĀĂĄĆĈĊČĎĐĒĔĖĘĚĜĞĠĢĤĦĨĪĬĮİĲĴĶĹĻĽĿŁŃŅŇŊŌŎŐŒŔŖŘŚŜŞŠŢŤŦŨŪŬŮŰŲŴŶŸŹŻŽƁƂƄƆƇƉƊƋƎƏƐƑƓƔƖƗƘƜƝƟƠƢƤƦƧƩƪƬƮƯƱƲƳƵƷƸƻƼƾƿǀǁǂǃǄǇǊǍǏǑǓǕǗǙǛǞǠǢǤǦǨǪǬǮǱǴǶǷǸǺǼǾȀȂȄȆȈȊȌȎȐȒȔȖȘȚȜȞȠȢȤȦȨȪȬȮȰȲȺȻȽȾɁɃɄɅɆɈɊɌɎḀḂḄḆḈḊḌḎḐḒḔḖḘḚḜḞḠḢḤḦḨḪḬḮḰḲḴḶḸḺḼḾṀṂṄṆṈṊṌṎṐṒṔṖṘṚṜṞṠṢṤṦṨṪṬṮṰṲṴṶṸṺṼṾẀẂẄẆẈẊẌẎẐẒẔẞẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỺỼỾЌE̋G̈A̋S̋U̇]*\*?">
+    		</xsd:pattern>
+    	</xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="StatusWeryfikacji">
+        <xsd:annotation>
+            <xsd:documentation>Zbiór dopuszczalnych wartości opisujących status weryfikacji danych.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POZYTYWNA">
+                <xsd:annotation>
+                    <xsd:documentation>Pozytywna</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NEGATYWNA">
+                <xsd:annotation>
+                    <xsd:documentation>Negatywna</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK">
+                <xsd:annotation>
+                    <xsd:documentation>Wartość nie weryfikowana</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

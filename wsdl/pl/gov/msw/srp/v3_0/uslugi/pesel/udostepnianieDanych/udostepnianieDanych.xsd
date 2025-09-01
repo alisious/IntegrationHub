@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/udostepnianieDanych/udostepnianieDanych/"
+            xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/udostepnianie/"
+            xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/"
+                schemaLocation="../parametry/parametry.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/" schemaLocation="../../../domena/pesel/pesel.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/udostepnianie/" schemaLocation="../parametry/udostepnianie.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../wspolne/wspolne.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+    <xsd:complexType name="udostepnijPelneDaneOsobPoPeselBase">
+        <xsd:sequence>
+            <xsd:element name="listaNumerowPesel" type="xsd_1:ListaNumerowPesel">
+                <xsd:annotation>
+                    <xsd:documentation>Lista numerów pesel osób do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijAktualneDaneOsobyPoIdBase">
+        <xsd:sequence>
+            <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator osoby do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijAktualneDaneOsobPoIdBase">
+        <xsd:sequence>
+            <xsd:element name="listaIdOsob" type="xsd_2:ListaIdOsob">
+                <xsd:annotation>
+                    <xsd:documentation>Lista identyfikatorów osób do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijAktualneDaneOsobyPoPeselBase">
+        <xsd:sequence>
+            <xsd:element name="requestId" type="wsp:IdentyfikatorZadania" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer pesel osoby do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijAktualneDaneOsobPoPeselBase">
+        <xsd:sequence>
+            <xsd:element name="listaNumerowPesel" type="xsd_1:ListaNumerowPesel">
+                <xsd:annotation>
+                    <xsd:documentation>Lista numerów pesel osób do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijPelneDaneOsobyPoIdBase">
+        <xsd:sequence>
+            <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator osoby do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijPelneDaneOsobPoIdBase">
+        <xsd:sequence>
+            <xsd:element name="listaIdOsob" type="xsd_2:ListaIdOsob">
+                <xsd:annotation>
+                    <xsd:documentation>Lista identyfikatorów osób do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijPelneDaneOsobyPoPeselBase">
+        <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer pesel osoby do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="weryfikujIUdostepnijAktualneDaneOsobyBase">
+        <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL osoby, której imię pierwsze i nazwisko mają zostać zweryfikowane.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imiePierwsze" type="kmd:Imie">
+                <xsd:annotation>
+                    <xsd:documentation>Pierwsze imię osoby do weryfikacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="kmd:ZapisNazwiska">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko osoby do weryfikacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="weryfikujIUdostepnijPelneDaneOsobyBase">
+        <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL osoby, której imię pierwsze i nazwisko mają zostać zweryfikowane.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imiePierwsze" type="kmd:Imie">
+                <xsd:annotation>
+                    <xsd:documentation>Pierwsze imię osoby do weryfikacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="kmd:ZapisNazwiska">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko osoby do weryfikacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

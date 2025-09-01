@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:auth="http://msw.gov.pl/srp/v3_0/domena/auth/"
+            targetNamespace="http://msw.gov.pl/srp/v3_0/domena/auth/">
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../domena/kmd/kmd.xsd"/>
+
+	<xsd:simpleType name="Imie">
+		<xsd:annotation>
+			<xsd:documentation>Imię w kontekście użytkownika.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Nazwisko">
+		<xsd:annotation>
+			<xsd:documentation>Nazwisko w kontekście użytkownika.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="300"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Pesel">
+		<xsd:annotation>
+			<xsd:documentation>Pesel w kontekście użytkownika.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="11"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="KodTeryt">
+		<xsd:annotation>
+			<xsd:documentation>Kod teryt gminy użytkownika.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="7"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+    <xsd:simpleType name="SortOrder">
+        <xsd:annotation>
+            <xsd:documentation>Kierunek sortowania.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ASCENDING" />
+            <xsd:enumeration value="DESCENDING" />
+            <xsd:enumeration value="DEFAULT" />
+        </xsd:restriction>
+    </xsd:simpleType>
+	<xsd:simpleType name="KodKonsulatu">
+        <xsd:annotation>
+            <xsd:documentation>Kod konsulatu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="4"></xsd:maxLength>
+            <xsd:minLength value="0"></xsd:minLength>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="LokalizacjaUSC">
+        <xsd:annotation>
+            <xsd:documentation>Lokalizacja USC.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="2"></xsd:maxLength>
+            <xsd:minLength value="0"></xsd:minLength>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="RodzajOrganu">
+        <xsd:annotation>
+            <xsd:documentation>Rodzaj organu rejestrującego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="100"></xsd:maxLength>
+            <xsd:minLength value="1"></xsd:minLength>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="CzySystem">
+        <xsd:annotation>
+            <xsd:documentation>Określa czy użytkownik jest systemowy.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+
+	<xsd:simpleType name="Login">
+		<xsd:annotation>
+			<xsd:documentation>Login użytkownika - jest również jego jednoznacznym identyfikatorem.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"></xsd:maxLength>
+			<xsd:minLength value="1"></xsd:minLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="IdUzytkownika">
+		<xsd:annotation>
+			<xsd:documentation>Identyfikator użytkownika systemu SRP.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="NazwaInstytucji">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa instytucji w której pracuje dany użytkownik (OU z DN certyfikatu).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="300"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+    <xsd:complexType name="PodstawoweDaneUzytkownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy do reprezentacji podstawowych danych użytkownika.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        	<xsd:element name="pesel" type="auth:Pesel">
+        		<xsd:annotation>
+        			<xsd:documentation>
+        				Pesel użytkownika.
+        			</xsd:documentation>
+        		</xsd:annotation>
+        	</xsd:element>
+        	<xsd:element name="imie" type="auth:Imie">
+        		<xsd:annotation>
+        			<xsd:documentation>
+        				Imię użytkownika.
+        			</xsd:documentation>
+        		</xsd:annotation>
+        	</xsd:element>
+        	<xsd:element name="nazwisko" type="auth:Nazwisko">
+        		<xsd:annotation>
+        			<xsd:documentation>
+        				Nazwisko użytkownika.
+        			</xsd:documentation>
+        		</xsd:annotation>
+        	</xsd:element>
+        	<xsd:element name="kodTeryt" type="auth:KodTeryt">
+        		<xsd:annotation>
+        			<xsd:documentation>
+        				Kod TERYT gminy, w której pracuje użytkownik.
+        			</xsd:documentation>
+        		</xsd:annotation>
+        	</xsd:element>
+                        <xsd:element name="lokalizacjaUSC" type="auth:LokalizacjaUSC" minOccurs="0">
+                <xsd:annotation>
+                                <xsd:documentation>Kod USC.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="usc" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa oddziału USC
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="konsulat" type="auth:KodKonsulatu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod konsulatu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="rodzajOrganu" type="auth:RodzajOrganu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Rodzaj organu
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        	<xsd:element name="aktywny" type="xsd:boolean">
+        		<xsd:annotation>
+        			<xsd:documentation>
+        				Informacja czy użytkownik może się logować do
+        				systemu.
+        			</xsd:documentation>
+        		</xsd:annotation>
+        	</xsd:element>
+        	<xsd:element name="uzytkownikId" type="auth:IdUzytkownika">
+        		<xsd:annotation>
+        			<xsd:documentation>
+        				Identyfikator uzytkownika.
+        			</xsd:documentation>
+        		</xsd:annotation>
+        	</xsd:element>
+                <xsd:element name="nazwaInstytucji" type="xsd:string" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Nazwa instytucji
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="czySystem" type="xsd:boolean">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Informacja czy użytkownik jestem systemem.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Uprawnienie">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy reprezentacji rekordu uprawnienia. </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        <xsd:element name="id" type="xsd:integer">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator rekordu uprawnienia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwa" type="auth:NazwaUprawnienia">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa uprawnienia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="opis" type="auth:Opis">
+                <xsd:annotation>
+                	<xsd:documentation>Opis szczegółowy uprawnienia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="tag" type="auth:Tag">
+                <xsd:annotation>
+                	<xsd:documentation>Unikalny identyfikator uprawnienia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="Tag">
+        <xsd:annotation>
+            <xsd:documentation>Niepowtarzalny ciag znaków identyfikujący rekord .</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="255"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaRoli">
+        <xsd:annotation>
+        	<xsd:documentation>Nazwa roli.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaUprawnienia">
+        <xsd:annotation>
+        	<xsd:documentation>Nazwa uprawnienia.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="255"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Opis">
+    	<xsd:annotation>
+    		<xsd:documentation>Opis słowno-muzyczny do opisania rekordu.</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:restriction base="xsd:string">
+    		<xsd:maxLength value="255" />
+    		<xsd:minLength value="1"></xsd:minLength>
+    	</xsd:restriction>
+    </xsd:simpleType>
+	
+	<xsd:simpleType name="OpisKomunikatuUzytkownika">
+    	<xsd:annotation>
+    		<xsd:documentation>Opis słowno-muzyczny do opisania komunikatu.</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:restriction base="xsd:string">
+    		<xsd:maxLength value="4000" />
+    		<xsd:minLength value="1"></xsd:minLength>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="SzczegoloweDaneUzytkownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy do reprezentacji pełnych danych użytkownika.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="auth:PodstawoweDaneUzytkownika">
+                <xsd:sequence>
+                    <xsd:element name="login" type="auth:Login">
+                        <xsd:annotation>
+                            <xsd:documentation>Login użytkownika.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="listaRol" type="auth:ListaRolUzytkownika">
+                        <xsd:annotation>
+                            <xsd:documentation>Lista ról przypisanych użytkownikowi.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataUtworzenia" type="xsd:dateTime">
+                        <xsd:annotation>
+                            <xsd:documentation>Data i czas utworzenia użytkownika w module autoryzacji.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="czyGmina" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Informacja czy użytkownik pracuje w gminie.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="czyUsc" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Informacja czy użytkownik pracuje w USC.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="czyPrzetwarzanieDanych" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Czy użytkownik będzie wykazywany na raporcie przetwarzania danych.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="czyUdostepnianieDanych" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Czy użytkownik będzie wykazywany na raporcie udostępniania danych.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="liczbaOsobPesel" type="xsd:integer">
+                        <xsd:annotation>
+                            <xsd:documentation>Parametr odpowiadający za maksymalną dopuszczalną ilość osób znalezionych w rejestrze  PESEL per użytkownik.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Rola">
+        <xsd:annotation>
+            <xsd:documentation>Szczegółowe dane roli.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+                <xsd:extension base="auth:PodstawoweDaneRoli">
+                   <xsd:sequence>
+                    <xsd:element name="opis" type="auth:Opis">
+                        <xsd:annotation>
+                            <xsd:documentation>Informacja czy role może nadawać kierownik lokalny.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="czyNadajeKierownik" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>Informacja czy role może nadawać kierownik lokalny.</xsd:documentation>
+                        </xsd:annotation></xsd:element>
+                   </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="PodstawoweDaneRoli">
+        <xsd:annotation>
+            <xsd:documentation>Podstawowe dane roli.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:integer">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator rekordu roli.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwa" type="auth:NazwaRoli">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa roli.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RolaUzytkownika">
+        <xsd:complexContent>
+                <xsd:extension base="auth:PodstawoweDaneRoli">
+                    <xsd:sequence>
+
+                        <xsd:element name="doKiedy"
+                            type="xsd:date">
+                        <xsd:annotation>
+                            <xsd:documentation>Data do kiedy przypisana rola do użytkownika będzie ważna.</xsd:documentation>
+                        </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListaRolUzytkownika">
+        <xsd:annotation>
+            <xsd:documentation>
+                Lista ról przypisanych do użytkownika.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="rolaUzytkownika" type="auth:RolaUzytkownika" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UzytkownikLDAP">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane użytkownika z LDAP.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="imie" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Imię użytkownika w LDAP.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwisko użytkownika w LDAP.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        PESEL użytkownika w LDAP.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaInstytucji" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa instytucji
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czySystem" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Oznaczenie użytkownika systemowego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodTeryt" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod TERYT użytkownika w LDAP.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodKonsulatu" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod konsulatu użytkownika w LDAP, jeżeli pochodzi z Instytucji konsulatów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="lokalizacjaUSC" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod lokalizacji USC, dla Urzędów SC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="rodzajOrganu" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Rodzaj organu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="certyfikat" type="xsd:base64Binary">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Certyfikat użytkownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dn" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        DN certyfikatu użytkownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GminyPodlegle">
+        <xsd:annotation>
+            <xsd:documentation>
+                Gminy podległe pod dany urząd USC.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:integer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator rekordu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gminaNazwa" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa gminy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gminaKodTeryt" type="auth:KodTeryt" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod teryt gminy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UrzadStanuCywilnego">
+        <xsd:annotation>
+            <xsd:documentation>
+                Informacje o urzędzie stanu cywilnego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:integer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator rekordu USC.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaUSC" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowoscNazwa" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa miejscowości siedziby USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowoscKodteryt" type="auth:KodTeryt" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod teryt siedziby USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gminaNazwa" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa gminy siedziby USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gminaKodTeryt" type="auth:KodTeryt" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod teryt gminy USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerUSC" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerNadrzednegoUSC" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer nadrzędnego USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Ulica USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerDomu" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer domu USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer lokalu USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod pocztowy USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wojewodztwoNazwa" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa województwa w którym znajduje się USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wojewodztwoKodTeryt" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod teryt województwa w którym znajduje się USC.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czyZlikwidowany" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Info czy USC jest zlikwidowane.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="gminyPodlegle" type="auth:GminyPodlegle" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Lista gmin podległych pod USC</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ksiegaListItem">
+        <xsd:sequence>
+            <xsd:element name="czyPrzeniesiona" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="id" type="xsd:integer"/>
+            <xsd:element name="liczbaAktow" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="miejscePrzeniesienia" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="numer" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="numerHistoryczny" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="powodZamkniecia" type="xsd:string"/>
+            <xsd:element name="rok" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="statusId" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="rocznikListItem">
+        <xsd:sequence>
+            <xsd:element name="czyRocznikPrzeniesiony" type="xsd:boolean"/>
+            <xsd:element name="czyUtworzonyManualnie" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="id" type="xsd:integer"/>
+            <xsd:element name="liczbaAktow" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="miejscePrzeniesienia" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="numer" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="powodZamkniecia" type="xsd:string"/>
+            <xsd:element name="rok" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="statusId" type="xsd:long"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

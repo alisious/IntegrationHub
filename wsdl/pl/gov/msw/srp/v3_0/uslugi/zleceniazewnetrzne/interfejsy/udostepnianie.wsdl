@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/zleceniazewnetrzne/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  name="udostepnianie"
+                  targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/zleceniazewnetrzne/">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/zleceniazewnetrzne/"
+                    xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                    xmlns:zlec="http://msw.gov.pl/srp/v3_0/domena/zleceniazewnetrzne/"
+                    xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                    xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/">
+
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                        schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                        schemaLocation="../../../domena/kmd/kmd.xsd"/>
+
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/zleceniazewnetrzne/"
+                        schemaLocation="../../../domena/zleceniazewnetrzne/zlecenia.xsd"/>
+
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/"
+                        schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+
+            <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+            <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+
+            <xsd:element name="statusZleceniaUsunieciaNiezgodnosci">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idZlecenia" type="wys:IdZlecenia">
+                            <xsd:annotation>
+                                <xsd:documentation>Identyfikator zlecenia.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="statusZleceniaUsunieciaNiezgodnosciResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="statusZlecenia" type="zlec:StatusZlecenia">
+                            <xsd:annotation>
+                                <xsd:documentation>Status zlecenia usunięcia niezgodności</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataAktualizacji" type="kmd:Data">
+                            <xsd:annotation>
+                                <xsd:documentation>Data aktualizacji zlecenia</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="uwagi">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista uwag zlecenia</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="uwaga" maxOccurs="unbounded" type="zlec:Uwagi">
+                                        <xsd:annotation>
+                                            <xsd:documentation>Uwaga w formie tekstowej</xsd:documentation>
+                                        </xsd:annotation>
+                                    </xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element name="daneAdresata" type="zlec:NazwaOrganu">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane adresata (Nazwa Organu)</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="szczegoloweDaneAdresata" type="kmd:Organ" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Szczegolowe dane adresata</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="udostepnijStatusZleceniaRequest">
+        <wsdl:part name="parameters" element="tns:statusZleceniaUsunieciaNiezgodnosci"/>
+    </wsdl:message>
+    <wsdl:message name="udostepnijStatusZleceniaResponse">
+        <wsdl:part name="parameters" element="tns:statusZleceniaUsunieciaNiezgodnosciResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="bladBiznesowyFault">
+        <wsdl:part name="fault1" element="tns:bladBiznesowy"/>
+    </wsdl:message>
+    <wsdl:message name="bladTechnicznyFault">
+        <wsdl:part name="fault2" element="tns:bladTechniczny"/>
+    </wsdl:message>
+    <wsdl:portType name="ZleceniaZewnetrzneUdostepnianie">
+        <wsdl:documentation>Interfejs zawiera zbiór usług służących udostępnianiu danych z modułu Zlecenia.</wsdl:documentation>
+        <wsdl:operation name="udostepnijStatusZleceniaUsunieciaNiezgodnosci">
+            <wsdl:documentation>Usługa pozwala na pobranie statusu zlecenia.</wsdl:documentation>
+            <wsdl:input message="tns:udostepnijStatusZleceniaRequest"/>
+            <wsdl:output message="tns:udostepnijStatusZleceniaResponse"/>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

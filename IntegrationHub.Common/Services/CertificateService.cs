@@ -68,7 +68,7 @@ namespace IntegrationHub.Common.Services
         /// <param name="logger">Logger (opcjonalnie)</param>
         /// <param name="problemDetails">Ustawiany na odpowiedź błędu jeśli nie uda się pobrać certyfikatu</param>
         /// <returns>CertificateInfo lub null jeśli wystąpił błąd</returns>
-        public static CertificateInfo? GetCertificateInfo(string thumbprint, ILogger? logger, out ProblemDetails? problemDetails)
+        public static ClientCertificateInfo? GetCertificateInfo(string thumbprint, ILogger? logger, out ProblemDetails? problemDetails)
         {
             problemDetails = null;
             try
@@ -77,7 +77,7 @@ namespace IntegrationHub.Common.Services
 
                 logger?.LogInformation("Certyfikat poprawnie załadowany: {Subject} ({Thumbprint})", cert.Subject, cert.Thumbprint);
 
-                return new CertificateInfo
+                return new ClientCertificateInfo
                 {
                     Subject = cert.Subject,
                     Issuer = cert.Issuer,

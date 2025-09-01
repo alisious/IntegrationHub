@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+	<xsd:include schemaLocation="kmd_wspolne.xsd"/>
+	<xsd:complexType name="Miejscowosc">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa miejscowości (dzielnicy) z kodem miejscowości  i kodem terytorialnym ze słownika TERYT.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="kodTerytorialny" type="kmd:KodTerytorialny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kod jednostki podziału terytorialnego w której leży miejscowość, ze słownika TERYT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwaMiejscowosci" type="kmd:NazwaMiejscowosci" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nazwa miejscowości (dzielnicy).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="symbolMiejscowosci" type="kmd:KodMiejscowosci" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Kod miejscowości ze słownika TERYT.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:simpleType name="NazwaMiejscowosci">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę miejscowości.
+Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SeriaNumerDokumentu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający opisowe pole seria i numer dokumentu</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaUlicy">
+		<xsd:annotation>
+			<xsd:documentation>Element nazwy ulicy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="110" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="Ulica">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa ulicy z kodem ulicy ze słownika TERYT.
+Jeśli ulica nie ma reprezentacji w katalogu TERYT, pole "sym_ul" pozostawia się
+puste a całą nazwę ulicy zgodnie z pisownią umieszcza się w polu nazwa_1.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="cecha" type="kmd:CechaUlicy" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Określenie rodzaju ulicy
+(UL., AL., PL., SKWER, BULW., RONDO, PARK, RYNEK, SZOSA, DROGA, OS., OGRÓD, WYSPA, WYB., INNE)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwaPierwsza" type="kmd:NazwaUlicy">
+				<xsd:annotation>
+					<xsd:documentation>Część nazwy ulicy począwszy od słowa, które decyduje o pozycji
+ulicy w układzie alfabetycznym, aż do końca nazwy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwaDruga" type="kmd:NazwaUlicy" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pozostała część nazwy ulicy lub pole puste.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="symbolUlicy" type="kmd:KodUlicy" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Kod ulicy ze słownika TERYT.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="MiejscowoscOut">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa miejscowości (dzielnicy) z kodem miejscowości i kodem terytorialnym ze słownika
+				TERYT.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="kodTerytorialny" type="kmd:KodTerytorialny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kod jednostki podziału terytorialnego w której leży miejscowość, ze słownika
+						TERYT.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwaMiejscowosci" type="kmd:NazwaMiejscowosciOut" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nazwa miejscowości (dzielnicy).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="symbolMiejscowosci" type="kmd:KodMiejscowosci" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Kod miejscowości ze słownika TERYT.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:simpleType name="NazwaMiejscowosciOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę miejscowości.
+				Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaUlicyOut">
+		<xsd:annotation>
+			<xsd:documentation>Element nazwy ulicy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="110"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="UlicaOut">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa ulicy z kodem ulicy ze słownika TERYT.
+				Jeśli ulica nie ma reprezentacji w katalogu TERYT, pole "sym_ul" pozostawia się
+				puste a całą nazwę ulicy zgodnie z pisownią umieszcza się w polu nazwa_1.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="cecha" type="kmd:CechaUlicy" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Określenie rodzaju ulicy
+						(UL., AL., PL., SKWER, BULW., RONDO, PARK, RYNEK, SZOSA, DROGA, OS., OGRÓD, WYSPA, WYB., INNE)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwaPierwsza" type="kmd:NazwaUlicyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Część nazwy ulicy począwszy od słowa, które decyduje o pozycji
+						ulicy w układzie alfabetycznym, aż do końca nazwy.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwaDruga" type="kmd:NazwaUlicyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pozostała część nazwy ulicy lub pole puste.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="symbolUlicy" type="kmd:KodUlicy" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Kod ulicy ze słownika TERYT.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:simpleType name="CechaUlicy">
+		<xsd:annotation>
+			<xsd:documentation>Określenie rodzaju ulicy
+				(UL., AL., PL., SKWER, BULW., RONDO, PARK, RYNEK, SZOSA, DROGA, OS., OGRÓD, WYSPA, WYB., INNE)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Gmina">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa gminy z kodem terytorialnym.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaGminy">
+				<xsd:attribute name="kt" type="kmd:KodTerytorialny" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Kod terytorialny dla gminy zakończony cyfrą 1, 2, 3.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="GminaOut">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa gminy z kodem terytorialnym.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaGminyOut">
+				<xsd:attribute name="kt" type="kmd:KodTerytorialny" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Kod terytorialny dla gminy zakończony cyfrą 1, 2, 3.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="KodTerytorialny">
+		<xsd:annotation>
+			<xsd:documentation>Kod TERYT ze słownika jednostek terytorialnych.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}|\d{4}|\d{5}|\d{7}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NumerUsc">
+		<xsd:annotation>
+			<xsd:documentation>Numer USC wskazujacy na konkretny oddział lub urząd w danej gminie.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}|\d{9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KodKraju">
+		<xsd:annotation>
+			<xsd:documentation>Kod kraju lub kod obywatelstwa wg katalogu MSWiA.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KodMiejscowosci">
+		<xsd:annotation>
+			<xsd:documentation>Kod TERYT ze słownika miejscowości (jeśli został nadany).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{5}|\d{7}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KodKonsula">
+		<xsd:annotation>
+			<xsd:documentation>Kod konsula ze słownika KONSULOWIE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KodPowiatu">
+		<xsd:annotation>
+			<xsd:documentation>Kod TERYT ze słownika gmin (jeśli został nadany).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KodWojewodztwa">
+		<xsd:annotation>
+			<xsd:documentation>Kod TERYT ze słownika województw (jeśli został nadany).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KodUlicy">
+		<xsd:annotation>
+			<xsd:documentation>Kod TERYT ze słownika ulic (jeśli został nadany).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Kraj">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa kraju wraz z międzynarodowym kodem.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaKraju">
+				<xsd:attribute name="kod" type="kmd:KodKraju" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Międzynarodowy kod kraju (jeśli nadany).
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="KrajOut">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa kraju wraz z międzynarodowym kodem.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaKrajuOut">
+				<xsd:attribute name="kod" type="kmd:KodKraju" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Międzynarodowy kod kraju (jeśli nadany).
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="Komentarz">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający komentarz.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaGminy">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę gminy.
+				Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaGminyOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę gminy.
+				Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaKraju">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę kraju.
+				Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+    <xsd:simpleType name="NazwaKrajuOut">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający nazwę kraju. Bez walidacji znaków.
+                Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="112"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+	<xsd:simpleType name="NazwaPowiatu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę powiatu. Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaPowiatuOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę powiatu. Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaWojewodztwa">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę województwa.
+				Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazwaWojewodztwaOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nazwę województwa.
+				Pole może zawierać litery, cyfry oraz znaki: kropka, myślnik, spacja, ukośnik, cudzysłów.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="112"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Organ">
+		<xsd:annotation>
+			<xsd:documentation>Organ który wprowadza dane do systemu.
+				Rodzaj i nazwa organu oraz jego lokalizacja.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="kodTerytorialny" type="kmd:KodTerytorialny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kod terytorialny. Dla gminy siedmioznakowy, zakończony cyfrą 1, 2 lub 3. Dla województwa dwuznakowy, dla powiatu czteroznakowy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rodzajOrganu" type="kmd:TypOrganu" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Rodzaj organu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kodKonsula" type="kmd:KodKonsula" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kod konsula ze słownika KONSULOWIE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="krajOrganuObcego" type="kmd:Kraj" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kraj organu obcego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerUSC" type="kmd:NumerUsc" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer danego USC.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Wojewodztwo">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa województwa z kodem województwa ze słownika TERYT.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaWojewodztwa">
+				<xsd:attribute name="woj" type="kmd:KodWojewodztwa" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Kod województwa ze słownika TERYT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="WojewodztwoOut">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa województwa z kodem województwa ze słownika TERYT.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaWojewodztwaOut">
+				<xsd:attribute name="woj" type="kmd:KodWojewodztwa" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Kod województwa ze słownika TERYT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="PowiatOut">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa powiatu z kodem powiatu ze słownika TERYT.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="kmd:NazwaPowiatuOut">
+				<xsd:attribute name="pow" type="kmd:KodPowiatu" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Kod powiatu ze słownika TERYT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TypOrganu">
+		<xsd:annotation>
+			<xsd:documentation>Typ okreslajacy rodzaj organu administracji. Może przyjmowac wartosci ze słownika SRP o
+				kodzie RODZAJE_ORGANOW.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+	<xsd:simpleType name="Plec">
+		<xsd:annotation>
+			<xsd:documentation>Dopuszczalne wartości dla oznaczenia płci.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MEZCZYZNA">
+				<xsd:annotation>
+					<xsd:documentation>Męska</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="KOBIETA">
+				<xsd:annotation>
+					<xsd:documentation>Żeńska</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StanCywilny">
+		<xsd:annotation>
+			<xsd:documentation>Dopuszczalne wartości określające stan cywilny osoby.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="KAWALER">
+				<xsd:annotation>
+					<xsd:documentation>Kawaler</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="PANNA">
+				<xsd:annotation>
+					<xsd:documentation>Panna</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ZONATY">
+				<xsd:annotation>
+					<xsd:documentation>Żonaty</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ZAMEZNA">
+				<xsd:annotation>
+					<xsd:documentation>Zamężna</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ROZWIEDZIONY">
+				<xsd:annotation>
+					<xsd:documentation>Rozwiedziony</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ROZWIEDZIONA">
+				<xsd:annotation>
+					<xsd:documentation>Rozwiedziona</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="WDOWIEC">
+				<xsd:annotation>
+					<xsd:documentation>Wdowiec</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="WDOWA">
+				<xsd:annotation>
+					<xsd:documentation>Wdowa</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="BRAK DANYCH">
+				<xsd:annotation>
+					<xsd:documentation>Brak danych</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StatusCudzoziemca">
+		<xsd:annotation>
+			<xsd:documentation>Dopuszczalne wartości dla Statusu Cudzoziemca.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="UE">
+				<xsd:annotation>
+					<xsd:documentation>Cudzoziemiec będący obywatelem państwa członkowskiego Unii Europejskiej,
+						obywatelem państwa członkowskiego Europejskiego Porozumienia o Wolnym Handlu (EFTA) – strony
+						umowy o Europejskim Obszarze Gospodarczym lub obywatelem Konfederacji Szwajcarskiej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CUE">
+				<xsd:annotation>
+					<xsd:documentation>Cudzoziemiec będący członkiem rodziny cudzoziemca będącego obywatelem państwa
+						członkowskiego Unii Europejskiej lub obywatelem państwa członkowskiego Europejskiego
+						Porozumienia o Wolnym Handlu (EFTA) – strony umowy o Europejskim Obszarze Gospodarczym lub
+						obywatelem Konfederacji Szwajcarskiej, nie będący jednocześnie obywatelem jednego z wymienionych
+						państw.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="NUE">
+				<xsd:annotation>
+					<xsd:documentation>Cudzoziemiec niebędący obywatelem państwa członkowskiego Unii Europejskiej,
+						obywatelem państwa członkowskiego Europejskiego Porozumienia o Wolnym Handlu (EFTA) – strony
+						umowy o Europejskim Obszarze Gospodarczym lub obywatelem Konfederacji Szwajcarskiej oraz
+						niebędący członkiem rodziny takiego cudzoziemca.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="UKR">
+				<xsd:annotation>
+					<xsd:documentation>Obywatel Ukrainy - uchodźca wojenny</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="NIEUSTALONE">
+				<xsd:annotation>
+					<xsd:documentation>Nieustalony status cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ParentyzacjaTyp">
+		<xsd:annotation>
+			<xsd:documentation>Dopuszczalne wartości dla typu powiązania parentyzacyjnego.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PRAWDA_BIOLOGICZNA">
+				<xsd:annotation>
+					<xsd:documentation>Prawda biologiczna</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="RodzajZameldowania">
+		<xsd:annotation>
+			<xsd:documentation>Dopuszczalne wartości dla rodzaju zameldowania posiadanego przez obywatela.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="POBYT_STALY">
+				<xsd:annotation>
+					<xsd:documentation>Pobyt stały</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="POBYT_CZASOWY">
+				<xsd:annotation>
+					<xsd:documentation>Pobyt czasowy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="POBYT_STALY_I_CZASOWY">
+				<xsd:annotation>
+					<xsd:documentation>Pobyt stały i czasowy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

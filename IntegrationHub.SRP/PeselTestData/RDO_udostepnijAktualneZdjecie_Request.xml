@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:dow="http://msw.gov.pl/srp/v3_0/uslugi/dowody/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header />
+  <soapenv:Body>
+    <dow:udostepnijAktualneZdjecie>
+      <pesel>82041711996</pesel>
+      <idOsoby>3855271178504782749</idOsoby>
+      <requestId>12345EF46</requestId>
+    </dow:udostepnijAktualneZdjecie>
+  </soapenv:Body>
+</soapenv:Envelope>

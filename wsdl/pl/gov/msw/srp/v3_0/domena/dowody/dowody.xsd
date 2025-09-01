@@ -1,0 +1,3147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/"
+            xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/" version="3.0">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                schemaLocation="../../domena/kmd/kmd.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/"
+                schemaLocation="../../uslugi/dowody/parametry/parametry.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/"
+                schemaLocation="../pesel/pesel.xsd"/>
+
+    <xsd:complexType name="DaneAdresowe">
+        <xsd:annotation>
+            <xsd:documentation>Adres osoby wnioskujacej o wydanie dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="kodPocztowy" type="dow:KodPocztowy" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z
+                        Zalacznikiem nr 1 do Rozporzadzenia, pkt. 14.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowosc" type="dow:Miejscowosc" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Miejscowosc zamieszkania osoby wnioskujacej o wydanie dowodu osobistego, zgodnie
+                        z Zalacznikiem nr 1 do Rozporzadzenia, pkt. 15.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerDomu" type="dow:NumerDomu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z Zalacznikiem
+                        nr 1 do Rozporzadzenia, pkt. 17.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="dow:NumerLokalu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z
+                        Zalacznikiem nr 1 do Rozporzadzenia, pkt. 18.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="poczta" type="dow:Miejscowosc" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Poczta osoby wnioskujacej o wydanie dowodu osobistego, dana przekazywana do SCPD
+                        w pliku BNI
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="dow:Ulica" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Ulica zamieszkania osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z
+                        Zalacznikiem nr 1 do Rozporzadzenia, pkt. 16.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Adres">
+        <xsd:annotation>
+            <xsd:documentation>Adres osoby wnioskujacej o wydanie dowodu osobistego lub posiadacza dowodu osobistego.
+                Dane adresowe wypelniane sa na wniosku o wydanie dowodu osobistego, zgodnie z Zalacznikiem nr 1 do
+                Rozporzadzenia (pkt. 14-18), drukowane na czesci A Formularza stanowiacego Zalacznik nr 2 do
+                Rozporzadzenia oraz nanoszone na blankiet dowodu osobistego – Zalacznik nr 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="dow:DaneAdresowe">
+                <xsd:sequence>
+                    <xsd:element name="kodTerytMiejscowosci" type="kmd:KodTerytorialny" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>kod terytorialny miejscowości.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="typAdresu" type="dow:TypAdresu" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Rodzaj zameldowania; zgodnie z Ustawa, art. 37, ust. 1 pkt. 4 osoba
+                                ubiegajaca sie o wydanie dowodu osobistego podaje na wniosku adres zameldowania na pobyt
+                                staly, a w przypadku jego braku zameldowania na pobyt czasowy trwajacy ponad 3 miesiace
+                                na terytorium Rzeczypospolitej Polskiej; w przypadku braku zameldowania na pobyt staly
+                                lub pobyt czasowy trwajacy ponad 3 miesiace danych adresowych nie zamieszcza sie.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:simpleType name="CzlonNazwiska">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy czlon nazwiska osoby wnioskujacej o wydanie dowodu osobistego lub
+                posiadacza dowodu osobistego. Podzial nazwiska na czlony zgodny z Zalacznikami nr 1 (pkt. 1-2) i 2 do
+                Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="300"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="CzlonNazwiskaRodowego">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy czlon nazwiska rodowego osoby wnioskujacej o wydanie dowodu osobistego
+                lub posiadacza dowodu osobistego. Podzial nazwiska na czlony zgodny z Zalacznikami nr 1 (pkt. 1-2) i 2
+                do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="28"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="DaneFormularzaDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy wspólne dane dokumentu tozsamosci dla dowodów książeczkowych i
+                blankietów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="dow:PodstawoweDaneDokumentuTozsamosci">
+                <xsd:sequence>
+                    <xsd:element name="daneOsobowe" type="dow:Osoba">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Typ definiujacy dane osobowe posiadacza dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="podstawoweDaneUrodzeniaDowod" type="dow:PodstawoweDaneUrodzeniaDowod">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Dane urodzenia posiadacza dowodu osobistego
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneWystawcy" type="dow:DaneWystawcyDowod">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Dane wystawcy dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneOsoboweSwdo" type="dow:DaneOsoboweSWDO" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Pozostałe dane osoby wnioskującej o wydanie dowodu osobistego, zgodnie z
+                                Załącznikiem nr 1 do Rozporzadzenia.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataWydaniaObywatelowi" type="kmd:Data" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Data wydania dowodu przez gminę.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="organZawieszajacyDowod" type="dow:NazwaOrganu" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Organ zawieszający dowód.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="organCofajacyZawieszenieDowodu" type="dow:NazwaOrganu" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Organ cofający zawieszenie dowodu.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataZawieszenia" type="kmd:Czas" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Data i czas zawieszenia</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataCofnieciaZawieszenia" type="kmd:Czas" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Data i czas cofnięcia zawieszenia.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataZwrotu" type="kmd:Data" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data zwrotu dowodu osobistego.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneOrganuRejestrujacegoZwrot" type="dow:DaneOrganuRejestrujacegoZwrot" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Dane organu rejestrującego zwrot dowodu.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataUniewaznieniaPoZawieszeniu" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Data uniewaznienia po akcji zawieszenia.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataWyslaniaDoGimny" type="kmd:Data" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Data wysłania dowodu do gimny.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataPrzyjeciaWGminie" type="kmd:Data" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Data przyjęcia dowodu przez gminę.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="certyfikatPodpisuOsobistego" type="xsd:boolean" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Certyfikat podpisu osobistego.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="DaneDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy dane dowodu osobistego z udostepnianymi danymi.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="dow:DaneFormularzaDowodu">
+                <xsd:sequence>
+                    <xsd:element name="daneUniewaznienia" type="dow:DaneUniewaznienia" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Dane uniewaznienia dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="powodZlozeniaWniosku" type="dow:PowodZlozeniaWniosku" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Przyczyna wydania dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="statusDokumentu" type="dow:StatusDowodu" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Pole opisujace techniczny status
+                                dokumentu dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="statusWarstwyEdo" type="dow:StatusWarstwyEdo" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Pole opisujące techniczny status warstwy elektronicznej dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataObwieszczenia" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data obwieszczenia Ministra, na podstawie którego dowody są
+                                unieważniane
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataWaznosciWynikajacaZObwieszczenia" type="kmd:DataKalendarzowa"
+                                 nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Data ważności wynikająca z obwieszczenia.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="zdjecieCzarnoBiale" type="xsd:base64Binary" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Zdjecie posiadacza dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="zdjecieKolorowe" type="xsd:base64Binary" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Kolorowa kopia zdjęcia osoby wnioskujacej o wydanie dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneNaDowodzie" type="dow:DaneNaDowodzie" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Dane osoby umieszczone na dowodzie.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="obywatelstwo" type="dow:Obywatelstwo">
+                    </xsd:element>
+                    <xsd:element name="dataPrzekazaniaDoSIS" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data przekazania do SIS.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneOdmowy" type="dow:DaneOdmowy" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Dane decyzji odmowy.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneNiewaznosci" type="dow:DaneNiewaznosci" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Dane decyzji nieważności.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="idDowodu" type="dow:IdDowodu" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Id techniczne dowodu.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="kodTerytUrzeduWydajacego" type="kmd:ZnakiSRP">
+                        <xsd:annotation>
+                            <xsd:documentation>Kod terytorialny Urzedu, który wydał dowod osobisty.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="nazwaUrzeduWydaja" type="kmd:ZnakiSRP">
+                        <xsd:annotation>
+                            <xsd:documentation>Nazwa urzędu wydawającego dowód osobist.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="numerWniosku" type="dow:NumerWniosku" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Numer wniosku okreslany jako zlozenie kodu terytorialnego wystawcy dowodu
+                                osobistego oraz kolejnego numeru wniosku dla danej lokalizacji wystawcy. Numer jest
+                                unikalny dla
+                                danej lokalizacji. Pole tozsame z Numerem zamowienia w Zalacznikach nr 1 i 2 do
+                                Rozporzadzenia.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="idWniosku" type="dow:IdWniosku" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Id wniosku</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="identyfikatorWersjiRekorduDowodu" type="dow:WersjaElementu">
+                        <xsd:annotation>
+                            <xsd:documentation>Identyfikator przechowujący znacznik stanu danych w całym rekordzie.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataPrzyjeciaKopertyPuk" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data przyjęcia koperty Puk.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="podpis" type="xsd:base64Binary" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Zdjęcie podpisu osoby.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dowodMobilny" type="xsd:boolean" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Mobilne wydanie dowodu.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="aktywacjaMobilna" type="xsd:boolean" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Mobilna aktywacja certyfikatów.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="weryfikacjaDowodu" type="dow:StatusWeryfikacjiDowodu" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Status weryfikacji dowodu.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="DaneDowodow">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy dane dowodu osobistego dla subskrypcji mTozsamość.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="pesel" type="dow:Pesel" >
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL właściciela dowodu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci" >
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusDowodu" type="dow:StatusDowodu" >
+                <xsd:annotation>
+                    <xsd:documentation>Status zwracanego dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZmiany" type="xsd:dateTime" >
+                <xsd:annotation>
+                    <xsd:documentation>Data aktualizacji danych dowodu w bazie RDO.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneOsoboweSWDO">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy dane osobowe osoby wnioskujacej o wydanie dowodu osobistego lub
+                posiadacza dowodu osobistego. Zakres danych zgodny z Zalacznikami nr 1 (pkt. 11-12, 14-18), nr 2 i nr 3
+                do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="adres" type="dow:Adres" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Dane adresowe posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kolorOczu" type="dow:KolorOczu" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Kolor oczu posiadacza dowodu osobistego. Wartosci jakie moze przyjmowac
+                        pole zgodne z pouczeniem nr 4 Zalacznika nr 1 do Rozporzadzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wzrost" type="dow:Wzrost" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Wzrost w centymetrach posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="podpis" type="xsd:base64Binary" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Obraz podpisu osoby wnioskujacej o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneUniewaznienia">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy dane uniewaznienia dowodu osobistego. Zgodnie z art. 33 Rozporzadzenia
+                Organ uniewazniajacy wprowadza do ewidencji informacje o dacie i przyczynie uniewaznienia dowodu
+                osobistego. Zgodnie z art. 34 Rozporzadzenia dowod osobisty uniewaznia po otrzymaniu dokumentow
+                stanowiacych podstawe uniewaznienia dowodu osobistego z powodu:
+                1. zawiadomienia o utracie dowodu osobistego
+                2. zawiadomienia o zniszczeniu dowodu osobistego
+                3. przekazania przez osobe trzecia znalezionego dowodu osobistego
+                4. utraty obywatelstwa polskiego przez posiadacza dowodu osobistego
+                5. zgonu posiadacza dowodu osobistego
+                6. odbioru nowego dowodu osobistego w miejsce poprzedniego dowodu osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="przewidywanaDataWaznosci"
+                         type="kmd:DataKalendarzowa" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Przewidywana data ważności.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataPrzyszlegoUniewaznienia"
+                         type="kmd:DataKalendarzowa" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data, po jakim czasie nastąpi unieważnienie
+                        dowodu, w przypadku zmiany danych w Peselu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataUniewaznienia" type="dow:Data"
+                         minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data uniewaznienie dowodu osobistego; zgodnie z
+                        § 34 Rozporzadzenia data uniewaznienia wynika z
+                        daty zdarzenia stanowiacego podstawe
+                        uniewaznienia dowodu osobistego; zgodnie z art.
+                        43 Ustawy dowod osobisty podlega uniewaznieniu:
+                        1) z dniem zawiadomienia o jego utracie,
+                        zniszczeniu lub z dniem przekazania przez osobe
+                        trzecia znalezionego dowodu osobistego;
+
+                        2) z dniem utraty obywatelstwa polskiego przez
+                        jego posiadacza;
+
+                        3) z dniem zgonu jego posiadacza;
+
+                        4) z dniem odbioru dowodu osobistego wydanego w
+                        miejsce poprzedniego, z wylaczeniem przypadkow,
+                        o ktorych mowa w pkt 1 i 6;
+
+                        5) po uplywie 3 miesiecy od zaistnienia
+                        okolicznosci, o ktorych mowa w art. 40 ust. 1
+                        pkt 1, w przypadku niezlozenia przez posiadacza
+                        dowodu osobistego wniosku o jego wymiane;
+
+                        6) z dniem uplywu waznosci dowodu osobistego.
+
+                        2. W przypadku obywateli polskich przebywajacych
+                        za granica termin, o ktorym mowa w ust. 1 pkt 5,
+                        wynosi 4 miesiace.
+
+                        Zgodnie z §.35 Rozporzadzenia, ust.2 w przypadku
+                        odebrania przez osobe nowego dowodu osobistego
+                        za date uniewaznienia poprzedniego dowodu
+                        osobistego przyjmuje sie date odbioru nowego
+                        dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="uniewaznienie"
+                         type="dow:PrzyczynaUniewaznienia" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Przyczyna uniewaznienia dowodu osobistego,
+                        wartosci zgodne z § 34 Rozporzadzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadUniewazniajacy" type="dow:KodTerytorialny" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod terytorialny urzędu unieważniającego dowód.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaOrganu" type="dow:NazwaOrganu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa organu unieważniającego dowód.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneFormularzaWniosku">
+        <xsd:annotation>
+            <xsd:documentation>
+                Typ definiujacy dane zawarte w Zalaczniku nr 1 do Rozporzadzenia wraz z pomocniczymi
+                danymi technicznymi uzupelnianymi w procesie przetwarzania.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idWniosku" type="dow:IdWniosku" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Id wniosku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerWniosku" type="dow:NumerWniosku" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer wniosku okreslany jako zlozenie kodu terytorialnego wystawcy dowodu
+                        osobistego oraz kolejnego numeru wniosku dla danej lokalizacji wystawcy. Numer jest unikalny dla
+                        danej lokalizacji. Pole tozsame z Numerem zamowienia w Zalacznikach nr 1 i 2 do Rozporzadzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZlozeniaWniosku" type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>Data zlozenia wniosku w gminnym lub miejskim organie ewidencji ludnosci,
+                        wlasciwym dla miejsca zamieszkania osoby ubiegajacej sie o wydanie dowodu osobistego.
+                        Zgodnie z zalacznikami nr 1 i 2 do Rozporzadzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneOsobowe" type="dow:Osoba" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane osobowe petenta.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="priorytet" type="dow:PriorytetWniosku" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Priorytet wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneWnioskodawcy" type="dow:DaneWnioskodawcy" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane osoby wnioskującej w imieniu osoby ubiegającej się o dowód
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneKontaktowe" type="dow:DaneKontaktowe" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane osoby wnioskującej w imieniu osoby ubiegającej się o dowód
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="podstawoweDaneUrodzeniaWniosek" type="dow:PodstawoweDaneUrodzeniaWniosek">
+                <xsd:annotation>
+                    <xsd:documentation>Dane dotyczace urodzenia osoby wnioskujacej o wydanie dowodu osobistego, zgodnie
+                        z Zalacznikiem nr 1 do Rozporzadzenia (pkt. 6- 10 oraz 13).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="przyczynaWydaniaDokumentu" type="dow:PowodZlozeniaWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Przyczyna wydania dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="zdjecieCzarnoBiale" type="xsd:base64Binary" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zdjecie osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z § 7, ust 1,
+                        pkt. 1 Rozporzadzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="zdjecieKolorowe" type="xsd:base64Binary" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Kolorowa kopia zdjęcia osoby wnioskujacej o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="obywatelstwo" type="dow:Obywatelstwo">
+                <xsd:annotation>
+                    <xsd:documentation>Obywatelstwo osoby wnioskującej o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominNazwisko" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia naziwska przy wysyłaniu do CPD.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominNazwisko2" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia drugiego członu naziwska przy wysyłaniu do CPD.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominImie2" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia drugiego imienia przy wysyłaniu do CPD.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominImieOjca" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia imienia ojca przy wysyłaniu do CPD.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominImieMatki" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia imienia matki przy wysyłaniu do CPD.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominNazwiskoRodowe" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia naziwska rodowego przy wysyłaniu do CPD.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pominNazwiskoRodoweMatki" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Parametr pominięcia naziwska rodowego matki przy wysyłaniu do CPD.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneDecyzjiOdmowy" type="dow:DecyzjaAdministracyjna" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane decyzji administracyjnej odmowy z Art. 32.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneBezRozpoznania" type="dow:DaneBezRozpoznaniaWniosek" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane związane z pozostawieniem wniosku bez rozpoznania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dodanoPrzezEUsluge" type="xsd:boolean" minOccurs="0" default="false">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy wniosek zostal dodany przez eUsluge.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="zdjecieEdytowane" type="xsd:boolean" default="false">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy zdjęcie zostało edytowane przez urzędnika.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="certyfikatPodpisuOsobistego" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy dowód posiada certyfikat podpisu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="certyfikatIdentyfikacji" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy dowód posiada certyfikat identyfikacji i uwierzytelnienia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="podpisOsoby" type="xsd:base64Binary" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Obraz podpisu osoby wnioskującej o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="powodBrakuPodpisu" type="dow:PowodBrakuPodpisu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Powód braku podpisu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dowodTymczasowy" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy dowód tymczasowy, z okresem ważności równym 12 miesięcy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wniosekMobilny" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy wniosek jest mobilny.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="odciskLewa" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zaszyfrowany obraz odcisku palca lewej dłoni osoby wnioskującej o wydanie dowodu
+                        osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="odciskPrawa" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Zaszyfrowany obraz odcisku palca prawej dłoni osoby wnioskującej o wydanie dowodu
+                        osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="odciskLewaSha1" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Skrót SHA1 zaszyfrowanego odcisku palca lewej dłoni osoby wnioskującej o
+                        wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="odciskPrawaSha1" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Skrót SHA1 zaszyfrowanego odcisku palca prawej dłoni osoby wnioskującej o
+                        wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="odciskLewaPlaintextSha2" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Skrót SHA1 odcisku palca lewej dłoni osoby wnioskującej o
+                        wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="odciskPrawaPlaintextSha2" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Skrót SHA1 odcisku palca prawej dłoni osoby wnioskującej o
+                        wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="rodzajPalcaLewaId" type="xsd:integer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator rodzaju odcisku palca lewej dłoni.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="rodzajPalcaPrawaId" type="xsd:integer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator rodzaju odcisku palca prawej dłoni.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="powodBrakuOdciskuLewa" type="dow:PowodBrakuOdcisku" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Powód braku odcisku palca lewej dłoni.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="powodBrakuOdciskuPrawa" type="dow:PowodBrakuOdcisku" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Powód braku odcisku palca prawej dłoni.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czyPobranoOdciski" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Czy pobrano odciski</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czyDowod12miesieczny" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Czy dowód jest 12 miesięczny</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneFormularzaWnioskuUkr">
+        <xsd:annotation>
+            <xsd:documentation>
+                Typ definiujacy dane specyficzne dla wniosku UKR.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWjazdu" type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>Data wjazdu na terytorium RP.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZlozeniaWniosku" type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>Data zlozenia wniosku.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerEwidencyjnyUkr" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer ewidencyjny UKR.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneOpiekuna" type="dow:DaneOpiekunaUkr" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Dane opiekuna.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneOpiekunaUkr">
+        <xsd:annotation>
+            <xsd:documentation>
+                Typ definiujacy dane specyficzne dla wniosku UKR.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="pesel" type="kmd:Pesel" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imie1" type="kmd:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imię pierwsze opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imie2" type="kmd:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imię drugie opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieKolejne" type="kmd:ImionaKolejne" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona kolejne opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:NazwiskoJednoczlonowe" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="obywatelstwoKodIso" type="kmd:KodKraju" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Kod ISO obywatelstwa opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data urodzenia opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="plec" type="kmd:Plec" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Płeć opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="rodzajDokumentu" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Rodzaj dokumentu opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumerDokumentu" type="kmd:SeriaINumer" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="stopienPokrewienstwa" type="kmd:OpiekunStopienPokrewienstwa" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pokrewieństwo opiekuna.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="stopienPokrewienstwaOpis" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pokrewieństwo opiekuna - opisowe.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneWniosku">
+        <xsd:annotation>
+            <xsd:documentation>
+                Typ uzupełniający dane wniosku o informacje systemowe oraz informacje występujące tylko na starych
+                wnioskach o dowód.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="dow:DaneFormularzaWniosku">
+                <xsd:sequence>
+                    <xsd:element name="organWystawiajacy" type="dow:OrganWystawiajacy" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Dane organu gminy wydajacego dowod osobisty.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataPersonalizacji" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data pesonalizacji - data personalizacji blankietu w CPD
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataPrzekazania" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data przekazania - data wyslania formularza z gminy do CPD
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataRejestracji" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data rejestracji - data rejestracji wplywu formularza w CPD
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="okresWaznosci" type="dow:OkresWaznosci" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Termin waznosci dowodu osobistego okreslony na podstawie art. 36 Ustawy.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="statusWniosku" type="dow:StatusWniosku" nillable="true">
+                        <xsd:annotation>
+                            <xsd:documentation>Status przetwarzania danych wniosku o wydanie dowodu osobistego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="daneOsoboweSwdo" type="dow:DaneOsoboweSWDO" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Pozostale dane osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z
+                                Zalacznikiem nr 1 do Rozporzadzenia (pkt. 11-12 oraz dane adresu miejsca zamieszkania
+                                pkt.
+                                14-18).
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="numerFormularza" type="dow:NumerFormularza" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Numer formularza zamowienia</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="seriaNumerDowodu" type="dow:SeriaINumerDokumentuTozsamosci" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>seria i numer dowodu osobistego wydanego dla wniosku</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="statusDowodu" type="dow:StatusDowodu" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Status dowodu osobistego wydanego dla wniosku</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="certyfikatWaznyOd" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data od kiedy certyfikaty identyfikacji i/lub podpisu osobistego będą ważne.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="DaneKontaktowe">
+        <xsd:annotation>
+            <xsd:documentation>Dane kontaktowe na wniosku o dowód osobisty.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="adres" type="dow:DaneAdresowe" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Dane adresowe do korespondencji wnioskodawcy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="email" type="kmd:PocztaElektroniczna" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Adres do korespondencji elektronicznej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerTelefonu" type="kmd:NumerTelefonu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer telefonu kontaktowego..</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneNaDowodzie">
+        <xsd:annotation>
+            <xsd:documentation>Typ danych przechowujący dane osoby do umieszczenia na dowodzie osobistym.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="imie" type="dow:Imiona" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona osoby naniesione na dowodzie.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:Nazwisko" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko osoby naniesione na dowodzie osobistym.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneWnioskodawcy">
+        <xsd:annotation>
+            <xsd:documentation>Typ danych przechowujący dane wnioskodawcy występującego w imieniu osoby ubiegającej się
+                o dowód osobisty.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="imie" type="dow:ImieWnioskodawcy" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Imie wnioskodawcy występującego w imieniu osoby ubiegającej się o dowód
+                        osobisty.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:NazwiskoWnioskodawcy" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Imie wnioskodawcy występującego w imieniu osoby ubiegającej się o dowód
+                        osobisty.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="dow:Pesel" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL wnioskodawcy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="PriorytetWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Typ definujący priorytet wniosku.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="15"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwiskoWnioskodawcy">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy czlon nazwiska osoby wnioskujacej o wydanie dowodu osobistego
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="28"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ImieWnioskodawcy">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy czlon nazwiska osoby wnioskujacej o wydanie dowodu osobistego
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="28"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="DecyzjaAdministracyjna">
+        <xsd:annotation>
+            <xsd:documentation>Typ danych przechowujący dane osoby do umieszczenia na dowodzie osobistym.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDecyzjiOdmowy" type="xsd_2:NumerDecyzji" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Numer decyzji administracyjnej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWydaniaDecyzji" type="kmd:DataKalendarzowa" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data wystawienia decyzji administracyjnej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadId" type="dow:IdUrzad">
+                <xsd:annotation>
+                    <xsd:documentation>Urząd wydający decyzję.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadDecyzjiNazwa" type="dow:NazwaOrganu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa organu(urzędu) dokonującego odmowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneBezRozpoznaniaWniosek">
+        <xsd:annotation>
+            <xsd:documentation>Typ danych przechowujący dane dla pozostawienia wniosku bez rozpatrzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="bezRozpoznaniaPrzyczyna" type="dow:PrzyczynaBezRozpoznaniaWniosek" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Przyczyna dla pozostawienia wniosku bez rozpatrzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="bezRozpoznaniaData" type="kmd:DataKalendarzowa" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data dla pozostawienia wniosku bez rozpatrzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="bezRozpoznaniaUrzadId" type="dow:IdUrzad" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Urząd dla pozostawienia wniosku bez rozpatrzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneWystawcy">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy dane organu gminy bedacego wystawca dowodu osobistego. Zgodnie z
+                Zalacznikiem nr 2 Rozporzadzenia podawany jest kod terytorialny wystawcy.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="region" type="dow:Region">
+                <xsd:annotation>
+                    <xsd:documentation>Region</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wystawca" type="dow:Wystawca" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Typ organu wystawiającego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaWystawcyZDowodu" type="dow:NazwaWystawcyZDowodu" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa wystawcy w brzmieniu wydrukowanym na dowodzie osobistym</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneWystawcyDowod">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy dane organu gminy bedacego wystawca dowodu osobistego. Zgodnie z
+                Zalacznikiem nr 2 Rozporzadzenia podawany jest kod terytorialny wystawcy. Dla RDO by nie zmieniać CPD.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idOrgan" type="dow:IdOrgan">
+                <xsd:annotation>
+                    <xsd:documentation>Id techniczne organu wystawcy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaWystawcyZDowodu" type="dow:NazwaWystawcyZDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa wystawcy w brzmieniu wydrukowanym na dowodzie osobistym</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneOrganuRejestrujacegoZwrot">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy dane organu gminy, który zarejestrował zwrot dowodu osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idOrganu" type="dow:IdOrgan">
+                <xsd:annotation>
+                    <xsd:documentation>Id techniczne organu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaOrganu" type="dow:NazwaOrganu">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa organu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OrganWystawiajacy">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy dane organu gminy bedacego wystawca dowodu osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="kodTerytGminy" type="dow:KodTerytorialny" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny gminy, w której mieści się organ wystawiający.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wystawca" type="dow:Wystawca" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Typ organu wystawiającego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="Data">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy nieformalna date zdarzenia biznesowego spisana z dokumentu. Moze to byc
+                data spoza kalendarza zapisana w postaci 8 cyfr w formacie DDMMRRRR.
+                Warunki poprawnosci i zaleznosci wartosci pol:
+                1.Jesli rok jest podzielny przez 4 i nie podzielny przez 100 to data 29 luty jest poprawna;
+                2.Jesli rok jest podzielny przez 400 to data 29 lutego jest poprawna;
+                3.Jesli miesiac rowna sie 01, 03, 05, 07, 08, 10, 12 to poprawny jest dzien 31;
+                4.Jesli miesiac rowna sie 04, 02, 06, 09, 11 to niepoprawny jest dzien 31;
+                5.Jesli miesiac rowna sie 02 to niepoprawny jest dzien 30;
+                6. Poprawna liczba miesiecy mniejsza lub rowna 12
+                7. Poprawna liczba dni mniejsza lub rowna 31
+                .
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{8}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Gmina">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa gminy. Wartosc i kod zgodne ze slownikiem TERYT.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="dow:NazwaJednostkiTerytorialnej">
+                <xsd:attribute name="kod" type="dow:KodTerytorialny"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="IdDowodOsobisty">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy techniczny identyfikator dowodu osobistego w bazie danych. Wykorzystywany w
+                uslugach wyszukiwania i udostepniania danych dowodu osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="32"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Imie">
+        <xsd:annotation>
+            <xsd:documentation>Imie jednowyrazowe (pierwsze lub drugie) osoby wnioskujacej o wydanie dowodu osobistego
+                lub posiadacza dowodu osobistego, zgodny z Zalacznikami nr 1, 2 i 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="120"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Imiona">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy zestaw pol imienia osoby wnioskujacej o wydanie dowodu osobistego lub
+                posiadacza dowodu osobistego. Kolekcja imion zgodna z Zalacznikami nr 1(pkt. 3-4) , 2 i 3 do
+                Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="imiePierwsze" type="dow:Imie" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Imie pierwsze posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieDrugie" type="dow:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imie drugie posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="KodPocztowy">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy kod pocztowy osoby wnioskujacej o wydanie dowodu osobistego lub
+                posiadacza dowodu osobistego, zgodnie z Zalacznikami nr 1 (pkt. 14), 2 i 3 do Rozporzadzenia. Pole moze
+                zawierac tylko cyfry.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{5}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KodPowiatu">
+        <xsd:annotation>
+            <xsd:documentation>Kod dla powiatu reprezentowany na 4 znakach. Wartosc zgodna ze slownikiem TERYT.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{4}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KodSlownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ pomocniczy definiujacy kod pozycji slownikowej, dla wszystkich wykorzystywanych
+                slownikow w domenie OEWiUDO.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:length value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KodTerytorialny">
+        <xsd:annotation>
+            <xsd:documentation>Kod terytorialny gminy wystawcy dowodu osobistego, zgodnie z Zalacznikiem nr 2 do
+                Rozporzadzenia (KT organu wydajacego).
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{5}|\d{7}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KodUrzednika">
+        <xsd:annotation>
+            <xsd:documentation>Identyfikator systemowy urzednika obslugujacego wniosek o wydanie dowodu osobistego,
+                przekazywany do SCPD w pliku BNI.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KodWojewodztwa">
+        <xsd:annotation>
+            <xsd:documentation>Kod wojewodztwa reprezentowany na 2 znakach. Wartosc zgodna ze slownikiem TERYT.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{2}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="KolorOczu">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy kolor oczu osoby wnioskujacej o wydanie dowodu osobistego. Pole przyjmuje
+                wartosci ze slownika zgodnie z pouczeniem nr 4 w Zalaczniku nr 1 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="NIEBIESKIE">
+                <xsd:annotation>
+                    <xsd:documentation>Niebieskie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SZARE">
+                <xsd:annotation>
+                    <xsd:documentation>Szare</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PIWNE">
+                <xsd:annotation>
+                    <xsd:documentation>Piwne</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="CZARNE">
+                <xsd:annotation>
+                    <xsd:documentation>Czarne</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZIELONE">
+                <xsd:annotation>
+                    <xsd:documentation>Zielone</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAZOWE">
+                <xsd:annotation>
+                    <xsd:documentation>Brązowe</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="CZERWONE">
+                <xsd:annotation>
+                    <xsd:documentation>Czerwone</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIEOKRESLONE">
+                <xsd:annotation>
+                    <xsd:documentation>Nieokreślone</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WIELOKOLOROWE">
+                <xsd:annotation>
+                    <xsd:documentation>Wielokolorowe</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="MiejsceUrodzenia">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy miejsce urodzenia osoby wnioskujacej o wydanie dowodu osobistego, zgodnie
+                z Zalacznikiem nr 1 do Rozporzadzenia (pkt 10).
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Miejscowosc">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy nazwe miejscowosci zamieszkania osoby wnioskujacej o wydanie dowodu
+                osobistego, zgodnie z Zalacznikiem nr 1 do Rozporzadzenia (pkt 15)
+                Pole moze zawierac litery, cyfry oraz znaki: kropka, myslnik, spacja, ukosnik, cudzyslow.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="28"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaJednostkiTerytorialnej">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa jednostki terytorialnej dla wojewodztwa, gminy, powiatu. Pobierana po kodzie
+                jednostki ze slownika TERYT.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaWystawcy">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa wystawcy dowodu osobistego, widniejaca na dowodzie osobistym, zgodnie z
+                Zalacznikiem nr 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="33"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaWystawcyZDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa wystawcy w brzmieniu wydrukowanym na dowodzie osobistym.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="66"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaOrganu">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa organu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="150"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Nazwisko">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy zestaw pol nazwiska osoby wnioskujacej o wydanie dowodu osobistego lub
+                posiadacza dowodu osobistego. Typ zgodny z Zalacznikami nr 1 (pkt. 1-2), nr 2 (Nazwisko 1 i Nazwisko 2)
+                i nr 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="czlonPierwszy" type="dow:CzlonNazwiska" nillable="true"/>
+            <xsd:element name="czlonDrugi" type="dow:CzlonNazwiska" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="NazwiskoRodowe">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy zestaw pol nazwiska rodowego osoby wnioskujacej o wydanie dowodu
+                osobistego lub posiadacza dowodu osobistego. Typ zgodny z Zalacznikami nr 1 (pkt. 1-2), nr 2 (Nazwisko 1
+                i Nazwisko 2) i nr 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwisko" type="dow:NazwiskoJednoczlonowe" nillable="true"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="NumerDokumentuTozsamosci">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy numer dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{6,7}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerDomu">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy numer domu wchodzacy w sklad danych adresowych osoby wnioskujacej o
+                wydanie dowodu osobistego lub posiadacza dowodu osobistego, zgodnie z Zalacznikami nr 1 (pkt. 17), nr 2
+                i nr 3 do Rozporzadzenia.
+                Warunki poprawnosci i zaleznosci wartosci pol:
+                1.Moze zawierac cyfry i litery oraz znaki: ukosnik, spacja, myslnik, kropka.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="15"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerFormularza">
+        <xsd:annotation>
+            <xsd:documentation>Numer formularza zamowienia, zgodnie z zalacznikiem nr 2 do Rozporzadzenia (ZAM. Nr).
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="10"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerLokalu">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy numer lokalu wchodzacy w sklad danych adresowych osoby wnioskujacej o
+                wydanie dowodu osobistego lub posiadacza dowodu osobistego, zgodnie z Zalacznikami nr 1 (pkt. 18), nr 2
+                i nr 3 do Rozporzadzenia
+                Warunki poprawnosci i zaleznosci wartosci pol:
+                1.Moze zawierac cyfry i litery oraz znaki: ukosnik, spacja, myslnik, kropka.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="5"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy numer wniosku o wydanie dowodu osobistego. Jest to numer unikalny dla
+                danej lokalizacji , skladajacy sie z kodu terytorialnego wystawcy dowodu osobistego oraz kolejnego
+                numeru wniosku dla danej lokalizacji wystawcy z zerami wiodacymi. Pole tozsame z Numerem zamowienia w
+                Zalacznikach nr 1 i 2 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:length value="23"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaJednostkiPolicji">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa jednoski policji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="2000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerSprawy">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy numer sprawy zarejestrowany przez policję.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="130"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="OkresWaznosci">
+        <xsd:annotation>
+            <xsd:documentation>Termin waznosci dowodu osobistego okreslony na podstawie art. 36 Ustawy.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="LAT_5">
+                <xsd:annotation>
+                    <xsd:documentation>5 lat</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="LAT_10">
+                <xsd:annotation>
+                    <xsd:documentation>10 lat</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BEZTERMINOWO">
+                <xsd:annotation>
+                    <xsd:documentation>Bezterminowo</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIEZNANY">
+                <xsd:annotation>
+                    <xsd:documentation>Nieznany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="MIESIECY_12">
+                <xsd:annotation>
+                    <xsd:documentation>12 miesięcy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Osoba">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy zakres danych identyfikacyjnych osoby wnioskujacej o wydanie dowodu
+                osobistego lub posiadacza dowodu osobistego, zgodnie z Zalacznikami nr1 (pkt. 1-5 wraz z numerem PESEL),
+                nr 2 i nr 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="imie" type="dow:Imiona" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona osoby wnioskujacej o wydanie dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:Nazwisko" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko osoby wnioskujacej o wydanie dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoRodowe" type="dow:NazwiskoRodowe" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko rodowe osoby wnioskujacej o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="dow:Pesel" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL osoby wnioskujacej o wydanie dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                <xsd:annotation>
+                    <xsd:documentation>Id osoby w rejestrze PESEL.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="Pesel">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy numer osoby w Powszechnym Elektronicznym Systemie Ewidencji Ludnosci.
+                Warunki poprawnosci i zaleznosci wartosci pol:
+                1.Zawiera tylko cyfry;
+                2.Sprawdzenie poprawnosci cyfry kontrolnej poprzez pomnozenie kazdej cyfry w numerze PESEL przez jej
+                wage, to znaczy:
+                1 pozycja razy jeden, 2 razy trzy, 3 razy siedem, 4 razy dziewiec, 5 razy jeden, 6 razy trzy, 7 razy
+                siedem,
+                8 razy dziewiec, 9 razy jeden i 10 razy trzy, a nastepnie przez sumowanie wyniku mnozenia, podzielenie
+                modulo 10 i odjecie wyniku od 10.
+                Powstala liczba powinna byc zgodna z 11. cyfra PESELA.
+                3.Pozycje od 7 do 10 nie moga byc jednoczesnie zerami.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{11}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Plec">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy plec osoby wnioskujacej o wydanie dowodu osobistego lub posiadacza dowodu
+                osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="KOBIETA">
+                <xsd:annotation>
+                    <xsd:documentation>Kobieta</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="MEZCZYZNA">
+                <xsd:annotation>
+                    <xsd:documentation>Mezczyzna</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="PodstawoweDaneDokumentuTozsamosci">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy podstawowe dane dokumentu tozsamosci gromadzone w EWiUDO oraz OEWiUDO na
+                podstawie zapisu Ustawy, art. 44e, ust. 3 pkt. 10.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="dow:Data" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data waznosci dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWydania" type="dow:Data" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data odbioru dokumentu przez obywatela.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PodstawoweDaneUrodzeniaDowod">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy zakres pol opisujacych dane urodzenia posiadacza dowodu osobistego
+                widniejace na dokumencie dowodu osobistego, zgodnie z Zalacznikiem nr 3 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataUrodzenia" type="dow:Data" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data urodzenia posiadacza dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieMatki" type="dow:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imie matki posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieOjca" type="dow:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imie ojca posiadacza dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejsceUrodzenia" type="dow:MiejsceUrodzenia" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Miejsce urodzenia posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="plec" type="dow:Plec" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Plec posiadacza dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PodstawoweDaneUrodzeniaWniosek">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy zakres pol opisujacych dane urodzenia osoby wnioskujacej o wydanie dowodu
+                osobistego, zgodnie z Zalacznikami nr 1 i 2 do Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataUrodzenia" type="dow:Data" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data urodzenia osoby wnioskujacej o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieOjca" type="dow:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imie ojca osoby wnioskujacej o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieMatki" type="dow:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imie matki osoby wnioskujacej o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejsceUrodzenia" type="dow:MiejsceUrodzenia" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Miejsce urodzenia osoby wnioskujacej o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoRodoweMatki" type="dow:NazwiskoRodowe" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko rodowe matki osoby wnioskujacej o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="plec" type="dow:Plec" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Plec osoby wnioskujacej o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Powiat">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa powiatu i kod terytorialny dla powiatu, w ktorym znajduje sie organ wystawcy dowodu
+                osobistego. Dana przekazywana do SCPD w pliku BNI.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="dow:NazwaJednostkiTerytorialnej">
+                <xsd:attribute name="kod" type="dow:KodPowiatu">
+                    <xsd:annotation>
+                        <xsd:documentation>Kod powiatu ze slownika TERYT.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="PozycjaSlownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ pomocniczy definiujacy, dla wszystkich wykorzystywanych slownikow w domenie OEWiUDO,
+                maksymalna liczbe znakow dla pola opisu danej pozycji slownikowej.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PrzyczynaUniewaznienia">
+        <xsd:annotation>
+            <xsd:documentation>Przyczyna uniewaznienia dowodu osobistego, zgodnie z art. 43, ust 1 Ustawy.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WYMIANA_USTAWA_2002">
+                <xsd:annotation>
+                    <xsd:documentation>Wymiana na podstawie art.2 ustawy z dnia 12.09.2002</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UPLYW_TERMINU_WAZNOSCI">
+                <xsd:annotation>
+                    <xsd:documentation>Upływ terminu ważności dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_DOWODU_ZGUBIENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata dokumentu tożsamości-zgubienie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_DOWODU_KRADZIEZ">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata dokumentu tożsamości-kradzież</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZNISZCZENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Zniszczenie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZMIANA_DANYCH">
+                <xsd:annotation>
+                    <xsd:documentation>Zmiana danych zawartych w dowodzie osobistym</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REKLAMACJA_BLEDNE_DANE">
+                <xsd:annotation>
+                    <xsd:documentation>Reklamacja-błędne dane</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REKLAMACJA_BLAD_JAKOSCIOWY">
+                <xsd:annotation>
+                    <xsd:documentation>Reklamacja-błąd jakościowy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DOWOD_NIE_ODEBRANY">
+                <xsd:annotation>
+                    <xsd:documentation>Dowód nie odebrany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KRADZIEZ_TOZSAMOSCI">
+                <xsd:annotation>
+                    <xsd:documentation>Kradzież tożsamości</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="INNE_PRZYCZYNY">
+                <xsd:annotation>
+                    <xsd:documentation>Inne przyczyny</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_DOWODU">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZMIANA_WIZERUNKU">
+                <xsd:annotation>
+                    <xsd:documentation>Zmiana wizerunku twarzy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REKLAMACJA">
+                <xsd:annotation>
+                    <xsd:documentation>Reklamacja</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZGON">
+                <xsd:annotation>
+                    <xsd:documentation>Zgon</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_OBYWATELSTWA">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata obywatelstwa</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PRZEKAZANIE_ZNALEZIONEGO_DOWODU">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata obywatelstwa</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ART_32">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata obywatelstwa</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ART_52">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata obywatelstwa</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USZKODZENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Uszkodzenie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UPLYW_TERMINU_ZAWIESZENIA">
+                <xsd:annotation>
+                    <xsd:documentation>Upływ terminu zawieszenia</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration
+                    value="BRAK_CERTYFIKATU_IDENTYFIKACJI_I_UWIERZYTELNIENIA_LUB_CERTYFIKATU_PODPISU_OSOBISTEGO">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Brak certyfikatu identyfikacji i uwierzytelnienia lub certyfikatu podpisu osobistego
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WYMIANA_DOWODU_BEZ_WARSTWY_ELEKTRONICZNEJ">
+                <xsd:annotation>
+                    <xsd:documentation>Wymiana dowodu bez warstwy elektronicznej</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK_MOZLIWOSCI_IDENTYFIKACJI_I_UWIERZYTELNIENIA_LUB_ZLOZENIA_PODPISU_OSOBISTEGO">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Brak możliwości identyfikacji i uwierzytelnienia lub złożenia podpisu osobistego
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WYMIANA_DOWODU_BEZ_ODCISKOW_PALCOW">
+                <xsd:annotation>
+                    <xsd:documentation>Wymiana dowodu bez odcisków palców</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PowodZlozeniaWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Powod zlozenia wniosku o wydania dowodu osobistego, zgodnie z art. 36 i art. 43 Ustawy.
+                Typ przyjmuje
+                wartosci ze slownika SL_POWOD_ZLOZENIA_WNIOSKU.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WYMIANA_NA_PODSTAWIE_ART_2_USTAWY_Z_DNIA_12_09_2002">
+                <xsd:annotation>
+                    <xsd:documentation>Wymiana na podstawie art.2 ustawy z dnia 12.09.2002</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UPLYW_TERMINU_WAZNOSCI_DOWODU_OSOBISTEGO">
+                <xsd:annotation>
+                    <xsd:documentation>Upływ terminu ważności dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_DOKUMENTU_TOZSAMOSCI_ZGUBIENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata dokumentu tożsamości-zgubienie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_DOKUMENTU_TOZSAMOSCI_KRADZIEZ">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata dokumentu tożsamości-kradzież</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZNISZCZENIE">
+                <xsd:annotation>
+                    <xsd:documentation>Zniszczenie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZMIANA_DANYCH">
+                <xsd:annotation>
+                    <xsd:documentation>Zmiana danych zawartych w dowodzie osobistym</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REKLAMACJA_BLEDNE_DANE">
+                <xsd:annotation>
+                    <xsd:documentation>Reklamacja-błędne dane</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REKLAMACJA_BLAD_JAKOSCIOWY">
+                <xsd:annotation>
+                    <xsd:documentation>Reklamacja-błąd jakościowy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DOWOD_NIE_ODEBRANY">
+                <xsd:annotation>
+                    <xsd:documentation>Dowód nie odebrany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KRADZIEZ_TOZSAMOSCI">
+                <xsd:annotation>
+                    <xsd:documentation>Kradzież tożsamości</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="INNE_PRZYCZYNY">
+                <xsd:annotation>
+                    <xsd:documentation>Inne przyczyny</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UTRATA_DOWODU">
+                <xsd:annotation>
+                    <xsd:documentation>Utrata dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USZKODZENIE_DOKUMENTU_TOZSAMOSCI">
+                <xsd:annotation>
+                    <xsd:documentation>Uszkodzenie dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZMIANA_WIZERUNKU_TWARZY">
+                <xsd:annotation>
+                    <xsd:documentation>Zmiana wizerunku twarzy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZNALEZIENIE_DOKUMENTU_TOZSAMOSCI">
+                <xsd:annotation>
+                    <xsd:documentation>Znalezienie dokumentu tożsamości przez osobę trzecią</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REKLAMACJA">
+                <xsd:annotation>
+                    <xsd:documentation>Reklamacja</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PO_RAZ_PIERWSZY">
+                <xsd:annotation>
+                    <xsd:documentation>Po raz pierwszy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UPLYW_TERMINU_ZAWIESZENIA_DOWODU_OSOBISTEGO">
+                <xsd:annotation>
+                    <xsd:documentation>Upływ terminu zawieszenia dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WYMIANA_DOWODU_BEZ_WARSTWY_ELEKTRONICZNEJ">
+                <xsd:annotation>
+                    <xsd:documentation>Wymiana dowodu bez warstwy elektronicznej</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK_UWIERZYTELNIENIA_LUB_PODPISU">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Brak możliwości identyfikacji i uwierzytelnienia lub złożenia podpisu osobistego
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK_CERTYFIKATU_IDENTYFIKACJI_LUB_CERTYFIKATU_PODPISU_OSOBISTEGO">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Brak certyfikatu identyfikacji i uwierzytelnienia lub certyfikatu podpisu osobistego
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WYMIANA_DOWODU_BEZ_ODCISKOW_PALCOW">
+                <xsd:annotation>
+                    <xsd:documentation>Wymiana dowodu bez odcisków palców</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PowodBrakuPodpisu">
+        <xsd:annotation>
+            <xsd:documentation>Powód braku podpisu.
+                Typ przyjmuje wartości ze słownika SL_POWOD_BRAKU_PODPISU.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POWODY_MEDYCZNE">
+                <xsd:annotation>
+                    <xsd:documentation>Brak podpisu z powodów medycznych</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DZIECKO_PONIZEJ_12_ROKU_ZYCIA">
+                <xsd:annotation>
+                    <xsd:documentation>Brak podpisu dla dziecka poniżej 12 roku życia</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PowodBrakuOdcisku">
+        <xsd:annotation>
+            <xsd:documentation>Powód braku odcisków palca.
+                Typ przyjmuje wartości ze słownika SL_POWOD_BRAKU_ODCISKU.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POWODY_MEDYCZNE">
+                <xsd:annotation>
+                    <xsd:documentation>Brak odcisków z powodów medycznych</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIEWYSTARCZAJACA_JAKOSC_PROBKI">
+                <xsd:annotation>
+                    <xsd:documentation>Brak odcisków z powodu niewystarczającej jakości próbki</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DZIECKO_PONIZEJ_12_ROKU_ZYCIA">
+                <xsd:annotation>
+                    <xsd:documentation>Brak pobrania odcisków dla dziecka poniżej 12 roku życia</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PowodBrakuWeryfikacji">
+        <xsd:annotation>
+            <xsd:documentation>Powód braku weryfikacji podczas odbioru dowodu.
+                Typ przyjmuje wartości ze słownika SL_POWOD_BRAKU_WERYFIKACJI.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BLAD_TECHNICZNY">
+                <xsd:annotation>
+                    <xsd:documentation>Brak weryfikacji z powodu błędu technicznego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WYDAWANIE_POZA_URZEDEM">
+                <xsd:annotation>
+                    <xsd:documentation>Brak weryfikacji z powodu wydawania dowodu poza urzędem</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PROBLEMY_MEDYCZNE">
+                <xsd:annotation>
+                    <xsd:documentation>Brak weryfikacji z powodu problemów medycznych</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="StatusWeryfikacjiDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Status weryfikacji dowodu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="CZEKA_NA_WERYFIKACJE">
+                <xsd:annotation>
+                    <xsd:documentation>Czeka na weryfikację</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZWERYFIKOWANY">
+                <xsd:annotation>
+                    <xsd:documentation>Zweryfikowany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="PowodBrakuWeryfikacjiOdciskowPalca">
+        <xsd:annotation>
+            <xsd:documentation>Status weryfikacji dowodu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POWODY_MEDYCZNE">
+                <xsd:annotation>
+                    <xsd:documentation>Powody medyczne</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="POWODY_TECHNICZNE">
+                <xsd:annotation>
+                    <xsd:documentation>Powody techniczne</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SLABA_JAKOSC_ODCISKU">
+                <xsd:annotation>
+                    <xsd:documentation>Słaba jakość odcisku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODBIERANY_PRZEZ_PELNOMOCNIKA">
+                <xsd:annotation>
+                    <xsd:documentation>Dowód odbierany przez pełnomocnika</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DZIECKO_PONIZEJ_12_ROKU_ZYCIA">
+                <xsd:annotation>
+                    <xsd:documentation>Dziecko poniżej 12 roku życia</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="RodzajPalca">
+        <xsd:annotation>
+            <xsd:documentation>Status weryfikacji dowodu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="KCIUK_PRAWY">
+                <xsd:annotation>
+                    <xsd:documentation>Kciuk prawy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WSKAZUJACY_PRAWY">
+                <xsd:annotation>
+                    <xsd:documentation>Wskazujący prawy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SRODKOWY_PRAWY">
+                <xsd:annotation>
+                    <xsd:documentation>Środkowy prawy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="OBRACZKOWY_PRAWY">
+                <xsd:annotation>
+                    <xsd:documentation>Obrączkowy prawy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KCIUK_LEWY">
+                <xsd:annotation>
+                    <xsd:documentation>Kciuk lewy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WSKAZUJACY_LEWY">
+                <xsd:annotation>
+                    <xsd:documentation>Wskazujący lewy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SRODKOWY_LEWY">
+                <xsd:annotation>
+                    <xsd:documentation>Środkowy lewy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="OBRACZKOWY_LEWY">
+                <xsd:annotation>
+                    <xsd:documentation>Obrączkowy lewy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Region">
+        <xsd:annotation>
+            <xsd:documentation>Jednostka podzialu terytorialnego kraju.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="gmina" type="dow:Gmina">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa gminy z kodem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="powiat" type="dow:Powiat">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa powiatu z kodem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wojewodztwo" type="dow:Wojewodztwo">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa wojewodztwa z kodemu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="SeriaDokumentuTozsamosci">
+        <xsd:annotation>
+            <xsd:documentation>Seria dokumentu tozsamosci.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[A-Z]{2,3}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="SeriaINumerDokumentuTozsamosci">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy serie i numer dowodu osobistego. Jest to numer unikalny skladajacy sie z
+                serii i numeru.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="seriaDokumentuTozsamosci" type="dow:SeriaDokumentuTozsamosci" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Seria dokumentu tozsamosci.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerDokumentuTozsamosci" type="dow:NumerDokumentuTozsamosci" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Numer dokumentu tozsamosci.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="StatusDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Techniczny status danych dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WYSLANY">
+                <xsd:annotation>
+                    <xsd:documentation>Wysłany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PRZYJETY_PRZEZ_URZAD">
+                <xsd:annotation>
+                    <xsd:documentation>Przyjęty przez urząd</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODMOWA_ART_52">
+                <xsd:annotation>
+                    <xsd:documentation>Odmowa art. 52</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WYDANY">
+                <xsd:annotation>
+                    <xsd:documentation>Wydany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UNIEWAZNIONY">
+                <xsd:annotation>
+                    <xsd:documentation>Unieważniony</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WPROWADZONY_RECZNIE">
+                <xsd:annotation>
+                    <xsd:documentation>Wprowadzony ręcznie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UNIEWAZNIONY_RECZNY">
+                <xsd:annotation>
+                    <xsd:documentation>Unieważniony - ręczny</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SPERSONALIZOWANY">
+                <xsd:annotation>
+                    <xsd:documentation>Spersonalizowany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODMOWA_ART_32">
+                <xsd:annotation>
+                    <xsd:documentation>Odmowa art. 32</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODWOLANIE">
+                <xsd:annotation>
+                    <xsd:documentation>Odwołanie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZAWIESZONY">
+                <xsd:annotation>
+                    <xsd:documentation>Zawieszony</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="StatusWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Techniczny status danych wniosku o wydanie dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WPROWADZONY">
+                <xsd:annotation>
+                    <xsd:documentation>Wprowadzony</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZAWIESZONY">
+                <xsd:annotation>
+                    <xsd:documentation>Zawieszony</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODMOWA_ART_32">
+                <xsd:annotation>
+                    <xsd:documentation>Odmowa art. 32</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BEZ_ROZPOZNANIA">
+                <xsd:annotation>
+                    <xsd:documentation>Bez rozpoznania</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NOWY">
+                <xsd:annotation>
+                    <xsd:documentation>Nowy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PRZYJETY_PRZEZ_SPD">
+                <xsd:annotation>
+                    <xsd:documentation>Przyjęty przez SPD</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIEDOPUSZCZONY_DO_PRODUKCJI">
+                <xsd:annotation>
+                    <xsd:documentation>Niedopuszczony do produkcji</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SPERSONALIZOWANY">
+                <xsd:annotation>
+                    <xsd:documentation>Spersonalizowany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODWOLANIE">
+                <xsd:annotation>
+                    <xsd:documentation>Odwołanie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZAKONCZONY_ODMOWNIE">
+                <xsd:annotation>
+                    <xsd:documentation>Zakończony odmownie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PRZEKAZANY_DO_SPD">
+                <xsd:annotation>
+                    <xsd:documentation>Spersonalizowany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="StatusWysylki">
+        <xsd:annotation>
+            <xsd:documentation>Status wysylki dokumentu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="NORMALNY">
+                <xsd:annotation>
+                    <xsd:documentation>Normalny.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZASTRZEZENIA">
+                <xsd:annotation>
+                    <xsd:documentation>Z zastrzezeniami.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TypAdresu">
+        <xsd:annotation>
+            <xsd:documentation>Rodzaj zameldowania osoby wnioskujacej o wydanie dowodu osobistego, zgodnie z Ustawa,
+                art. 37, ust. 1 pkt. 4.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POBYT_STALY">
+                <xsd:annotation>
+                    <xsd:documentation>Pobyt stały.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="POBYT_CZASOWY">
+                <xsd:annotation>
+                    <xsd:documentation>Pobyt czasowy ponad 3 miesiące.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK_ADRESU">
+                <xsd:annotation>
+                    <xsd:documentation>Brak adresu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Ulica">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa ulicy miejsca zamieszkania osoby wnioskujacej o wydanie dowodu osobistego, zgodnie
+                z Zalacznikiem nr 1 Rozporzadzenia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="Wojewodztwo">
+        <xsd:annotation>
+            <xsd:documentation>Kod terytorialnym.i nazwa wojewodztwa w ktorym znajduje sie organ wystawcy dowodu
+                osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="dow:NazwaJednostkiTerytorialnej">
+                <xsd:attribute name="kod" type="dow:KodWojewodztwa">
+                    <xsd:annotation>
+                        <xsd:documentation>Kod wojewodztwa ze slownika TERYT.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="Wystawca">
+        <xsd:annotation>
+            <xsd:documentation>Typ organu wystawiającego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="KIEROWNIK_WYDZIALU_SPRAW_SPOLECZNO_ADMINISTRACYJNYCH">
+                <xsd:annotation>
+                    <xsd:documentation>Kierownik wydziału spraw społeczno-administracyjnych</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KWMO">
+                <xsd:annotation>
+                    <xsd:documentation>KWMO</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KPMO">
+                <xsd:annotation>
+                    <xsd:documentation>KPMO</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KMMO">
+                <xsd:annotation>
+                    <xsd:documentation>KMMO</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KSMO">
+                <xsd:annotation>
+                    <xsd:documentation>KSMO</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KDMO">
+                <xsd:annotation>
+                    <xsd:documentation>KDMO</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KSMO">
+                <xsd:annotation>
+                    <xsd:documentation>KSMO</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NACZELNIK_PREZYDENT_MIASTA_POWIATU">
+                <xsd:annotation>
+                    <xsd:documentation>Naczelnik/prezydent (miasta/powiatu)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NACZELNIK_GMINY">
+                <xsd:annotation>
+                    <xsd:documentation>Naczelnik gminy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NACZELNIK_DZIELNICY">
+                <xsd:annotation>
+                    <xsd:documentation>Naczelnik dzielnicy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NACZELNIK_MIASTA_I_GMINY">
+                <xsd:annotation>
+                    <xsd:documentation>Naczelnik miasta i gminy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WOJEWODA">
+                <xsd:annotation>
+                    <xsd:documentation>Wojewoda</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ_MIASTA">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz miasta</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ_MIASTA_I_GMINY">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz miasta i gminy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ_GMINY">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz gminy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ_GMINY_DZIELNICY">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz gminy-dzielnicy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ_DZIELNICY">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz dzielnicy</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PREZYDENT_MIASTA">
+                <xsd:annotation>
+                    <xsd:documentation>Prezydent miasta</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WOJT">
+                <xsd:annotation>
+                    <xsd:documentation>Wójt</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WOJEWODZKI_URZAD_SPRAW_WEWNETRZNYCH">
+                <xsd:annotation>
+                    <xsd:documentation>Wojewódzki urząd spraw wewnętrznych (WUSW)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="MSWIA">
+                <xsd:annotation>
+                    <xsd:documentation>MSWiA</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NIEZNANY">
+                <xsd:annotation>
+                    <xsd:documentation>Nieznany</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BURMISTRZ_GMINY_I_MIASTA">
+                <xsd:annotation>
+                    <xsd:documentation>Burmistrz gminy i miasta</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="WystawcaOsoba">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy zakres danych identyfikacyjnych urzednika obslugujacego procesy zwiazane
+                z wydaniem dowodu osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="identyfikator" type="dow:KodUrzednika" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator urzednika</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="dow:Pesel" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer Pesel urzednika</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Wysylka">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy wysylke dokumentu do organu gminy.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="statusWysylki" type="dow:StatusWysylki" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Status wysylki.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWysylki" type="kmd:DataKalendarzowa" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data wysylki.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wysylkaUwagi" type="dow:WysylkaUwagi" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Uwagi do wysylki.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="Wzrost">
+        <xsd:annotation>
+            <xsd:documentation>Wzrost osoby wnioskujacej o wydanie dowodu osobistego, podany w centymetrach.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[\d]{2,3}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="WysylkaUwagi">
+        <xsd:annotation>
+            <xsd:documentation>Uwagi do wysylki dokumentu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Obywatelstwo">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający obywatelstwo osoby ubiegającej się o wydanie dowodu osobistego.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POLSKIE">
+                <xsd:annotation>
+                    <xsd:documentation>Polskie obywatelstwo.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="INNE">
+                <xsd:annotation>
+                    <xsd:documentation>Obywatelstwo innego kraju.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ZnakiLacinskie">
+        <xsd:annotation>
+            <xsd:documentation>Zawiera duze i male znaki lacinskie wraz z wszystkimi dopuszczonymi modyfikatorami
+                (akcentami), kropke, myslnik, spacje, przecinek, ukosnik.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PriorytetZlecenia">
+        <xsd:annotation>
+            <xsd:documentation>Typ definujący priorytet zlecenia.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TrescZlecenia">
+        <xsd:annotation>
+            <xsd:documentation>Zawartosc zlecenia.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="3000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="DaneOdmowy">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane odmowy zgodny z artykułem 32.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDecyzji" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer decyzji odmowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataDecyzji"
+                         type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data decyzji odmowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadDecyzji" type="dow:KodTerytorialny">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod terytorialny organu(urzędu) dokonującego odmowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadDecyzjiNazwa" type="dow:NazwaOrganu" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa organu(urzędu) dokonującego odmowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneNiewaznosci">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane unieważnienia dowodu zgodna z artykułem 52.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDecyzji" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer decyzji unieważnienia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataDecyzji" type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data decyzji unieważnienia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadDecyzji" type="dow:KodTerytorialny">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Kod terytorialny organu(urzędu) dokonującego unieważnienia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaOrganu" type="dow:NazwaOrganu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Nazwa organu unieważniającego dowód.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="IdUrzad">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy techniczny identyfikator urzędu w bazie danych. Wykorzystywany w
+                uslugach wyszukiwania, aktualizacji i udostepniania danych dowodów osobistych i wniosków.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="32"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="IdOrgan">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy techniczny identyfikator organu w bazie danych. Wykorzystywany w
+                uslugach wyszukiwania, aktualizacji i udostepniania danych dowodów osobistych i wniosków.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="32"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwiskoJednoczlonowe">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy nazwisko jednoczłonowe.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="300"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PrzyczynaBezRozpoznaniaWniosek">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy przyczynę bez rozpoznania dla wniosku.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="300"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="CzyIstniejeWniosekAktywny">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa czy wybrana osoba posiada zarejestrowany i aktywny wniosek.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaUrzeduWniosekAktywny">
+        <xsd:annotation>
+            <xsd:documentation>Typ przechowuje nazwę urzędu w którym zarejestrowano wniosek.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="10"/>
+            <xsd:maxLength value="200"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwiskoUzytkownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy czlon nazwiska uzytkownika
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="32"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ImieUzytkownika">
+        <xsd:annotation>
+            <xsd:documentation>Typ definiujacy czlon imie uzytkownika
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dow:ZnakiLacinskie">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="32"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="DaneStatusuWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy dane statusu wniosku o wydanie dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="statusWniosku" type="dow:StatusWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Status przetwarzania danych wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataNadaniaStatusu" type="kmd:DataICzas">
+                <xsd:annotation>
+                    <xsd:documentation>Data nadania statusu wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieUzytkownika" type="dow:ImieUzytkownika">
+                <xsd:annotation>
+                    <xsd:documentation>Użytkownik, który nadał status wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoUzytkownika" type="dow:NazwiskoUzytkownika">
+                <xsd:annotation>
+                    <xsd:documentation>Użytkownik, który nadał status wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="CzyIstniejeDowodAktywny">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa czy wybrana osoba posiada aktywny dowód osobisty.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazwaUrzeduDowodAktywny">
+        <xsd:annotation>
+            <xsd:documentation>Typ przechowuje nazwę urzędu, w którym wydano dowód osobisty.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="10"/>
+            <xsd:maxLength value="200"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="DaneStatusuDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy dane statusu dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="statusDowodu" type="dow:StatusDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>Status przetwarzania danych dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataNadaniaStatusu" type="kmd:DataICzas">
+                <xsd:annotation>
+                    <xsd:documentation>Data nadania statusu dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWykonaniaAkcji" type="kmd:DataICzas">
+                <xsd:annotation>
+                    <xsd:documentation>Data wykonania akcji zmiany statusu dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieUzytkownika" type="dow:ImieUzytkownika">
+                <xsd:annotation>
+                    <xsd:documentation>Użytkownik, który nadał status dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoUzytkownika" type="dow:NazwiskoUzytkownika">
+                <xsd:annotation>
+                    <xsd:documentation>Użytkownik, który nadał status dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaOrganu" type="dow:NazwaOrganu">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa organu użytkownika, który nadał status dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Wydruk">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujący wydruk.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dane" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Dane dla wydruku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="IdDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający techniczny identyfikator danych dowodu w bazie RDO.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="IdWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający techniczny identyfikator danych wniosku w bazie RDO.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer"/>
+    </xsd:simpleType>
+    <xsd:complexType name="ZmienStatusDowoduNaWyslanyParametry">
+        <xsd:annotation>
+            <xsd:documentation>Typ okreslajacy parametry zmiany statusu dowodu na wysłany.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element type="dow:IdWniosku" name="idWniosku"/>
+            <xsd:element type="xsd:date" name="dataWyslaniaDoGminy"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaDaneDowodu">
+        <xsd:annotation>
+            <xsd:documentation>
+                Lista dowodów osobistych
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="daneDowodu" type="dow:DaneDowodu" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="dataZmiany" type="xsd:dateTime" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data zmiany, od której pobrane zostały zmiany.
+                        Jeśli parametr nie został zwrócony to są to dane inicjujące.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaDowodowSubskrypcja">
+        <xsd:annotation>
+            <xsd:documentation>
+                Lista danych dowodów osobistych do subskrypcji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="DaneDowodow" type="dow:DaneDowodow" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="dataNastepnegoWywolania" type="xsd:dateTime" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data do wywołania kolejnej subskrypcji.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaDaneWniosku">
+        <xsd:annotation>
+            <xsd:documentation>
+                Lista wniosków
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="daneWniosku" type="dow:DaneWniosku" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="dataZmiany" type="xsd:dateTime" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data zmiany, od której pobrane zostały zmiany.
+                        Jeśli parametr nie został zwrócony to są to dane inicjujące.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="WersjaElementu">
+        <xsd:annotation>
+            <xsd:documentation>Przechowuje informacje o wersji elementu. Informacja o wersji elementu jest
+                wykorzystywana przez usługi aktualizujące dane w rejestrze RDO.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="StatusWarstwyEdo">
+        <xsd:annotation>
+            <xsd:documentation>Status warstwy elektronicznej dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ZAWIESZONA">
+                <xsd:annotation>
+                    <xsd:documentation>Zawieszona</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="UNIEWAZNIONA">
+                <xsd:annotation>
+                    <xsd:documentation>Unieważniona</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WAZNA">
+                <xsd:annotation>
+                    <xsd:documentation>Ważna</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK">
+                <xsd:annotation>
+                    <xsd:documentation>Brak</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="DaneDowoduDoUniewaznienia">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane dowodu do unieważnienia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="seriaNumerDowodu" type="dow:SeriaINumerDokumentuTozsamosci" minOccurs="0"/>
+            <xsd:element type="xsd:date" name="dataWaznosci" minOccurs="0"/>
+            <xsd:element type="xsd:date" name="dataUniewaznieniaCertyfikatow"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneZawieszenia">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane zawieszenia dowodu.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataZawieszenia" type="kmd:Czas"/>
+            <xsd:element name="organZawieszajacyDowod" type="dow:NazwaOrganu"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneCofnieciaZawieszenia">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane zawieszenia dowodu.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataCofnieciaZawieszenia" type="kmd:Czas"/>
+            <xsd:element name="organCofajacyZawieszenieDowodu" type="dow:NazwaOrganu"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneZgloszeniaZwrotu">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane odnalezienia dowodu.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataZgloszeniaZwrotu" type="kmd:Data"/>
+            <xsd:element name="organRejestrujacyZwrot" type="dow:NazwaOrganu"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneStatusuDowoduIWarstwyElektronicznej">
+        <xsd:sequence>
+            <xsd:element name="statusDowodu" type="dow:StatusDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Status dowodu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusWarstwyEdo" type="dow:StatusWarstwyEdo">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Status warstwy elektronicznej.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataICzasCofnieciaZawieszenia" type="kmd:Czas" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data i czas zawieszenia dowodu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataICzasZawieszenia" type="kmd:Czas" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data i czas zawieszenia dowodu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneWarstwyElektronicznej">
+        <xsd:annotation>
+            <xsd:documentation>
+                Dane warstwy elektronicznej.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="zdjecieKolorowe" type="xsd:base64Binary" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Zdjęcie kolorowe.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusWarstwyEdo" type="dow:StatusWarstwyEdo" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Status warstwy elektronicznej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWaznosciZObwieszczenia" type="kmd:DataKalendarzowa" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności z obwieszczenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneZawieszenia" type="dow:DaneZawieszenia" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Dane zawieszenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="daneCofnieciaZawieszenia" type="dow:DaneCofnieciaZawieszenia" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Dane cofnięcia zawieszenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneDowoduSubskrypcjaIn">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający zestaw pól wejściowych dla usługi dodawania dowodów do subskrypcji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL powiązany z dokumentem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DaneDowoduSubskrypcjaOut">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający zestaw pól wyjściowych dla usługi dodawania dowodów do subskrypcji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="czyDodano" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Informacja, czy dokument został dodany do subskrypcji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

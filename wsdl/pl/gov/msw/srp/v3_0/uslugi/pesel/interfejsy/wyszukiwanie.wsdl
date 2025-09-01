@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="wyszukiwanie"
+                                                        targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/"
+                                                        xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/pesel/"
+                                                        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                                                        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/"
+                xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/"
+                xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/wyszukiwanie/"
+                xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/">
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/" schemaLocation="../parametry/parametry.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/wyszukiwanie/" schemaLocation="../parametry/wyszukiwanie.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+      <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+      <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+      <xsd:element name="wyszukajOsoby">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="requestId" type="wsp:IdentyfikatorZadania" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kryteriaWyszukiwania" type="xsd_1:KryteriaWyszukiwaniaOsob">
+              <xsd:annotation>
+                <xsd:documentation>Kryteria wyszukiwania osób.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kontekstWyszukiwania" type="xsd_2:Kontekst" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Zawiera informację czy wyszukiwanie danych odbywa się w ramach prowadzonego postępowania (TAK/NIE). Dodatkowo kontekst może zawierać informację o identyfikatorze sprawy, w związku z którą wykonywana jest operacja. Identyfikator sprawy jest zapisywany w rejestrze udostępnień danych PESEL.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wyszukajOsobyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="znalezioneOsoby" type="xsd_1:ListaZnalezionychOsob">
+              <xsd:annotation>
+                <xsd:documentation>Wynik wyszukiwania osób. Zawiera informacje o wszystkich rekordach spełniających zadane kryteria.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="wyszukajPodstawoweDaneOsoby">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="requestId" type="wsp:IdentyfikatorZadania" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kryteriaWyszukiwania" type="xsd_1:KryteriaWyszukiwaniaOsob">
+              <xsd:annotation>
+                <xsd:documentation>Kryteria wyszukiwania osób.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wyszukajPodstawoweDaneOsobyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="znalezioneOsoby" type="xsd_1:ZnalezioneOsoby">
+              <xsd:annotation>
+                <xsd:documentation>Wynik wyszukiwania osób. Zawiera informacje o wszystkich rekordach spełniających zadane kryteria.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="bladTechnicznyFault">
+    <wsdl:part element="tns:bladTechniczny" name="fault18"/>
+  </wsdl:message>
+  <wsdl:message name="wyszukajOsobyRequest">
+    <wsdl:part element="tns:wyszukajOsoby" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="wyszukajOsobyResponse">
+    <wsdl:part element="tns:wyszukajOsobyResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="wyszukajPodstawoweDaneOsobyRequest">
+    <wsdl:part element="tns:wyszukajPodstawoweDaneOsoby" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="wyszukajPodstawoweDaneOsobyResponse">
+    <wsdl:part element="tns:wyszukajPodstawoweDaneOsobyResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="bladBiznesowyFault">
+    <wsdl:part element="tns:bladBiznesowy" name="fault19"/>
+  </wsdl:message>
+  <wsdl:portType name="PeselWyszukiwanie">
+    <wsdl:documentation>Interfejs zawiera zbiór usług umożliwiających wyszukiwanie rekordów w rejestrze PESEL.</wsdl:documentation>
+    <wsdl:operation name="wyszukajOsoby">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na synchroniczne wyszukanie danych osoby w rejestrze PESEL. Usługa wyszukuje i zwraca listę rekordów spełniających zadane kryteria, zawierającą identyfikatory znalezionych osób oraz informacje o datach urodzenia i płci. W celu pobrania szczegółowych danych wybranych osób należy wywołać odpowiednią usługę interfejsu PeselUdostepnianie. Długość zwracanej listy jest określona za pomocą parametru systemowego.</wsdl:documentation>
+      <wsdl:input message="tns:wyszukajOsobyRequest"/>
+      <wsdl:output message="tns:wyszukajOsobyResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="wyszukajPodstawoweDaneOsoby">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na synchroniczne wyszukanie danych osoby w rejestrze PESEL.
+        Usługa wyszukuje i zwraca listę rekordów spełniających zadane kryteria.</wsdl:documentation>
+      <wsdl:input message="tns:wyszukajPodstawoweDaneOsobyRequest"/>
+      <wsdl:output message="tns:wyszukajPodstawoweDaneOsobyResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

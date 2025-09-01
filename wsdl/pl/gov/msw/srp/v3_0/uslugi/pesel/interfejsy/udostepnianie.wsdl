@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="udostepnianie" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/" xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/pesel/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/"  xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/" xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/" xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/udostepnianie/"  xmlns:ubase="http://msw.gov.pl/srp/v3_0/uslugi/pesel/udostepnianieDanych/udostepnianieDanych/">
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/udostepnianieDanych/udostepnianieDanych/" schemaLocation="../udostepnianieDanych/udostepnianieDanych.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/udostepnianie/" schemaLocation="../parametry/udostepnianie.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/" schemaLocation="../parametry/parametry.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/" schemaLocation="../../../domena/pesel/pesel.xsd"/>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoId">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobyPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoIdWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobyPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoIdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsoby" type="pes:DaneOsoby" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Aktualne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+      <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+      <xsd:element name="udostepnijAktualneDaneOsobPoId">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobPoIdWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobPoIdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsob" type="xsd_2:ListaDanychOsob">
+              <xsd:annotation>
+                <xsd:documentation>Lista aktualnych danych osób.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoPesel">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobyPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoPeselWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobyPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsoby" type="pes:DaneOsoby" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Aktualne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoPesel2">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+              <xsd:annotation>
+                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer pesel osoby do pobrania.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobyPoPesel2Response">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsoby" type="pes:DaneOsoby3" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Aktualne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobPoPesel">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobPoPeselWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijAktualneDaneOsobPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijAktualneDaneOsobPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsob" type="xsd_2:ListaDanychOsob">
+              <xsd:annotation>
+                <xsd:documentation>Lista aktualnych danych osób.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyPoId">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobyPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyPoIdWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobyPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyPoIdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsoby" type="pes:DaneOsoby" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Pełne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobPoId">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobPoIdWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobPoIdBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobPoIdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsob" type="xsd_2:ListaDanychOsob">
+              <xsd:annotation>
+                <xsd:documentation>Lista pełnych danych osób.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyPoPesel">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobyPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyPoPeselWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobyPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsoby" type="pes:DaneOsoby" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Pełne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijDaneOstatniegoPaszportu">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="listaNumerowPesel" type="xsd_1:ListaNumerowPesel">
+              <xsd:annotation>
+                <xsd:documentation>Numery pesel osób do pobrania.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijDaneOstatniegoPaszportuResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsob" type="xsd_2:ListaDanychOstatniegoPaszportu">
+              <xsd:annotation>
+                <xsd:documentation>Dane paszportowe z rejestru PESEL dla wskazanych numerów PESEL.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobPoPesel">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobPoPeselWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:udostepnijPelneDaneOsobPoPeselBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsob" type="xsd_2:ListaDanychOsob">
+              <xsd:annotation>
+                <xsd:documentation>Lista pełnych danych osób.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujIUdostepnijAktualneDaneOsoby">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:weryfikujIUdostepnijAktualneDaneOsobyBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujIUdostepnijAktualneDaneOsobyWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:weryfikujIUdostepnijAktualneDaneOsobyBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujIUdostepnijAktualneDaneOsobyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="weryfikacjaPozytywna" type="xsd:boolean">
+              <xsd:annotation>
+                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych. W przypadku pozytywnej weryfikacji zwrócone zostaną również aktualne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneOsoby" type="pes:DaneOsoby">
+              <xsd:annotation>
+                <xsd:documentation>Aktualne dane osoby. Dane zwracane są tylko w przypadku poprawnej weryfikacji podanych danych.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujIUdostepnijPelneDaneOsoby">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:weryfikujIUdostepnijPelneDaneOsobyBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujIUdostepnijPelneDaneOsobyWS">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="ubase:weryfikujIUdostepnijPelneDaneOsobyBase"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujIUdostepnijPelneDaneOsobyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="weryfikacjaPozytywna" type="xsd:boolean">
+              <xsd:annotation>
+                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych. W przypadku pozytywnej weryfikacji zwrócone zostaną również pełne dane osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneOsoby" type="pes:DaneOsoby">
+              <xsd:annotation>
+                <xsd:documentation>Pełne dane osoby. Dane zwracane są tylko w przypadku poprawnej weryfikacji podanych danych.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijDaneAnulowanejOsobyPoPesel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer pesel anulowanej osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijDaneAnulowanejOsobyPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsoby" type="pes:DaneOsoby">
+              <xsd:annotation>
+                <xsd:documentation>Dane anulowanej osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="udostepnijPeselOsobyPoPoprzednimNumerzePesel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel" minOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Jeden z poprzednich numerów Pesel osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPeselOsobyPoPoprzednimNumerzePeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Aktualny Pesel osoby. Brak danej oznacza że podany Pesel nie wystepuje w żadnym łańcuchu Peseli</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element><xsd:element name="udostepnijPoprzednieNumeryPeselOsoby">
+      <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element name="numerPesel" type="kmd:Pesel" minOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>Numer Pesel osoby.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:element>
+      <xsd:element name="udostepnijPoprzednieNumeryPeselOsobyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="numeryPesel" type="pes:DaneNrPesel">
+              <xsd:annotation>
+                <xsd:documentation>Lista poprzednich numerów Pesel. Brak danej oznacza że osoba nie posiada łańcucha Peseli</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijNumeryPeselRodzicowPoNumerzePeselDziecka">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer PESEL dziecka.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijNumeryPeselRodzicowPoNumerzePeselDzieckaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Lista numerów PESEL rodziców pobranych po numerze PESEL dziecka.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="weryfikujRelacje">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPeselWnioskujacy" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer PESEL osoby wnioskującej.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="relacja" type="kmd:Relacja" minOccurs="0" maxOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>Parametry relacji dla osoby wyszukiwanej.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="weryfikujRelacjeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="czyAktywnyPelnoletni" type="xsd:boolean">
+              <xsd:annotation>
+                <xsd:documentation>Flaga określająca, czy PESEL wnioskującego jest aktywny oraz wnioskujący jest
+                  pełnoletni.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="relacja" type="kmd:RelacjaOutput" minOccurs="1" maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>Parametry relacji dla wyszukiwanej osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPowiazanieDzieciZRodzicemPoPesel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer PESEL rodzica.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPowiazanieDzieciZRodzicemPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="listaDanychDzieci" type="xsd_2:ListaDanychDzieci">
+              <xsd:annotation>
+                <xsd:documentation>Dane wszystkich dzieci powiazanych parentyzacja ze wskazanym rodzicem</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijDaneUKRPoPesel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer PESEL osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijDaneUKRPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="daneOsobyUKR" type="pes:DaneOsobyUKR">
+              <xsd:annotation>
+                <xsd:documentation>Dane osoby o statusie UKR</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyUKRPoPesel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+              <xsd:annotation>
+                <xsd:documentation>Numer PESEL osoby.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="udostepnijPelneDaneOsobyUKRPoPeselResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="pelneDaneOsobyUKR" type="pes:PelneDaneOsobyUKR">
+              <xsd:annotation>
+                <xsd:documentation>Dane osoby o statusie UKR</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="udostepnijAktualneDaneOsobyPoIdRequest">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobyPoId" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobyPoIdResponse">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobyPoIdResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="bladBiznesowyFault">
+    <wsdl:part element="tns:bladBiznesowy" name="fault14"/>
+  </wsdl:message>
+  <wsdl:message name="bladTechnicznyFault">
+    <wsdl:part element="tns:bladTechniczny" name="fault15"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobPoIdRequest">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobPoId" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobPoIdResponse">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobPoIdResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobyPoPeselRequest">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobyPoPesel" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobyPoPeselResponse">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobyPoPeselResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobyPoPesel2Request">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobyPoPesel2" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobyPoPesel2Response">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobyPoPesel2Response" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobPoPeselRequest">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobPoPesel" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijAktualneDaneOsobPoPeselResponse">
+    <wsdl:part element="tns:udostepnijAktualneDaneOsobPoPeselResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobyPoIdRequest">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobyPoId" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobyPoIdResponse">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobyPoIdResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobPoIdRequest">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobPoId" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobPoIdResponse">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobPoIdResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijDaneOstatniegoPaszportuRequest">
+    <wsdl:part element="tns:udostepnijDaneOstatniegoPaszportu" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijDaneOstatniegoPaszportuResponse">
+    <wsdl:part element="tns:udostepnijDaneOstatniegoPaszportuResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobyPoPeselRequest">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobyPoPesel" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobyPoPeselResponse">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobyPoPeselResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobPoPeselRequest">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobPoPesel" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobPoPeselResponse">
+    <wsdl:part element="tns:udostepnijPelneDaneOsobPoPeselResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="weryfikujIUdostepnijAktualneDaneOsobyRequest">
+    <wsdl:part element="tns:weryfikujIUdostepnijAktualneDaneOsoby" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="weryfikujIUdostepnijAktualneDaneOsobyResponse">
+    <wsdl:part element="tns:weryfikujIUdostepnijAktualneDaneOsobyResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="weryfikujIUdostepnijPelneDaneOsobyRequest">
+    <wsdl:part element="tns:weryfikujIUdostepnijPelneDaneOsoby" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="weryfikujIUdostepnijPelneDaneOsobyResponse">
+    <wsdl:part element="tns:weryfikujIUdostepnijPelneDaneOsobyResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijDaneAnulowanejOsobyPoPeselRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijDaneAnulowanejOsobyPoPesel"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijDaneAnulowanejOsobyPoPeselResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijDaneAnulowanejOsobyPoPeselResponse"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPoprzednieNumeryPeselOsobyRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijPoprzednieNumeryPeselOsoby"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPoprzednieNumeryPeselOsobyResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijPoprzednieNumeryPeselOsobyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijNumeryPeselRodzicowPoNumerzePeselDzieckaRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijNumeryPeselRodzicowPoNumerzePeselDziecka"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijNumeryPeselRodzicowPoNumerzePeselDzieckaResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijNumeryPeselRodzicowPoNumerzePeselDzieckaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPeselOsobyPoPoprzednimNumerzePeselRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijPeselOsobyPoPoprzednimNumerzePesel"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPeselOsobyPoPoprzednimNumerzePeselResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijPeselOsobyPoPoprzednimNumerzePeselResponse"/>
+  </wsdl:message>
+  <wsdl:message name="weryfikujRelacjeRequest">
+    <wsdl:part element="tns:weryfikujRelacje" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="weryfikujRelacjeResponse">
+    <wsdl:part element="tns:weryfikujRelacjeResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPowiazanieDzieciZRodzicemPoPeselRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijPowiazanieDzieciZRodzicemPoPesel"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPowiazanieDzieciZRodzicemPoPeselResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijPowiazanieDzieciZRodzicemPoPeselResponse"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijDaneUKRPoPeselRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijDaneUKRPoPesel"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijDaneUKRPoPeselResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijDaneUKRPoPeselResponse"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobyUKRPoPeselRequest">
+    <wsdl:part name="parameters" element="tns:udostepnijPelneDaneOsobyUKRPoPesel"/>
+  </wsdl:message>
+  <wsdl:message name="udostepnijPelneDaneOsobyUKRPoPeselResponse">
+    <wsdl:part name="parameters" element="tns:udostepnijPelneDaneOsobyUKRPoPeselResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PeselUdostepnianie">
+    <wsdl:documentation>Interfejs zawiera zbiór usług służących udostępnianiu danych z rejestru PESEL.</wsdl:documentation>
+    <wsdl:operation name="udostepnijAktualneDaneOsobyPoId">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych osoby podając identyfikator osoby.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijAktualneDaneOsobyPoIdRequest"/>
+      <wsdl:output message="tns:udostepnijAktualneDaneOsobyPoIdResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijAktualneDaneOsobPoId">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych osób podając listę identyfikatorów osób, których dane mają zostać pobrane i zwrócone. Zawsze zwracana jest określona liczba osób, która jest zdefiniowana jako parametr systemowy. W przypadku podania na liście nieistniejącego ID zostanie ono pominięte podczas udostępniania.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijAktualneDaneOsobPoIdRequest"/>
+      <wsdl:output message="tns:udostepnijAktualneDaneOsobPoIdResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijAktualneDaneOsobyPoPesel">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych osoby podając numer PESEL.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijAktualneDaneOsobyPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijAktualneDaneOsobyPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijAktualneDaneOsobyPoPesel2">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych osoby podając numer PESEL.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijAktualneDaneOsobyPoPesel2Request"/>
+      <wsdl:output message="tns:udostepnijAktualneDaneOsobyPoPesel2Response"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijAktualneDaneOsobPoPesel">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service aktualnych danych osób podając listę numerów PESEL osób, których dane mają zostać pobrane i zwrócone. Zawsze zwracana jest określona liczba osób, która jest zdefiniowana jako parametr systemowy. W przypadku podania na liście nieistniejącego numeru PESEL zostanie on pominięty podczas udostępniania.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijAktualneDaneOsobPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijAktualneDaneOsobPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPelneDaneOsobyPoId">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych osoby podając identyfikator osoby.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPelneDaneOsobyPoIdRequest"/>
+      <wsdl:output message="tns:udostepnijPelneDaneOsobyPoIdResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPelneDaneOsobPoId">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych osób podając listę identyfikatorów osób, których dane mają zostać pobrane i zwrócone. Zawsze zwracana jest określona liczba osób, która jest zdefiniowana jako parametr systemowy. W przypadku podania na liście nieistniejącego ID zostanie ono pominięte podczas udostępniania.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPelneDaneOsobPoIdRequest"/>
+      <wsdl:output message="tns:udostepnijPelneDaneOsobPoIdResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPelneDaneOsobyPoPesel">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych osoby podając numer PESEL.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPelneDaneOsobyPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijPelneDaneOsobyPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijDaneOstatniegoPaszportu">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service danych paszportowych z rejestru PESEL dla wskazanych numerów PESEL.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijDaneOstatniegoPaszportuRequest"/>
+      <wsdl:output message="tns:udostepnijDaneOstatniegoPaszportuResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPelneDaneOsobPoPesel">
+      <wsdl:documentation>Usługa pozwala systemowi zewnętrznemu na pobranie poprzez Web Service pełnych danych osób. Usługa pobiera i zwraca pełne dane osób, lista numerów pesel osób do pobrania określona jest przez jeden z parametrów wywołania usługi. Zawsze zwracana jest określona liczba osób, która jest zdefiniowana jako parametr systemowy. W przypadku podania na liście nieistniejącego numeru PESEL zostanie on pominięty podczas udostępniania.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPelneDaneOsobPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijPelneDaneOsobPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="weryfikujIUdostepnijAktualneDaneOsoby">
+      <wsdl:documentation>Usługa pozwala na pobranie aktualnych danych osoby z uprzednią weryfikacją danych podanych przez system zewnętrzny. Dane osobowe zwracane są tylko w przypadku pozytywnej weryfikacji numeru PESEL, imienia pierwszego i aktualnego nazwiska osoby.</wsdl:documentation>
+      <wsdl:input message="tns:weryfikujIUdostepnijAktualneDaneOsobyRequest"/>
+      <wsdl:output message="tns:weryfikujIUdostepnijAktualneDaneOsobyResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="weryfikujIUdostepnijPelneDaneOsoby">
+      <wsdl:documentation>Usługa pozwala na pobranie pełnych danych osoby z uprzednią weryfikacją danych podanych przez system zewnętrzny. Dane osobowe zwracane są tylko w przypadku pozytywnej weryfikacji numeru PESEL, imienia pierwszego i aktualnego nazwiska osoby.</wsdl:documentation>
+      <wsdl:input message="tns:weryfikujIUdostepnijPelneDaneOsobyRequest"/>
+      <wsdl:output message="tns:weryfikujIUdostepnijPelneDaneOsobyResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijDaneAnulowanejOsobyPoPesel">
+      <wsdl:documentation>Usługa pozwala na pobranie danych anulowanej osoby z audytu zmian.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijDaneAnulowanejOsobyPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijDaneAnulowanejOsobyPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPeselOsobyPoPoprzednimNumerzePesel">
+      <wsdl:documentation>Usługa pozwala na pobranie aktualnego numeru pesel na podstawie jednego z peseli poprzednich.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPeselOsobyPoPoprzednimNumerzePeselRequest"/>
+      <wsdl:output message="tns:udostepnijPeselOsobyPoPoprzednimNumerzePeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPoprzednieNumeryPeselOsoby">
+      <wsdl:documentation>Usługa pozwala na pobranie wszystkich poprzednich numerów pesel na podstawie aktualnego numeru.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPoprzednieNumeryPeselOsobyRequest"/>
+      <wsdl:output message="tns:udostepnijPoprzednieNumeryPeselOsobyResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijNumeryPeselRodzicowPoNumerzePeselDziecka">
+      <wsdl:documentation>Usługa pozwala na pobranie aktualnych numerów PESEL rodziców na podstawie numeru PESEL dziecka.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijNumeryPeselRodzicowPoNumerzePeselDzieckaRequest"/>
+      <wsdl:output message="tns:udostepnijNumeryPeselRodzicowPoNumerzePeselDzieckaResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="weryfikujRelacje">
+      <wsdl:documentation>Usługa weryfikuje podane przez system zewnętrzny numer PESEL wnioskującego oraz numer PESEL, imię i
+        nazwisko osoby wyszukiwanej, sprawdza czy istnieje między nimi relacja.</wsdl:documentation>
+      <wsdl:input message="tns:weryfikujRelacjeRequest"/>
+      <wsdl:output message="tns:weryfikujRelacjeResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPowiazanieDzieciZRodzicemPoPesel">
+      <wsdl:documentation>Usługa pozwala na pobranie listy dzieci powiazanych parentyzacja z rodzicem, wyszukiwanym po numerze PESEL.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPowiazanieDzieciZRodzicemPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijPowiazanieDzieciZRodzicemPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijDaneUKRPoPesel">
+      <wsdl:documentation>Usługa pozwala na pobranie danych osoby o statusie UKR po wyszukiwanym numerze pesel.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijDaneUKRPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijDaneUKRPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="udostepnijPelneDaneOsobyUKRPoPesel">
+      <wsdl:documentation>Usługa pozwala na pobranie pełnych danych osoby o statusie UKR po wyszukiwanym numerze pesel.</wsdl:documentation>
+      <wsdl:input message="tns:udostepnijPelneDaneOsobyUKRPoPeselRequest"/>
+      <wsdl:output message="tns:udostepnijPelneDaneOsobyUKRPoPeselResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Udostepnianie" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdl_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:wsp="http://www.w3.org/ns/ws-policy"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+<wsdl:import location="interfejsy/udostepnianie.wsdl" namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"/>
+
+    <wsdl:binding name="DowodyUdostepnianieBinding" type="wsdl_1:DowodyUdostepnianie">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="dostepDoWykazuUniewaznionychDowodowPoSeriaINumer">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/dostepDoWykazuUniewaznionychDowodowPoSeriaINumer/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneDowoduPoNumerze">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneDowoduPoNumerze/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneDowoduPoId">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneDowoduPoId/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneDowodowPoNumerze">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneDowodowPoNumerze/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneWniosku">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneWniosku/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneWnioskow">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneWnioskow/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneAktualnegoDowoduPoPesel">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneAktualnegoDowoduPoPesel/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijDaneAktualnychDowodowPoPesel">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneAktualnychDowodowPoPesel/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="udostepnijStatusWniosku">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/sprawdzStatusWniosku/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijWniosekAktywnyPoPesel">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijWniosekAktywnyPoPesel/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijHistorieStatusuWniosku">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijHistorieStatusuWniosku/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="udostepnijDowodAktywnyPoPesel">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDowodAktywnyPoPesel/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijHistorieStatusuDowodu">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijHistorieStatusuDowodu/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        
+        <wsdl:operation name="udostepnijOstatniDowodPoOsobaId">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijOstatniDowodPoOsobaId/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+	
+        <wsdl:operation name="udostepnijWnioskiWydanieDowoduOsobistego">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijWnioskiWydanieDowoduOsobistego/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+	
+        <wsdl:operation name="udostepnijDowodyOsobiste">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijWnioskiWydanieDowoduOsobistego/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="realizujUdostepnienieDowodowOsobistych">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/realizujUdostepnienieDowodowOsobistych/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="realizujUdostepnienieWnioskow">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/realizujUdostepnienieWnioskow/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijPrzetwarzaneDane">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijPrzetwarzaneDane/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneOstatnioOdebranegoDowoduPoPesel/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijDaneOstatnioOdebranegoDowoduPoPesel2">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneOstatnioOdebranegoDowoduPoPesel2/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="udostepnijAktualneZdjecie">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijAktualneZdjecie/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="DowodyUdostepnianie">
+        <wsdl:port binding="tns:DowodyUdostepnianieBinding" name="DowodyUdostepnianiePort">
+            <soap:address
+                    location="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/DowodyUdostepnianie/DowodyUdostepnianiePort"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+            version="3.0"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../domena/kmd/kmd.xsd"/>
+  <xsd:complexType name="SzczegolyBledu">
+    <xsd:annotation>
+      <xsd:documentation>Typ zawiera szczegółowe informacje o błędzie.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="kod" type="wsp:KodBledu">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera kod opisujący rodzaj błędu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zrodlo" type="kmd:KrotkiTekst">
+        <xsd:annotation>
+          <xsd:documentation>Parametr opisuję źródło wystąpienia błędu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="opis" type="kmd:KrotkiTekst">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera szczegółowe informacje o błędzie jaki wystąpił.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BladTechniczny">
+    <xsd:annotation>
+      <xsd:documentation>Informacja o szczegółach błędu technicznego, jaki wystąpił w trakcie wykonywania usługi. Żądana operacja nie zakończyła się poprawnie.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="kod" type="wsp:KodBledu">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera kod opisujący rodzaj błędu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="opis" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera informacje ogólne o błędzie jaki wystąpił. Parametr opcjonalny.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="opisTechniczny" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera szczegółowe informacje o błędach jakie wystąpiły.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BladBiznesowy">
+    <xsd:annotation>
+      <xsd:documentation>Informacja o szczegółach błędu biznesowego, jaki wystąpił w trakcie wykonywania usługi. Żądana operacja nie zakończyła się poprawnie. Operację można powtórzyć ze zmienionymi parametrami wejściowymi.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="kod" type="wsp:KodBledu">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera kod opisujący rodzaj błędu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="opis" type="kmd:KrotkiTekst">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera informacje ogólne o błędzie jaki wystąpił. Parametr opcjonalny.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="szczegoly" type="wsp:SzczegolyBledu">
+        <xsd:annotation>
+          <xsd:documentation>Parametr zawiera szczegółowe informacje o błędach jakie wystąpiły.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="StronicowanieZawartosci">
+    <xsd:annotation>
+      <xsd:documentation>Typ zawiera informację o stronicowaniu. Zawiera takie informacje jak ilość wyświetlanych elementów na stronie, oraz numer wyświetlanej strony.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="numerStrony" type="xsd:int">
+        <xsd:annotation>
+          <xsd:documentation>Parametr określa numer wyświetlanej obecnie strony.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="liczbaElementowNaStronie" type="xsd:int">
+        <xsd:annotation>
+          <xsd:documentation>Parametr określa ustawioną ilość wyświetlanych elementów na stronie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BladWykonania">
+    <xsd:annotation>
+      <xsd:documentation>Typ występujący w zleceniach asynchroniczny. Typ reprezentuje wynik zapytania, który nie zakończył się pomyślnie, w takim przypadku wynikiem może być błąd biznesowy, lub błąd techniczny.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element minOccurs="0" name="bladTechniczny" type="wsp:BladTechniczny">
+        <xsd:annotation>
+          <xsd:documentation>Informacja o szczegółach błędu technicznego, jaki wystąpił w trakcie wykonywania usługi. Żądana operacja nie zakończyła się poprawnie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="bladBiznesowy" type="wsp:BladBiznesowy">
+        <xsd:annotation>
+          <xsd:documentation>Informacja o szczegółach błędu biznesowego, jaki wystąpił w trakcie wykonywania usługi. Żądana operacja nie zakończyła się poprawnie. Operację można powtórzyć ze zmienionymi parametrami wejściowymi.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:simpleType name="KodBledu">
+    <xsd:annotation>
+      <xsd:documentation>Typ opisujący kod błędu jaki wystąpił.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="IdentyfikatorZadania">
+    <xsd:annotation>
+      <xsd:documentation>
+        Identyfikator żądania - powinien być unikalny dla każdego żądania.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="255"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

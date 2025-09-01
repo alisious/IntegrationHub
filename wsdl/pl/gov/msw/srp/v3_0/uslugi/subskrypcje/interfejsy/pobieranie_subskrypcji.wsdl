@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="pobieranie_subskrypcji"
+                  targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/subskrypcje/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/subskrypcje/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/subskrypcje/"
+                    xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                    xmlns:subskrypcje="http://msw.gov.pl/srp/v3_0/domena/subskrypcje/"
+                    xmlns:udostepnianie="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/udostepnianie/"
+                    xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                    xmlns:crs="http://msw.gov.pl/srp/v3_0/domena/crs/">
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/subskrypcje/parametry/pobieranie_subskrypcji/" schemaLocation="../parametry/pobieranie_subskrypcji.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/subskrypcje/" schemaLocation="../../../domena/subskrypcje/subskrypcje.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/udostepnianie/" schemaLocation="../../pesel/parametry/udostepnianie.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/" schemaLocation="../../../domena/dowody/dowody.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/crs/" schemaLocation="../../../domena/crs/crs.xsd"/>
+
+            <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+            <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+
+            <xsd:element name="dodajNumeryPesel">
+				<xsd:complexType>
+					<xsd:sequence>
+
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+							<xsd:annotation>
+								<xsd:documentation>ID subskrypcji.</xsd:documentation>
+							</xsd:annotation></xsd:element>
+                        <xsd:element name="listaNumerowPesel" type="subskrypcje:ListaNumerowPesel">
+							<xsd:annotation>
+								<xsd:documentation>Lista numerów PESEL, które mają zostać dodane do subskrypcji.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="czyNadpisac" type="xsd:boolean">
+							<xsd:annotation>
+								<xsd:documentation>
+									Jeżeli ta flaga będzie miała wartość TRUE to lista numerów PESEL przypisanych do subskrypcji zostanie nadpisana przez nowo
+									podaną listę. W przeciwnym przypadku zostaną dodane tylko nowe numery PESEL, których do tej pory nie było na liście.
+								</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="dodajNumeryPeselResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="liczbaNumerowPesel" type="xsd:integer">
+							<xsd:annotation>
+								<xsd:documentation>Liczba wszystkich numerów PESEL, które są przypisane do sprawy.</xsd:documentation>
+							</xsd:annotation></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="usunNumeryPesel">
+				<xsd:complexType>
+					<xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+							<xsd:annotation>
+								<xsd:documentation>ID subskrypcji.</xsd:documentation>
+							</xsd:annotation></xsd:element>
+                        <xsd:element name="listaNumerowPesel" type="subskrypcje:ListaNumerowPesel">
+							<xsd:annotation>
+								<xsd:documentation>Lista numerów PESEL do usunięcia z subskrypcji.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="usunNumeryPeselResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="liczbaNumerowPesel" type="xsd:integer">
+							<xsd:annotation>
+								<xsd:documentation>Liczba wszystkich numerów PESEL, które są przypisane do sprawy.</xsd:documentation></xsd:annotation></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDaneOsoby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataZmiany" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="version" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDaneOsobyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDanychOsob" type="udostepnianie:ListaDanychOsob">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista danych osób, których dane zmieniły się od podanego znacznika czasu w zakresie monitorowanym przez subskrypcję.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="maxIloscOsob" type="xsd:int">
+                            <xsd:annotation>
+                                <xsd:documentation>Maksymalna ilość osób zwracanych przez usługę. Jeżeli liczba osób zwróconych przez usługę jest równa temu parametrowi to należy ponownie wywołać usługę.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDaneOsoby2">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataZmiany" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDaneOsoby2Response">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDanychOsob" type="udostepnianie:ListaDanychOsob2">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista danych osób, których dane zmieniły się od podanego znacznika czasu w zakresie monitorowanym przez subskrypcję.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="maxIloscOsob" type="xsd:int">
+                            <xsd:annotation>
+                                <xsd:documentation>Maksymalna ilość osób zwracanych przez usługę. Jeżeli liczba osób zwróconych przez usługę jest równa temu parametrowi to należy ponownie wywołać usługę.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeGminnaDaneOsoby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="dataZmiany" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="version" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeGminnaDaneOsobyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDanychOsob" type="udostepnianie:ListaDanychOsob">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista danych osób, których dane zmieniły się od podanego znacznika czasu w zakresie monitorowanym przez subskrypcję.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="maxIloscOsob" type="xsd:int">
+                            <xsd:annotation>
+                                <xsd:documentation>Maksymalna ilość osób zwracanych przez usługę. Jeżeli liczba osób zwróconych przez usługę jest równa temu parametrowi to należy ponownie wywołać usługę.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeInicjalnaDaneOsoby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idOsoby" type="xsd:integer" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby określający pozycję, do której przesłano poprzednią paczkę danych osób.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="version" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeInicjalnaDaneOsobyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDanychOsob" type="udostepnianie:ListaDanychOsob">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista danych osób, których dane przypisane są do subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataPobrania" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data i czas wywołania usługi pochodząca z systemu SRP. Należy ją podać podczas pobierania subskrypcji przyrostowej.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="maxIloscOsob" type="xsd:int">
+                            <xsd:annotation>
+                                <xsd:documentation>Maksymalna ilość osób zwracanych przez usługę. Jeżeli liczba osób zwróconych przez usługę jest równa temu parametrowi to należy ponownie wywołać usługę podając największe ID osoby.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeInicjalnaDaneOsoby2">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idOsoby" type="xsd:integer" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby określający pozycję, do której przesłano poprzednią paczkę danych osób.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyDolaczycDaneHistoryczne" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    Jeżeli ta flaga będzie miała wartość TRUE to do danych osoby będą dołaczone dane historyczne osoby.
+                                    W przypadku ustawienia wartości FALSE lista będzie zawierała jedynie aktualne dane osób.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeInicjalnaDaneOsoby2Response">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDanychOsob" type="udostepnianie:ListaDanychOsob2">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista danych osób, których dane przypisane są do subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataPobrania" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data i czas wywołania usługi pochodząca z systemu SRP. Należy ją podać podczas pobierania subskrypcji przyrostowej.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="maxIloscOsob" type="xsd:int">
+                            <xsd:annotation>
+                                <xsd:documentation>Maksymalna ilość osób zwracanych przez usługę. Jeżeli liczba osób zwróconych przez usługę jest równa temu parametrowi to należy ponownie wywołać usługę podając największe ID osoby.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeInicjalnaGminnaDaneOsoby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="kt" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:documentation>Kod teryt osób powiązanych z subskrypcją.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="idOsoby" type="xsd:integer" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Id osoby określający pozycję, do której przesłano poprzednią paczkę danych osób.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="version" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Wersja zwracanego obiektu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeInicjalnaGminnaDaneOsobyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDanychOsob" type="udostepnianie:ListaDanychOsob">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista danych osób, których dane przypisane są do subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataPobrania" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data i czas wywołania usługi pochodząca z systemu SRP. Należy ją podać podczas pobierania subskrypcji przyrostowej.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="maxIloscOsob" type="xsd:int">
+                            <xsd:annotation>
+                                <xsd:documentation>Maksymalna ilość osób zwracanych przez usługę. Jeżeli liczba osób zwróconych przez usługę jest równa temu parametrowi to należy ponownie wywołać usługę podając największe ID osoby.</xsd:documentation>
+                            </xsd:annotation> 
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="dodajDowodyOsobiste">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation></xsd:element>
+                        <xsd:element name="listaDowodowOsobistych" type="subskrypcje:ListaDowodowOsobistych">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista dowodów osobistych, które mają zostać dodane do subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="dodajDowodyOsobisteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDodanychDowodowOsobistych" type="subskrypcje:ListaDodanychDowodowOsobistych">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista dowodów osobistych dodanych do subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDowodyOsobiste">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataZmiany" type="xsd:dateTime" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.
+                                    Jeśli parametr nie zostanie podany to zostaną zwrócone wyniki zgodnie z ostanią datą zmiany zapisaną dla podanej subskrypcji.
+                                    Jeśli data zmiany dla danej subskrypcji zapisana w bazie nie będzie wypełniona to będą zwrócone dane inicjujące.
+                               </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDowodyOsobisteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDaneDowodu" type="dow:ListaDaneDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista dowodów osobistych.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeWnioski">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataZmiany" type="xsd:dateTime" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.
+                                    Jeśli parametr nie zostanie podany to zostaną zwrócone wyniki zgodnie z ostanią datą zmiany zapisaną dla podanej subskrypcji.
+                                    Jeśli data zmiany dla danej subskrypcji zapisana w bazie nie będzie wypełniona to będą zwrócone dane inicjujące.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeWnioskiResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDaneWniosku" type="dow:ListaDaneWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista wniosków.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeCRS">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataZmiany" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeCRSResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaStatusow" type="crs:ListaStatusow">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista zmienionych statusów sprzeciwu.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDowodowPoSeriiINumerze">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dataOstatniejZmiany" type="xsd:dateTime">
+                            <xsd:annotation>
+                                <xsd:documentation>Data zmiany, od której zostaną pobrane zmiany.
+                                    Jeśli parametr nie zostanie podany to zostaną zwrócone wyniki zgodnie z ostanią datą zmiany zapisaną dla podanej subskrypcji.
+                                    Jeśli data zmiany dla danej subskrypcji zapisana w bazie nie będzie wypełniona to będą zwrócone dane inicjujące.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="pobierzSubskrypcjeDowodowPoSeriiINumerzeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="listaDowodowSubskrypcja" type="dow:ListaDowodowSubskrypcja">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista dowodów osobistych po serii i numerze.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="usunDowodyOsobiste">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="subskrypcje:IdSubskrypcji">
+                            <xsd:annotation>
+                                <xsd:documentation>ID subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="czyUsunacWszystkieDowodyZSubskrypcji" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Jeżeli ta flaga będzie miała wartość TRUE to z subskrypcji zostaną usunięte wszystkie dowody.
+                                W przeciwnym przypadku zostaną usunięte dowody, których seria i numer znajduje się w listaSeriiINumerowDowodow.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                        <xsd:element name="listaSeriiINumerowDowodow" type="subskrypcje:ListaSeriiINumerowDokumentowTozsamosci">
+                            <xsd:annotation>
+                                <xsd:documentation>Lista dowodów osobistych, które mają zostać usunięte z subskrypcji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="usunDowodyOsobisteResponse">
+                <xsd:complexType>
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="pl">
+                            Response oznaczający poprawne wykonanie akcji. Nie zawiera żadnych danych.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:sequence/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="bladBiznesowyFault">
+        <wsdl:part element="tns:bladBiznesowy" name="fault20"/>
+    </wsdl:message>
+    <wsdl:message name="bladTechnicznyFault">
+        <wsdl:part element="tns:bladTechniczny" name="fault21"/>
+    </wsdl:message>
+    <wsdl:message name="dodajNumeryPeselRequest">
+		<wsdl:part name="parameters" element="tns:dodajNumeryPesel"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="dodajNumeryPeselResponse">
+		<wsdl:part name="parameters" element="tns:dodajNumeryPeselResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="usunNumeryPeselRequest">
+		<wsdl:part name="parameters" element="tns:usunNumeryPesel"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="usunNumeryPeselResponse">
+		<wsdl:part name="parameters" element="tns:usunNumeryPeselResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDaneOsobyRequest">
+		<wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDaneOsoby"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDaneOsobyResponse">
+		<wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDaneOsobyResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDaneOsoby2Request">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDaneOsoby2"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDaneOsoby2Response">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDaneOsoby2Response"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeGminnaDaneOsobyRequest">
+		<wsdl:part name="parameters" element="tns:pobierzSubskrypcjeGminnaDaneOsoby"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeGminnaDaneOsobyResponse">
+		<wsdl:part name="parameters" element="tns:pobierzSubskrypcjeGminnaDaneOsobyResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeInicjalnaDaneOsobyRequest">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeInicjalnaDaneOsoby"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeInicjalnaDaneOsobyResponse">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeInicjalnaDaneOsobyResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeInicjalnaDaneOsoby2Request">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeInicjalnaDaneOsoby2"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeInicjalnaDaneOsoby2Response">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeInicjalnaDaneOsoby2Response"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeInicjalnaGminnaDaneOsobyRequest">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeInicjalnaGminnaDaneOsoby"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeInicjalnaGminnaDaneOsobyResponse">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeInicjalnaGminnaDaneOsobyResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="dodajDowodyOsobisteRequest">
+        <wsdl:part name="parameters" element="tns:dodajDowodyOsobiste"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="dodajDowodyOsobisteResponse">
+        <wsdl:part name="parameters" element="tns:dodajDowodyOsobisteResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDowodyOsobisteRequest">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDowodyOsobiste"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDowodyOsobisteResponse">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDowodyOsobisteResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeWnioskiRequest">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeWnioski"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeWnioskiResponse">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeWnioskiResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeCRSRequest">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeCRS"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeCRSResponse">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeCRSResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDowodowPoSeriiINumerzeRequest">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDowodowPoSeriiINumerze"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pobierzSubskrypcjeDowodowPoSeriiINumerzeResponse">
+        <wsdl:part name="parameters" element="tns:pobierzSubskrypcjeDowodowPoSeriiINumerzeResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="usunDowodyOsobisteRequest">
+        <wsdl:part name="parameters" element="tns:usunDowodyOsobiste"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="usunDowodyOsobisteResponse">
+        <wsdl:part name="parameters" element="tns:usunDowodyOsobisteResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="SubskrypcjePobieranieSubskrypcji">
+        <wsdl:documentation>Interfejs zawiera zbiór usług pobieranie subskrypcji.</wsdl:documentation>
+        <wsdl:operation name="dodajNumeryPesel">
+			<wsdl:documentation>Usługa umożliwia dodanie numerów PESEL do subskrypcji.</wsdl:documentation>
+			<wsdl:input message="tns:dodajNumeryPeselRequest"></wsdl:input>
+			<wsdl:output message="tns:dodajNumeryPeselResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="usunNumeryPesel">
+			<wsdl:documentation>Usługa umożliwia usunięcie numerów PESEL przypisanych do subskrypcji.</wsdl:documentation>
+			<wsdl:input message="tns:usunNumeryPeselRequest"></wsdl:input>
+			<wsdl:output message="tns:usunNumeryPeselResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeDaneOsoby">
+			<wsdl:documentation>Usługa umożliwia pobranie zamówionej subskrypcji</wsdl:documentation>
+			<wsdl:input message="tns:pobierzSubskrypcjeDaneOsobyRequest"></wsdl:input>
+			<wsdl:output message="tns:pobierzSubskrypcjeDaneOsobyResponse"></wsdl:output>
+			<wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeDaneOsoby2">
+            <wsdl:documentation>Usługa umożliwia pobranie zamówionej subskrypcji. Usługa udosŧepaniania dla Systemu CEPiK</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeDaneOsoby2Request"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeDaneOsoby2Response"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeGminnaDaneOsoby">
+			<wsdl:documentation>Usługa umożliwa pobranie aktualnych danych zmionionych osób, które są zameldowanie w gminie użytkownika wywołującego usługę.</wsdl:documentation>
+			<wsdl:input message="tns:pobierzSubskrypcjeGminnaDaneOsobyRequest"></wsdl:input>
+			<wsdl:output message="tns:pobierzSubskrypcjeGminnaDaneOsobyResponse"></wsdl:output>
+			<wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeInicjalnaDaneOsoby">
+            <wsdl:documentation>Usługa umożliwia pobranie zamówionej subskrypcji</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeInicjalnaDaneOsobyRequest"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeInicjalnaDaneOsobyResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeInicjalnaDaneOsoby2">
+            <wsdl:documentation>Usługa umożliwia pobranie zamówionej subskrypcji. Usługa udosŧepaniania dla Systemu CEPiK</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeInicjalnaDaneOsoby2Request"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeInicjalnaDaneOsoby2Response"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeInicjalnaGminnaDaneOsoby">
+            <wsdl:documentation>Usługa umożliwa pobranie aktualnych danych zmionionych osób, które są zameldowanie w gminie użytkownika wywołującego usługę.</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeInicjalnaGminnaDaneOsobyRequest"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeInicjalnaGminnaDaneOsobyResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="dodajDowodyOsobiste">
+            <wsdl:documentation>Usługa umożliwia dodanie dowodów osobistych do subskrypcji.</wsdl:documentation>
+            <wsdl:input message="tns:dodajDowodyOsobisteRequest"></wsdl:input>
+            <wsdl:output message="tns:dodajDowodyOsobisteResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeDowodyOsobiste">
+            <wsdl:documentation>Usługa umożliwa pobranie aktualnych danych dla dowodów osobistych. Jeśli jest to pierwsze wywołanie dla danej subskrypcji to zostaną zwrócone dane inicjujące. Kolejne wywołania będą zwrocły dane przyrosotowo.</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeDowodyOsobisteRequest"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeDowodyOsobisteResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeWnioski">
+            <wsdl:documentation>Usługa umożliwa pobranie aktualnych danych dla wniosków. Jeśli jest to pierwsze wywołanie dla danej subskrypcji to zostaną zwrócone dane inicjujące. Kolejne wywołania będą zwrocły dane przyrosotowo.</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeWnioskiRequest"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeWnioskiResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeCRS">
+            <wsdl:documentation>Usługa umożliwa pobranie zmian w statusie sprzeciwu z rejestru CRS od punktu podanego w czasie. Zawsze zwracany jest aktualny status.</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeCRSRequest"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeCRSResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="pobierzSubskrypcjeDowodowPoSeriiINumerze">
+            <wsdl:documentation>Usługa umożliwia pobranie zamówionej subskrypcji dowodów po serii i numerze</wsdl:documentation>
+            <wsdl:input message="tns:pobierzSubskrypcjeDowodowPoSeriiINumerzeRequest"></wsdl:input>
+            <wsdl:output message="tns:pobierzSubskrypcjeDowodowPoSeriiINumerzeResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="usunDowodyOsobiste">
+            <wsdl:documentation>Usługa umożliwia usunięcie subskrypcji dowodów osobistych</wsdl:documentation>
+            <wsdl:input message="tns:usunDowodyOsobisteRequest"></wsdl:input>
+            <wsdl:output message="tns:usunDowodyOsobisteResponse"></wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault" message="tns:bladBiznesowyFault"/>
+            <wsdl:fault name="bladTechnicznyFault" message="tns:bladTechnicznyFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+</wsdl:definitions>

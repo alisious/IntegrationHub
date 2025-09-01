@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/weryfikacja/" version="3.0"
+            xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/weryfikacja/">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/" schemaLocation="../../../domena/dowody/dowody.xsd"/>
+    <xsd:complexType name="WeryfikowaneDaneAdresu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych adresu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="miejscowosc" type="dow:Miejscowosc">
+                <xsd:annotation>
+                    <xsd:documentation>Miejscowość zamieszkania posiadacza dowodu osobistego. Wartość zgodna z
+                        Załącznikiem nr 1 do Rozporządzenia, pkt. 15.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="ulica" type="dow:Ulica">
+                <xsd:annotation>
+                    <xsd:documentation>Ulica zamieszkania posiadacza dowodu osobistego. Wartość zgodna z Załącznikiem nr
+                        1 do Rozporządzenia, pkt. 16.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="numerDomu" type="dow:NumerDomu">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu posiadacza dowodu osobistego. Wartość zgodna z Załącznikiem nr 1 do
+                        Rozporządzenia, pkt. 17.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="numerLokalu" type="dow:NumerLokalu">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu posiadacza dowodu osobistego. Wartość zgodna z Załącznikiem nr 1 do
+                        Rozporządzenia, pkt. 18.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodPocztowy" type="dow:KodPocztowy">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy posiadacza dowodu osobistego. Wartość zgodna z Załącznikiem nr 1 do
+                        Rozporządzenia, pkt. 14.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneOsobowe">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych osobowych w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerPesel" type="dow:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imiePierwsze" type="dow:Imie">
+                <xsd:annotation>
+                    <xsd:documentation>Pierwsze imię posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieDrugie" type="dow:Imie" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Drugie imię posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:Nazwisko">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <!--
+            <xsd:element minOccurs="0" name="nazwiskoRodowe" type="dow:Nazwisko">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko rodowe posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="plec" type="dow:Plec">
+                <xsd:annotation>
+                    <xsd:documentation>Płeć posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataUrodzenia" type="dow:Data">
+                <xsd:annotation>
+                    <xsd:documentation>Data urodzenia posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="miejsceUrodzenia" type="dow:MiejsceUrodzenia">
+                <xsd:annotation>
+                    <xsd:documentation>Miejsce urodzenia posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="imieOjca" type="dow:Imie">
+                <xsd:annotation>
+                    <xsd:documentation>Imię ojca posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="imieMatki" type="dow:Imie">
+                <xsd:annotation>
+                    <xsd:documentation>Imię matki posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kolorOczu" type="dow:KolorOczu">
+                <xsd:annotation>
+                    <xsd:documentation>Kolor oczu posiadacza dowodu osobistego. Wartości jakie może przyjmować pole
+                        zgodne z pouczeniem nr 4 Załącznika nr 1 do Rozporządzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="wzrost" type="dow:Wzrost">
+                <xsd:annotation>
+                    <xsd:documentation>Wzrost w centymetrach posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            -->
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RaportWeryfikacji">
+        <xsd:annotation>
+            <xsd:documentation>Raport weryfikacji danych. Jest zwracany jako rezultat weryfikacji podawanych danych
+                osoby z danymi zawartymi w rejestrze RDO. Zawiera wszystkie pola zawarte w zakresie weryfikacji
+                rozszerzone o informację zgodności.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="zgodnoscElementuDanych"
+                         type="xsd_1:ZgodnoscElementuDanych">
+                <xsd:annotation>
+                    <xsd:documentation>Rezultat weryfikacji danych dowodu osobistego z danymi rejestru RDO.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZakresDanychDoWeryfikacji">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący określeniu zakresu danych, jaki ma zostać zweryfikowany. Przekazane dane
+                dowodów nie ujęte w zakresie nie znajdą się w rezultacie weryfikacji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="weryfikowanyElement" type="kmd:ElementDanych">
+                <xsd:annotation>
+                    <xsd:documentation>Elementy, których wartości zostaną zweryfikowane.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych dowodu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <!--
+            <xsd:element minOccurs="0" name="daneAdresu" type="xsd_1:WeryfikowaneDaneAdresu">
+                <xsd:annotation>
+                    <xsd:documentation>Zestaw danych adresowych widocznych na dowodzie osobistym.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            -->
+            <xsd:element name="daneOsobowe" type="xsd_1:WeryfikowaneDaneOsobowe">
+                <xsd:annotation>
+                    <xsd:documentation>Zestaw danych osobowych widocznych na dowodzie osobistym.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataProdukcji" type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>Data produkcji dowodu osobistego. Jest to data znajdująca się na dowodzie i
+                        oznaczona na nim jako "Data wydania".
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWaznosci" type="kmd:DataKalendarzowa">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <!--
+            <xsd:element minOccurs="0" name="nazwaWystawcy" type="dow:NazwaWystawcy">
+                <xsd:annotation>
+                    <xsd:documentation>Słowna nazwa wystawcy dowodu osobistego. Np. PREZYDENT MIASTA STOŁECZNEGO
+                        WARSZAWY.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            -->
+            <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZgodnoscElementuDanych">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu informacji o zgodności wartości danego elementu danych z danymi
+                rejestru RDO.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="kmd:ElementDanych">
+                <xsd:sequence>
+                    <xsd:element name="daneZgodne" type="xsd:boolean"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:simpleType name="StatusWeryfikacjiWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Status weryfikacji możliwości złożenia wniosku za pomocą e-usługi.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="OK">
+                <xsd:annotation>
+                    <xsd:documentation>Osoba spełnia warunki do złożenia wniosku za pomocą e-usługi</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="NUMER_PESEL_ANULOWANY">
+                <xsd:annotation>
+                    <xsd:documentation>Podany numer PESEL jest anulowany, a więc osoba nie może złożyć wniosku za pomocą e-usługi</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK_POLSKIEGO_OBYWATELSTWA">
+                <xsd:annotation>
+                    <xsd:documentation>Osoba o podanym numerze PESEL nie posiada obywatelstwa polskiego, a więc nie może złożyć wniosku za pomocą e-usługi</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZAREJESTROWANY_ZGON">
+                <xsd:annotation>
+                    <xsd:documentation>Osoba o podanym numerze PESEL ma zarejestrowany zgon w rejestrze PESEL, a więc nie może złożyć wniosku za pomocą e-usługi</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="OSOBA_NIEPELNOLETNIA">
+                <xsd:annotation>
+                    <xsd:documentation>Osobie o podanym numerze PESEL pozostało więcej niż 30 dni do dnia 18-tych urodzin.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ISTNIEJE_AKTYWNY_WNIOSEK_LUB_DOWOD">
+                <xsd:annotation>
+                    <xsd:documentation>Osoba o podanym numerze PESEL posiada już wniosek będący w realizacji
+                        (czyli wniosek w statusie Wprowadzony, Nowy, Zawieszony, Odmowa Art. 32, Odwołanie, Przekazany do SPD lub Przyjęty przez SPD),
+                        lub dowód, który nie został odebrany (czyli dowód w statusie Spersonalizowany, Wysłany,
+                        Przyjęty przez urząd, Odmowa art.32 lub Odwołanie)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KOBIETA_16_LAT_MEZATKA_PELNOLETNIA">
+                <xsd:annotation>
+                    <xsd:documentation>Osoba o podanym numerze PESEL to kobieta, która ukończyła 16 lat i zawarła małżeństwo.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

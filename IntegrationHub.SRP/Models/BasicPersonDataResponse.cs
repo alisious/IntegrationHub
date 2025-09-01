@@ -10,6 +10,6 @@ namespace IntegrationHub.SRP.Models
     public class BasicPersonDataResponse
     {
         [JsonPropertyName("znalezioneOsoby")]
-        public List<BasicPersonData> Persons { get; set; } = new();
+        public List<PersonData> Persons { get; set; } = new();
     }
 }

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            targetNamespace="http://msw.gov.pl/srp/v3_0/domena/zleceniazewnetrzne/" version="3.0">
+
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                schemaLocation="../../domena/kmd/kmd.xsd"/>
+
+    <xsd:simpleType name="Uwagi">
+        <xsd:annotation>
+            <xsd:documentation>Uwaga w formie tekstowej</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="4000"/>
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="RodzajNiezgodnosci">
+        <xsd:annotation>
+            <xsd:documentation>Dopuszczalne wartości dla rodzaju zniezgodności.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_ADRESACH_POBYTU_CZASOWEGO">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w adresach pobytu czasowego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_ADRESACH_POBYTU_STALEGO">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w adresach pobytu stałego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_DOKUMENTU_TOZSAMOSCI_CUDZOZIEMCA">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych dokumentu tożsamości cudzoziemca</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_STANU_CYWILNEGO">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych stanu cywilnego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_URODZENIA">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych urodzenia</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_WYJAZDU">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych wyjazdu</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_ZGONU">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych zgonu</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_IMIONACH">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w imionach</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_KRAJU_AKTUALNEGO_LUB_POPRZEDNIEGO_MIEJSCA_ZAMIESZKANIA">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w kraju aktualnego lub poprzedniego zamieszkania</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_NAZWISKACH">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w nazwiskach</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_OBYWATELSTWACH">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w obywatelstwach</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_DOWODU_OSOBISTEGO">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych dowodu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_DANYCH_PASZPORTU">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w danych paszportu</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_W_STATUSIE_CUDZOZIEMCA">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności w statusie cudzoziemca</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="USUN_NIEZGODNOSCI_PODWOJNY_PESEL">
+                <xsd:annotation>
+                    <xsd:documentation>Usuń niezgodności - podwójny PESEL</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="StatusZlecenia">
+        <xsd:annotation>
+            <xsd:documentation>Dopuszczalne wartości dla statusu zlecenia.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="NOWE">
+                <xsd:annotation>
+                    <xsd:documentation>Nowe zlecenie</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PRZYJETE">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie przyjęte</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="REALIZOWANE">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie w trakcie realizacji</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZREALIZOWANE">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie zrealizowane</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ODRZUCONE">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie odrzucone</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DO_AKCEPTACJI">
+                <xsd:annotation>
+                    <xsd:documentation>Zlecenie w trakcie akceptacji</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="NazwaOrganu">
+        <xsd:annotation>
+            <xsd:documentation>Nazwa organu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="kmd:ZnakiSRP">
+            <xsd:maxLength value="300"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

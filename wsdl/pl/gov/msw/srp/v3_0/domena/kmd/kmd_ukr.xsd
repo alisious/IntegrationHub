@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+			targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+	<xsd:simpleType name="OpiekunStopienPokrewienstwa">
+		<xsd:annotation>
+			<xsd:documentation>Stopień pokrewieństwa opiekuna UKR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MATKA">
+				<xsd:annotation>
+					<xsd:documentation>Matka</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="OJCIEC">
+				<xsd:annotation>
+					<xsd:documentation>Ojciec</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="OPIEKUN_TYMCZASOWY">
+				<xsd:annotation>
+					<xsd:documentation>Opiekun tymczasowy na podstawie orzeczenia polskiego sądu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="OSOBA_SPRAWUJACA_PIECZE_ZASTEPCZA">
+				<xsd:annotation>
+					<xsd:documentation>Osoba sprawująca pieczę zastępczą na podstawie orzeczenia polskiego sądu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="INNA_OSOBA">
+				<xsd:annotation>
+					<xsd:documentation>Inna osoba sprawująca faktyczną opiekę nad dzieckiem (np. ciotka, siostra)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

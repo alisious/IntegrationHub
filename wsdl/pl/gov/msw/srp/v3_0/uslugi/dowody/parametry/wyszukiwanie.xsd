@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/" version="3.0"
+            xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+            xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/"
+            xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/"
+                schemaLocation="parametry.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                schemaLocation="../../../domena/dowody/dowody.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/"
+                schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/"
+                schemaLocation="../../../domena/pesel/pesel.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+                schemaLocation="../../../domena/kmd/kmd.xsd"/>
+
+    <xsd:complexType name="KryteriumSeriaNumerDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów związanych z wyszukaniem po seri i numerze dowodu.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="seriaINumer" type="wys:KryteriumTekstowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numeru i serii dowodu pisanych razem bez dodatkowych znaków.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodTeryt" type="wys:KryteriumTekstowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny organu obsługującego proces wydawania dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZnalezionyDowodZUdostepnianymiDanymi">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy reprezentacji rekordu znalezionego dowodu osobistego z udostępnianymi danymi.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                <xsd:annotation>
+                    <xsd:documentation>Seria znalezionego dowodu osobistego. (np. ACL)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataPersonalizacji" type="dow:Data">
+                <xsd:annotation>
+                    <xsd:documentation>Data personalizacji dowodu osobistego. Jest to data znajdująca się na dowodzie i
+                        oznaczona na nim jako "Data wydania".
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="dow:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL osoby ubiegającej się o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imiona" type="dow:Imiona">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona osoby ubiegającej się o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:Nazwisko">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko osoby ubiegającej się o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWaznosci" type="dow:Data">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dowodu osobistego..
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusDokumentu" type="dow:StatusDowodu" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Pole opisujace techniczny status
+                        dokumentu dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające identyfikator danych osoby w bazie danych PESEL. Dana
+                        techniczna.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="zdjecie" type="xsd:base64Binary" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Zdjecie posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="idDowodu" type="dow:IdDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>Id techniczne dowodu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodTerytUrzeduWydajacego" type="kmd:ZnakiSRP">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny Urzedu, który wydał dowod osobisty.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwaUrzeduWydaja" type="kmd:ZnakiSRP">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa urzędu wydawającego dowód osobist.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="identyfikatorWersjiRekorduDowodu" type="dow:WersjaElementu">
+                <xsd:annotation>
+                    <xsd:documentation>Identyfikator przechowujący znacznik stanu danych w całym rekordzie.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusWarstwyEdo" type="dow:StatusWarstwyEdo" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Pole opisujące techniczny status warstwy elektronicznej dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWaznosciWynikajacaZObwieszczenia" type="kmd:DataKalendarzowa" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności wynikająca z obwieszczenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZawieszenia" type="kmd:Czas" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data zawieszenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organZawieszajacyDowod" type="kmd:ZnakiSRP" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa organu zawieszającego dowód.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataCofnieciaZawieszenia" type="kmd:Czas" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data cofnięcia zawieszenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organCofajacyZawieszenieDowodu" type="kmd:ZnakiSRP" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa organu wycofującego zawieszenie dowodu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataPrzyjeciaKopertyPuk" type="xsd:date" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data przyjęcia koperty z puk.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="podpis" type="xsd:base64Binary" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Podpis.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZwrotu" type="dow:Data" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data zwrotu dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRejestrujacyZwrot" type="kmd:ZnakiSRP" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa organu rejestrującego zwrot dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZnalezionyDowod">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy reprezentacji rekordu znalezionego dowodu osobistego.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="xsd_1:ZnalezionyDowodZUdostepnianymiDanymi">
+                <xsd:sequence>
+                    <xsd:element name="dataObwieszczenia" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Data obwieszczenia Ministra, na podstawie którego dowody są
+                                unieważniane
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumDanychOsobowych">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi osobowymi posiadacza dowodu lub osoby
+                składającej wniosek.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="numerPesel" type="wys:KryteriumLiczbowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numeru PESEL posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodTeryt" type="wys:KryteriumTekstowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny organu obsługującego proces wydawania dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZnalezionyWniosek">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy reprezentacji rekordu znalezionego wniosku o dowód osobisty.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idWniosku" type="dow:IdWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Id wniosku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerWniosku" type="dow:NumerWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Numer wniosku o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="pesel" type="dow:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL osoby ubiegającej się o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imiona" type="dow:Imiona">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona osoby ubiegającej się o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="dow:Nazwisko">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko osoby ubiegającej się o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusWniosku" type="dow:StatusWniosku" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Status przetwarzania danych wniosku o wydanie dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dodanoPrzezEUsluge" type="xsd:boolean" minOccurs="0" default="false">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje czy wniosek zostal zlozony przez eUsluge.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="certyfikatPodpisuOsobistego" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Certyfikat podpisu osobistego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="IstniejacyWniosek">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy reprezentacji rekordu znalezionego wniosku o dowód osobisty.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idWniosku" type="dow:IdWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Id wniosku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerWniosku" type="dow:NumerWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Numer wniosku o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadTeryt" type="kmd:ZnakiSRP">
+                <xsd:annotation>
+                    <xsd:documentation>Kod teryt urzędu obsługującego wniosek</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="urzadNazwa" type="kmd:ZnakiSRP">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa urzędu obsługującego wniosek</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="StacjonarnyWniosek">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy reprezentacji rekordu znalezionego wniosku w trybie stacjonarnym.
+                Uzupelniany jedynie, jeśli wnioski wyszukiwane są na stacji mobilnej.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idWniosku" type="dow:IdWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Id wniosku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerWniosku" type="dow:NumerWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Numer wniosku o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusWniosku" type="dow:StatusWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Status wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumDokumentu">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi dokumentu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="seriaINumer" type="wys:KryteriumTekstoweZGwiazdka">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numeru i serii dowodu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaZnalezionychWnioskow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych wnioskach o wydanie dowodu
+                osobistego. W przypadku stosowania mechanizmu stronicowania parametr liczbaZnalezionychWnioskow określa
+                liczbę wszystkich rekordów spełniających zadane kryteria i może być większa od liczby zwróconych
+                rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaZnalezionychWnioskow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="znalezionyWniosek" type="xsd_1:ZnalezionyWniosek">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaIstniejacychWnioskow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych wnioskach o wydanie dowodu
+                osobistego. W przypadku stosowania mechanizmu stronicowania parametr liczbaZnalezionychWnioskow określa
+                liczbę wszystkich rekordów spełniających zadane kryteria i może być większa od liczby zwróconych
+                rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaWnioskow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="istniejacyWniosek" type="xsd_1:IstniejacyWniosek">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaWnioskow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o numerach wniosków.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="idWniosku" type="dow:IdWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numer wniosku o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaDowodow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o numerach dowodów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" name="idDowodu" type="dow:IdDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>Id techniczne dowodu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaPelnychWnioskow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych wnioskach o wydanie dowodu
+                osobistego. W przypadku stosowania mechanizmu stronicowania parametr liczbaZnalezionychWnioskow określa
+                liczbę wszystkich rekordów spełniających zadane kryteria i może być większa od liczby zwróconych
+                rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaZnalezionychWnioskow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="wnioski" type="dow:DaneWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaPelnychDowodowZUdostepnianymiDanymi">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych dowodach osobistych. W przypadku
+                stosowania mechanizmu stronicowania parametr liczbaZnalezionychDowodow określa liczbę wszystkich
+                rekordów spełniających zadane kryteria i może być większa od liczby zwróconych rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaZnalezionychDowodow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="dowody" type="dow:DaneDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaZnalezionychDowodowZUdostepnianymiDanymi">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych dowodach osobistych z danymi do
+                udostępnienia. W przypadku
+                stosowania mechanizmu stronicowania parametr liczbaZnalezionychDowodow określa liczbę wszystkich
+                rekordów spełniających zadane kryteria i może być większa od liczby zwróconych rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaZnalezionychDowodow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="znalezionyDowod"
+                         type="xsd_1:ZnalezionyDowodZUdostepnianymiDanymi">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaZnalezionychDowodow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych dowodach osobistych. W przypadku
+                stosowania mechanizmu stronicowania parametr liczbaZnalezionychDowodow określa liczbę wszystkich
+                rekordów spełniających zadane kryteria i może być większa od liczby zwróconych rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaZnalezionychDowodow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="znalezionyDowod" type="xsd_1:ZnalezionyDowod">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ListaIstniejacychDowodow">
+        <xsd:annotation>
+            <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych dowodach osobistych. W przypadku
+                stosowania mechanizmu stronicowania parametr liczbaZnalezionychDowodow określa liczbę wszystkich
+                rekordów spełniających zadane kryteria i może być większa od liczby zwróconych rezultatów.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="liczbaZnalezionychDowodow" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania
+                        mechanizmu stronicowania może być większa od liczby zwróconych rekordów.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="dowody" type="xsd_1:ZnalezionyDowod">
+                <xsd:annotation>
+                    <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu
+                        sortowania lista zawiera tylko rekordy z wybranej strony.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriaWyszukiwaniaWnioskow">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów wyszukiwania wniosków o dowody osobiste.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="kryteriumDanychOsobowych" type="xsd_1:KryteriumDanychOsobowych">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium wyszukiwania po danych osobowych.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kryteriumWniosku" type="xsd_1:KryteriumWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium wyszukiwania po danych wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodTeryt" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Definiuje kod teryt przy wyszukiwaniu wnioskow przez akcje "Tylko z eUslugi".
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:choice minOccurs="0">
+                <xsd:element name="rodzajWyszukiwaniaWniosku" type="wys:RodzajWyszukiwaniaWniosku">
+                    <xsd:annotation>
+                        <xsd:documentation>Określa rodzaj wyszukiwania wniosku.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="tylkoMojeWnioski" type="xsd:boolean">
+                    <xsd:annotation>
+                        <xsd:documentation>Parametr wyświetlający tylko moje wnioski.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumWniosku">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów wyszukiwania wniosku.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="numerWniosku" type="wys:KryteriumTekstoweZGwiazdka">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numer wniosku o wydanie dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="numerPesel" type="wys:KryteriumLiczbowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numeru PESEL posiadacza dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="statusWniosku" type="dow:StatusWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium aktualnego statusu wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodTerytOrganWydajacy" type="wys:KryteriumTekstowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny organu obsługującego proces wydawania dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataZlozeniaWniosku" type="wys:KryteriumDat">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium daty złożenia wniosku.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumStatusDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów związanych z wyszukaniem po statusie dowodu.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="statusDowodu" type="dow:StatusDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium statusu dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataPersonalizacji" type="wys:KryteriumDat">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium daty personalizacji (produkcji, wydania) dowodu osobistego. Jest to
+                        data znajdująca się na dowodzie i oznaczona na nim jako "Data wydania".
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodTeryt" type="wys:KryteriumTekstowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny urzędu, który wydawał dowod osobisty.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumPrzyjeciePukDowodu">
+        <xsd:annotation>
+            <xsd:documentation>
+                Typ określa zestaw kryteriów związanych z wyszukaniem dla masowego przyjęcia kopert z PUK.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="xsd_1:KryteriumStatusDowodu">
+                <xsd:sequence>
+                    <xsd:element name="czyCertyfikatIdentyfikacji" type="xsd:boolean" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Kryterium informujące czy zwrócić tylko dowody osobiste posiadające certyfikat identyfikacji.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataPrzyjeciaPuk" type="kmd:DataKalendarzowa" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Kryterium daty przyjęcia koperty z PUK.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="dataWyslaniaDowodu" type="wys:KryteriumDat">
+                        <xsd:annotation>
+                            <xsd:documentation>Kryterium daty wysłania dowodu do gminy.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="seriaINumer" type="wys:KryteriumTekstowe" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Kryterium numeru i serii dowodu pisanych razem bez dodatkowych znaków.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="KryteriumDlaDowoduPoIdOsoby">
+        <xsd:annotation>
+            <xsd:documentation>Typ określa zestaw kryteriów związanych z wyszukaniem dowodów po identyfikatorze osoby.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium wyszukiwania dowodu po identyfikatorze osoby.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="kodTeryt" type="wys:KryteriumTekstowe">
+                <xsd:annotation>
+                    <xsd:documentation>Kod terytorialny organu obsługującego proces wydawania dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

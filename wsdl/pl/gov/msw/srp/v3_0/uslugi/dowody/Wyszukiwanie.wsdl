@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Wyszukiwanie" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+>
+    <wsdl:import location="interfejsy/wyszukiwanie.wsdl" namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"/>
+    <wsdl:binding name="DowodyWyszukiwanieBinding" type="wsdl_1:DowodyWyszukiwanie">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="wyszukajDowodPoSeriaNumer">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/wyszukajDowodPoSeriaNumer/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajDowodPoSeriaNumerZGwiazdka">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/wyszukajDowodPoSeriaNumerZGwiazdka/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="wyszukajWnioski">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/wyszukajWnioski/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="wyszukajDowodPoStatusie">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/wyszukajDowodPoStatusie/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="wyszukajDowodyDlaPrzyjeciaPuk">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/wyszukajDowodyDlaPrzyjeciaPuk/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="wyszukajDowodyPoIdOsoby">
+            <soap:operation
+                    soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/wyszukajDowodyPoIdOsoby/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+    <wsdl:service name="DowodyWyszukiwanie">
+        <wsdl:port binding="tns:DowodyWyszukiwanieBinding" name="DowodyWyszukiwaniePort">
+            <soap:address
+                    location="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Wyszukiwanie/DowodyWyszukiwanie/DowodyWyszukiwaniePort"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

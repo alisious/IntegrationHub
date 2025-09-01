@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pes="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <pes:udostepnijAktualneDaneOsobyPoId>
+         <!--Optional:-->
+         <requestId>3333</requestId>
+         <idOsoby>8915811133892491966</idOsoby>
+         <!--Optional:-->
+         <version>v1</version>
+      </pes:udostepnijAktualneDaneOsobyPoId>
+   </soapenv:Body>
+</soapenv:Envelope>

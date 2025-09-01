@@ -1,0 +1,102 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+   <soap:Body>
+      <ns2:udostepnijAktualneDaneOsobyPoIdResponse xmlns:ns2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+         <daneOsoby>
+            <czyAnulowano>false</czyAnulowano>
+            <daneDowoduOsobistego>
+               <dataWaznosci>2026-08-16</dataWaznosci>
+               <seriaINumer>CDB153126</seriaINumer>
+               <wystawca>
+                  <kodTerytorialny>3024032</kodTerytorialny>
+                  <rodzajOrganu>WOJT</rodzajOrganu>
+               </wystawca>
+               <dataAktualizacji>2016-09-09T10:23:51.793</dataAktualizacji>
+            </daneDowoduOsobistego>
+            <daneImion>
+               <imiePierwsze>TOMASZ</imiePierwsze>
+               <dataAktualizacji>2016-09-09T10:23:51.793</dataAktualizacji>
+            </daneImion>
+            <daneKrajowZamieszkania>
+               <krajZamieszkania kod="500">POLSKA</krajZamieszkania>
+               <dataAktualizacji>2016-09-09T10:23:51.793</dataAktualizacji>
+               <podstawaWpisu>
+                  <dataZmiany>19701020</dataZmiany>
+                  <organ xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                  <organZmiany xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+               </podstawaWpisu>
+            </daneKrajowZamieszkania>
+            <daneNazwiska>
+               <nazwisko>NOWAK</nazwisko>
+               <nazwiskoRodowe>
+                  <nazwisko>NOWAK</nazwisko>
+               </nazwiskoRodowe>
+               <dataAktualizacji>2016-09-09T10:23:51.793</dataAktualizacji>
+               <podstawaWpisu>
+                  <dataZmiany>2005-10-16</dataZmiany>
+                  <organ xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                  <organZmiany xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+               </podstawaWpisu>
+            </daneNazwiska>
+            <daneObywatelstwa>
+               <dataAktualizacji>2014-12-31T00:00:00.000</dataAktualizacji>
+               <obywatelstwo kod="500">POLSKIE</obywatelstwo>
+            </daneObywatelstwa>
+            <danePobytuStalego>
+               <adresZameldowaniaId>98047648803184898</adresZameldowaniaId>
+               <numerDomu>24</numerDomu>
+               <gmina kt="3024032">KAŹMIERZ</gmina>
+               <kodPocztowy>64530</kodPocztowy>
+               <miejscowoscDzielnica symbolMiejscowosci="0584550">
+                  <kodTerytorialny>3024032</kodTerytorialny>
+                  <nazwaMiejscowosci>GORSZEWICE</nazwaMiejscowosci>
+               </miejscowoscDzielnica>
+               <wojewodztwo woj="30">WIELKOPOLSKIE</wojewodztwo>
+               <komentarz xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+               <dataOd>19701020</dataOd>
+               <dataAktualizacji>2005-10-16T00:00:00.000</dataAktualizacji>
+            </danePobytuStalego>
+            <daneStanuCywilnego>
+               <dataZawarcia>
+                  <data>19970703</data>
+               </dataZawarcia>
+               <numerAktu>90/97</numerAktu>
+               <stanCywilny>ZONATY</stanCywilny>
+               <organSporzadzajacyAkt>
+                  <kodTerytorialny>3026044</kodTerytorialny>
+                  <rodzajOrganu>URZAD_STANU_CYWILNEGO</rodzajOrganu>
+               </organSporzadzajacyAkt>
+               <wspolmalzonek>
+                  <imie>WIOLETA</imie>
+                  <nazwiskoRodowe>CIEŚLAK</nazwiskoRodowe>
+               </wspolmalzonek>
+               <czyZmienianoPlec>false</czyZmienianoPlec>
+               <numerKolejnosci>1</numerKolejnosci>
+               <dataAktualizacji>2006-08-31T00:00:00.000</dataAktualizacji>
+            </daneStanuCywilnego>
+            <daneUrodzenia>
+               <dataUrodzenia>19701020</dataUrodzenia>
+               <imieMatki>MARIANNA</imieMatki>
+               <imieOjca>KAZIMIERZ</imieOjca>
+               <krajUrodzenia/>
+               <miejsceUrodzenia>
+                  <nazwaMiejscowosci>SZAMOTUŁY</nazwaMiejscowosci>
+               </miejsceUrodzenia>
+               <nazwiskoRodoweMatki>SOBAŃSKA</nazwiskoRodoweMatki>
+               <numerAktu>944/70</numerAktu>
+               <organSporzadzajacyAkt>
+                  <kodTerytorialny>3024074</kodTerytorialny>
+                  <rodzajOrganu>URZAD_STANU_CYWILNEGO</rodzajOrganu>
+               </organSporzadzajacyAkt>
+               <plec>MEZCZYZNA</plec>
+               <dataAktualizacji>2005-10-16T00:00:00.000</dataAktualizacji>
+            </daneUrodzenia>
+            <dataAktualizacji>2016-09-09T10:23:51.793</dataAktualizacji>
+            <dataZalozeniaRekordu>1987-04-05T00:00:00.000</dataZalozeniaRekordu>
+            <idOsoby>6326375721044016740</idOsoby>
+            <numerPesel>70102004671</numerPesel>
+            <wersjaRekordu>2</wersjaRekordu>
+         </daneOsoby>
+      </ns2:udostepnijAktualneDaneOsobyPoIdResponse>
+   </soap:Body>
+</soap:Envelope>

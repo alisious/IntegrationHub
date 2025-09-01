@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/wyszukiwanie/" version="3.0" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/" xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/wyszukiwanie/">
+  <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/" schemaLocation="../../../domena/pesel/pesel.xsd"/>
+  <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+  <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/" schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+  <xsd:complexType name="KryteriumDanychZgonu">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi zgonu.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="numerAktu" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium numeru aktu zgonu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kodTerytorialnyWystawcyAktu" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu terytorialnego organu rejestrującego akt zgonu. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element minOccurs="0" name="dataZgonu" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium daty zgonu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ListaZnalezionychOsob">
+    <xsd:annotation>
+      <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych osobach. W przypadku stosowania mechanizmu stronicowania parametr liczbaZnalezionychOsob określa liczbę wszystkich rekordów spełniających zadane kryteria i może być większa od liczby zwróconych rezultatów.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="liczbaZnalezionychOsob" type="xsd:int">
+        <xsd:annotation>
+          <xsd:documentation>Liczba wszystkich rekordów spełniających zadane kryteria. W przypadku stosowania mechanizmu stronicowania może być większa od liczby zwróconych rekordów.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="znalezionaOsoba" type="xsd_1:ZnalezionaOsoba">
+        <xsd:annotation>
+          <xsd:documentation>Lista rekordów spełniających kryteria. W przypadku stosowania mechanizmu sortowania lista zawiera tylko rekordy z wybranej strony.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ZnalezioneOsoby">
+    <xsd:annotation>
+      <xsd:documentation>Typ służy przekazywaniu listy informacji o znalezionych osobach.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="znalezionaOsoba" type="xsd_1:PodstawoweDaneOsobyZDanymiPobytu"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="KryteriumNazwiska">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi nazwiska.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="nazwisko" type="wys:KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+            <xsd:documentation>Kryterium nazwiska osoby. Jako rozdzielenie członów nazwisk stosuje się znak "-" (myślnik). Podana wartość wyszukiwana jest łącznie, wśród wszystkich członów nazwiska razem, a nie każdego z osobna.  Na przykład po podaniu "Kowal*" zostanie znaleziony "Kowalski-Wiśniewski" ale nie zostanie znaleziony "Wiśniewski-Kowalski".Przykłady użycia:"Kowal" - znalezione zostaną tylko osoby posiadające jednoczłonowe nazwisko "Kowal","Kow*" - wszystkie nazwiska (jedno i dwuczłonowe) posiadające początek pierwszego członu "Kow","Kowal-* - wszystkie nazwiska (jedno i dwuczłonowe), których pierwszy człon to "Kowal","Kowal-W*" - wszystkie nazwiska dwuczłonowe, których pierwszy człon to "Kowal" a drugi rozpoczyna się na literę "W".</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="nazwiskoRodowe" type="wys:KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium nazwiska rodowego osoby. Jako rozdzielenie członów nazwisk stosuje się znak "-" (myślnik). Podana wartość wyszukiwana jest łącznie, wśród wszystkich członów nazwiska rodowego razem, a nie każdego z osobna.  Na przykład po podaniu "Kowal*" zostanie znaleziony "Kowalski-Wiśniewski" ale nie zostanie znaleziony "Wiśniewski-Kowalski".Przykłady użycia:"Kowal" - znalezione zostaną tylko osoby posiadające jednoczłonowe nazwisko "Kowal","Kow*" - wszystkie nazwiska (jedno i dwuczłonowe) posiadające początek pierwszego członu "Kow","Kowal-* - wszystkie nazwiska (jedno i dwuczłonowe), których pierwszy człon to "Kowal","Kowal-W*" - wszystkie nazwiska dwuczłonowe, których pierwszy człon to "Kowal" a drugi rozpoczyna się na literę "W".</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dowolneNazwisko" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium określa czy po wpisaniu wartości w pole "nazwisko" mają zostać zwrócone osoby mające podaną wartość w nazwisku lub nazwisku rodowym.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dowolnyCzlonNazwiska" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium dowolnego członu nazwiska. Podana wartość wyszukiwana jest wśród obu członów nazwiska. Na przykład dla wartości kryterium  "Kowal*" zostaną znalezione osoby z nazwiskami "Kowalski-Wiśniewski" oraz "Wiśniewski-Kowalski".</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="innyZapis" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium określa czy wyszukiwanie powinno zostać przeprowadzone RÓWNIEŻ po innym zapisie nazwiska.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumStanuCywilnego">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi stanu cywilnego.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+    	<xsd:element minOccurs="0" name="numerAktu"
+    		type="wys:KryteriumTekstowe">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Kryterium numeru aktu małżeństwa.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+
+    	<xsd:element minOccurs="0" name="stanCywilny"
+    		type="kmd:StanCywilny">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Kryterium stanu cywilnego.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+    	<xsd:element minOccurs="0" name="numerPeselWspolmalzonka"
+    		type="wys:KryteriumLiczbowe">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Kryterium numeru PESEL współmałżonka.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+    	<xsd:element minOccurs="0" name="imieWspolmalzonka"
+    		type="wys:KryteriumTekstowe">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Kryterium imienia współmałżonka. W rejestrze PESEL
+    				przechowywane jest jedynie pierwsze imię
+    				współmałżonka.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+    	<xsd:element minOccurs="0" name="nazwiskoRodoweWspolmalzonka"
+    		type="wys:KryteriumTekstowe">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Kryterium nazwiska rodowego współmałżonka. Składnia
+    				kryterium jest analogiczna do parametru nazwiska
+    				rodowego w KryteriumNazwiska.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+    	<xsd:element minOccurs="0" name="dataZmiany"
+    		type="wys:KryteriumDat">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Kryterium daty zmiany.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+        <xsd:element name="formaUstania" type="kmd:FormaUstaniaMalzenstwa" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+                <xsd:documentation>rejestrowana forma ustania małżeństwa.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="wystawcaAktu" type="kmd:Organ" minOccurs="0" maxOccurs="1">
+    		<xsd:annotation>
+    			<xsd:documentation>Organ wystawcy dokumentu</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+        <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+    		<xsd:annotation>
+    			<xsd:documentation>
+    				Zakres wyszukiwania danych. Przyjmuje wartości: dane
+    				aktualne, dane poprzednie, dane aktualne lub
+    				poprzednie.
+    			</xsd:documentation>
+    		</xsd:annotation>
+    	</xsd:element>
+
+
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumPobytu">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi pobytu.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="ulica" type="wys:KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium ulicy adresu pobytu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="numerDomu" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium numeru domu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="numerLokalu" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium numeru lokalu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="miejscowosc" type="wys:KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium miejscowości pobytu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kodTerytorialny" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu terytorialnego adresu pobytu. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kodPocztowy" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu pocztowego adresu pobytu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dataOd" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium daty początkowej pobytu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dataDo" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium daty końcowej pobytu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="aktualnyAdresStaly" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Informacja czy zakres wyszukiwania obejmuje aktualne adresy stałe.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="aktualnyAdresCzasowy" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Informacja czy zakres wyszukiwania obejmuje aktualne adresy czasowe.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="poprzednieAdresyStale" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Informacja czy zakres wyszukiwania obejmuje poprzednie adresy stałe.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="poprzednieAdresyCzasowe" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Informacja czy zakres wyszukiwania obejmuje poprzednie adresy czasowe.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumDokumentu">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi dokumentu tożsamości.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="seriaINumer" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium serii i numeru dokumentu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dataWaznosci" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium daty ważności dokumentu tożsamości.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumWyjazdu">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi wyjazdu.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="kodKrajuWyjazdu" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu kraju docelowego wyjazdu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dataWyjazdu" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium daty wyjazdu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="przewidywanyOkresPobytu" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium przewidywany okres pobytu poza granicami Rzeczypospolitej Polskiej trwający dłużej niż 6 miesięcy.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kodTerytorialnyOrganuRejestrujacego" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu terytorialnego organu rejestrującego wyjazd. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumDowodu">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi dowodu osobistego.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="xsd_1:KryteriumDokumentu">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="kodTerytorialnyWystawcy" type="wys:KryteriumLiczbowe">
+            <xsd:annotation>
+              <xsd:documentation>Kryterium kodu terytorialnego wystawcy dowodu osobistego. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumDokumentuCudzoziemca">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi dokumentu cudzoziemca.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="xsd_1:KryteriumDokumentu">
+        <xsd:sequence>
+	      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+	        <xsd:annotation>
+	          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumKrajuZamieszkania">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi kraju zamieszkania.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="kodKrajuZamieszkania" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu kraju zamieszkania.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumDanychUrodzenia">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi urodzenia.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="plec" type="kmd:Plec">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium płci osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="dataUrodzenia" type="wys:KryteriumDat">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium daty urodzenia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kodKrajuUrodzenia" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu kraju urodzenia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="miejsceUrodzenia" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium miejsca urodzenia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="peselMatki" type="kmd:Pesel">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium pesel matki.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="peselOjca" type="kmd:Pesel">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium pesel ojca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="imieMatki" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium imienia matki. W rejestrze PESEL przechowywane jest jedynie pierwsze imię obojga rodziców.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="imieOjca" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium imienia ojca. W rejestrze PESEL przechowywane jest jedynie pierwsze imię obojga rodziców.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="nazwiskoRodoweMatki" type="wys:KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium nazwiska rodowego matki. Składnia kryterium jest analogiczna do parametru nazwiska rodowego w KryteriumNazwiska.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="nazwiskoRodoweOjca" type="wys:KryteriumTekstoweZGwiazdkaBezSpacji">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium nazwiska rodowego ojca. Składnia kryterium jest analogiczna do parametru nazwiska rodowego w KryteriumNazwiska.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="numerAktu" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium numeru aktu urodzenia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kodTerytorialnyWystawcyAktu" type="wys:KryteriumLiczbowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu terytorialnego organu rejestrującego akt urodzenia. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ZakresWyszukiwania">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zakres wyszukiwanych danych.W przypadku kryteriów wyszukiwania odnoszących się do zespołu danych, których wartości historyczne są przechowywane w rejestrze PESEL (np. nazwiska, imiona), określają czy podane wartości mają być wyszukane wśród danych aktualnych, historycznych czy wszystkich.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="DANE_AKTUALNE">
+        <xsd:annotation>
+          <xsd:documentation>Wyszukiwanie w obrębie danego kryterium dotyczy tylko danych aktualnych.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="DANE_AKTUALNE_LUB_POPRZEDNIE">
+        <xsd:annotation>
+          <xsd:documentation>Wyszukiwanie w obrębie danego kryterium dotyczy wszystkich danych.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="DANE_POPRZEDNIE">
+        <xsd:annotation>
+          <xsd:documentation>Wyszukiwanie w obrębie danego kryterium dotyczy tylko danych poprzednich.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="KryteriaWyszukiwaniaOsob">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów wyszukiwania osób.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="numerPesel" type="kmd:Pesel">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium numeru PESEL osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumImienia" type="xsd_1:KryteriumImienia">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych imienia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumNazwiska" type="xsd_1:KryteriumNazwiska">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych nazwiska.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumDanychUrodzenia" type="xsd_1:KryteriumDanychUrodzenia">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych urodzenia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumDowodu" type="xsd_1:KryteriumDowodu">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych aktualnego dowodu osobistego osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumDokumentuCudzoziemca" type="xsd_1:KryteriumDokumentuCudzoziemca">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych dokumentu tożsamości cudzoziemca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumPaszportu" type="xsd_1:KryteriumDokumentu">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych paszportu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumPobytu" type="xsd_1:KryteriumPobytu">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych adresowych.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumStanuCywilnego" type="xsd_1:KryteriumStanuCywilnego">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych stanu cywilnego.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumObywatelstwa" type="xsd_1:KryteriumObywatelstwa">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych obywatelstwa.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumStatusuCudzoziemca" type="xsd_1:KryteriumStatusuCudzoziemca">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium statusu cudzoziemca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumDanychZgonu" type="xsd_1:KryteriumDanychZgonu">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych zgonu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumZaawansowane" type="wys:KryteriumZaawansowane">
+        <xsd:annotation>
+          <xsd:documentation>Zaawansowane kryterium wyszukiwania. Umożliwia tworzenie złożonych kryteriów z wykorzystaniem nawiasów, operatorów (np. RÓWNY, WIĘKSZY_LUB_RÓWNY itp.) oraz spójników (koniunkcja, alternatywa). Kryteria definiowane są przez administratora rejestru PESEL. Ich listę pobrać można za pomocą metody pobierzListeKryteriowZaawansowanych interfejsu PeselWyszukiwanie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumWyjazdu" type="xsd_1:KryteriumWyjazdu">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po danych wyjazdu.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="kryteriumKrajuZamieszkania" type="xsd_1:KryteriumKrajuZamieszkania">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium wyszukiwania po aktualnym lub poprzednich krajach zamieszkania.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumImienia">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi imion.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+       <xsd:element minOccurs="0" name="imie" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium dowolnego imienia osoby. Wartość zostanie wyszukana wśród wszystkich imion osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="imiePierwsze" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium pierwszego imienia osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="imieDrugie" type="wys:KryteriumTekstowe">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium drugiego imienia osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="innyZapis" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium określa czy wyszukiwanie powinno zostać przeprowadzone RÓWNIEŻ po innym zapisie imienia.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ZnalezionaOsoba">
+    <xsd:annotation>
+      <xsd:documentation>Typ służy reprezentacji rekordu znalezionej osoby. Zawiera szereg danych znalezionej osoby. Data urodzenia i płeć nie są w rozumieniu ustawy danymi osobowymi (nie można na ich podstawie określić konkretnej osoby) i ich udostępnienie nie jest logowane.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+        <xsd:annotation>
+          <xsd:documentation>Identyfikator rekordu osoby w rejestrze PESEL.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="pesel" type="kmd:Pesel">
+        <xsd:annotation>
+          <xsd:documentation>Numer pesel osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="seriaINumerDowodu" type="kmd:SeriaINumer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Identyfikator rekordu osoby w rejestrze PESEL.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwisko" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imiePierwsze" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię pierwsze znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieDrugie" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię drugie znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="miejsceUrodzenia" type="kmd:NazwaMiejscowosci" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Miejsce urodzenia znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Data urodzenia znalezionej osoby w formacie YYYYMMDD, np. 19701231 (31 grudnia 1970).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="plec" type="kmd:Plec">
+        <xsd:annotation>
+          <xsd:documentation>Płeć znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="czyZyje" type="xsd:boolean" default="true" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Flaga czy osoba żyje.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="czyAnulowany" type="xsd:boolean" default="false" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Flaga czy rekord osoby jest anulowany.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="peselPoczatkuLancucha" type="kmd:Pesel" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Numer pesel osoby z poczatku łańcucha o ile istnieje.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idOsobyPoczatkuLancucha" type="pes:IdDaneOsoby" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Identyfikator rekordu osoby z poczatku łańcucha PESEL o ile istnieje.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PodstawoweDaneOsoby">
+    <xsd:sequence>
+      <xsd:element name="osobaId" type="pes:IdDaneOsoby">
+        <xsd:annotation>
+          <xsd:documentation>Identyfikator rekordu osoby w rejestrze PESEL.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="numerPesel" type="kmd:Pesel">
+        <xsd:annotation>
+          <xsd:documentation>Numer pesel osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="czyPeselAnulowany" type="xsd:boolean" default="false" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Flaga czy rekord osoby jest anulowany.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imiePierwsze" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię pierwsze znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieDrugie" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię drugie znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwisko" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwiskoRodowe" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="obywatelstwo" type="kmd:Kraj" nillable="true">
+        <xsd:annotation>
+          <xsd:documentation>Oznaczenie kraju, którego obywatelstwo posiada osoba lub statusu bezpaństwowca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="plec" type="kmd:Plec">
+        <xsd:annotation>
+          <xsd:documentation>Płeć znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="miejsceUrodzenia" type="kmd:NazwaMiejscowosci" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Miejsce urodzenia znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieMatki" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię matki.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieOjca" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię ojca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwiskoRodoweMatki" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko rodowe matki.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwiskoRodoweOjca" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko rodowe ojca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="czyZyje" type="xsd:boolean" default="true" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Flaga czy osoba żyje.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PodstawoweDaneOsobyZDanymiPobytu">
+    <xsd:sequence>
+      <xsd:element name="osobaId" type="pes:IdDaneOsoby">
+        <xsd:annotation>
+          <xsd:documentation>Identyfikator rekordu osoby w rejestrze PESEL.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="numerPesel" type="kmd:Pesel">
+        <xsd:annotation>
+          <xsd:documentation>Numer pesel osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="czyPeselAnulowany" type="xsd:boolean" default="false" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Flaga czy rekord osoby jest anulowany.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imiePierwsze" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię pierwsze znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieDrugie" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię drugie znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imionaKolejne" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię trzecie i kolejne imiona osoby rozdzielone znakiem spacji.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwisko" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwiskoRodowe" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="obywatelstwo" type="kmd:Kraj" nillable="true">
+        <xsd:annotation>
+          <xsd:documentation>Oznaczenie kraju, którego obywatelstwo posiada osoba lub statusu bezpaństwowca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="plec" type="kmd:Plec">
+        <xsd:annotation>
+          <xsd:documentation>Płeć znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="miejsceUrodzenia" type="kmd:NazwaMiejscowosci" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Miejsce urodzenia znalezionej osoby.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Data urodzenia znalezionej osoby</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieMatki" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię matki.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="imieOjca" type="kmd:Imie" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Imię ojca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwiskoRodoweMatki" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko rodowe matki.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nazwiskoRodoweOjca" type="kmd:ZapisNazwiska" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Nazwisko rodowe ojca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="danePobytuStalego" type="pes:PodstawoweDanePobytuOut" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Dane pobytu stałego.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="danePobytuCzasowego" type="pes:PodstawoweDanePobytuOut" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Dane pobytu czasowego.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="czyZyje" type="xsd:boolean" default="true" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Czy osoba żyje.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumObywatelstwa">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi obywatelstwa.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="kodKraju" type="wys:KryteriumLiczbowe" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium kodu kraju obywatelstwa.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KryteriumStatusuCudzoziemca">
+    <xsd:annotation>
+      <xsd:documentation>Typ określa zestaw kryteriów związanych z danymi statusu cudzoziemca.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="statusCudzoziemca" type="kmd:StatusCudzoziemca" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Kryterium statusu cudzoziemca.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="zakres" type="xsd_1:ZakresWyszukiwania">
+        <xsd:annotation>
+          <xsd:documentation>Zakres wyszukiwania danych. Przyjmuje wartości: dane aktualne, dane poprzednie, dane aktualne lub poprzednie.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

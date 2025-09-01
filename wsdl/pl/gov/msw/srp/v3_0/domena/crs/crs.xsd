@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:crs="http://msw.gov.pl/srp/v3_0/domena/crs/" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/crs/">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../domena/kmd/kmd.xsd"/>
+
+    <xsd:complexType name="AdresKorespondencyjny">
+        <xsd:sequence>
+            <xsd:element name="ulica" type="crs:NazwaUlicy" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa ulicy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerDomu" type="crs:NumerDomu">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerMieszkania" type="kmd:NumerLokalu"
+                minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer mieszkania.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="kmd:KodPocztowy">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowosc"
+                type="kmd:NazwaMiejscowosci">
+                <xsd:annotation>
+                    <xsd:documentation>Miejscowość.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="poczta" type="crs:Poczta">
+                <xsd:annotation>
+                    <xsd:documentation>Poczta miejscowość.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="PodstawoweDanePrzedstawicielaUstawowego">
+        <xsd:annotation>
+            <xsd:documentation>Podstawowe dane przestawiciela ustawowego dla osoby zarejestrowanej w CRS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="imiePierwsze" type="kmd:Imie">
+                <xsd:annotation>
+                    <xsd:documentation>Imię pierwsze przedstawiciela.</xsd:documentation>
+                </xsd:annotation></xsd:element>
+            <xsd:element name="nazwisko" type="kmd:ZapisNazwiska">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko przedstawiciela.</xsd:documentation>
+                </xsd:annotation></xsd:element>
+            <xsd:element name="pesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>PESEL przedstawiciela.</xsd:documentation>
+                </xsd:annotation></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:simpleType name="NumerZgloszenia">
+        <xsd:restriction base="xsd:string"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="DanePrzedstawicielaUstawowego">
+        <xsd:complexContent>
+            <xsd:extension base="crs:PodstawoweDanePrzedstawicielaUstawowego">
+                <xsd:sequence>
+                    <xsd:element name="imieDrugie" type="kmd:Imie">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Imię drugie przedstawiciela ustawowego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="dataUrodzenia" type="kmd:Data">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Data urodzenia przedstawiciela
+                                ustawowego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="miejsceUrodzenia"
+                        type="kmd:Miejscowosc">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Miejsce urodzenia przedstawiciela
+                                ustawowego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+					<xsd:element name="plec" type="kmd:Plec">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Plec przedstawiciela
+                                ustawowego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+					<xsd:element name="adresZameldowaniaStalego" type="kmd:AdresKrajowy">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Adres zameldowania stałego przedstawiciela
+                                ustawowego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+					<xsd:element name="adresZameldowaniaCzasowego" type="kmd:AdresKrajowy">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Adres zameldowania czasowego przedstawiciela
+                                ustawowego.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="czyAnulowany" type="xsd:boolean"
+                        minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="czyZmienilPesel"
+                        type="xsd:boolean" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="dataZgonu" type="kmd:Data" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>Data zgonu lub null jeśli zyje</xsd:documentation>
+						</xsd:annotation></xsd:element>
+                    <xsd:element name="dataZnalezieniaZwlok" type="kmd:Data" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>Data znalezienia zwkłok lub null jeśli zyje</xsd:documentation>
+						</xsd:annotation></xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Poczta">
+        <xsd:annotation>
+            <xsd:documentation>
+                Nazwa miejscowości, w której znajduje się poczta.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="112"></xsd:maxLength>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NumerDomu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający numer domu. Może zawierać cyfry i litery oraz znaki: ukośnik, spacja, myślnik, kropka.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+<xsd:simpleType name="NazwaUlicy">
+		<xsd:annotation>
+			<xsd:documentation>Element nazwy ulicy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+    <xsd:complexType name="Wniosek">
+        <xsd:annotation>
+            <xsd:documentation>Dane wniosku zarejestrowanego w CRS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerPeselPrzedstawiciela" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer PESEL przedstawiciela osoby zarejestrowanej w CRS.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerSprawy" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer sprawy.</xsd:documentation>
+                </xsd:annotation></xsd:element>
+            <xsd:element name="adresKorespondencyjny"
+                type="crs:AdresKorespondencyjny">
+            </xsd:element>
+
+            <xsd:element name="dataZgloszenia" type="xsd:string"></xsd:element>
+            <xsd:element name="miejsceZgloszenia" type="xsd:string" minOccurs="0"></xsd:element>
+            <xsd:element name="czySprzeciw" type="xsd:boolean"></xsd:element>
+            <xsd:element name="komentarz" type="xsd:string" minOccurs="0"></xsd:element>
+            <xsd:element name="dataUtworzenia" type="xsd:string"></xsd:element>
+            <xsd:element name="dataOstatniejModyfikacji" type="xsd:string" minOccurs="0"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListaWnioskow">
+        <xsd:annotation>
+            <xsd:documentation>Lista wniosków CRS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="wniosek" type="crs:Wniosek" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:simpleType name="Uwagi">
+        <xsd:annotation>
+            <xsd:documentation>Uwagi dołączone do wniosku.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1000"></xsd:maxLength>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    
+
+    <xsd:complexType name="StatusSprzeciwu">
+    	<xsd:sequence>
+    		<xsd:element name="numerPesel" type="kmd:Pesel">
+    			<xsd:annotation>
+    				<xsd:documentation>Numer PESEL osoby, której status sprzeciwu uległ zmianie.</xsd:documentation>
+    			</xsd:annotation></xsd:element>
+    		<xsd:element name="dataZmiany" type="xsd:dateTime">
+    			<xsd:annotation>
+    				<xsd:documentation>Data ostatniej zmiany statusu sprzeciwu.</xsd:documentation>
+    			</xsd:annotation></xsd:element>
+    		<xsd:element name="czySprzeciw" type="xsd:boolean">
+    			<xsd:annotation>
+    				<xsd:documentation>Informacja, czy osoba aktualnie posiada zarejestrowany sprzeciw.</xsd:documentation>
+    			</xsd:annotation></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="ListaStatusow">
+        <xsd:annotation>
+            <xsd:documentation>Lista statusów sprzeciwu w CRS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="status" type="crs:StatusSprzeciwu" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

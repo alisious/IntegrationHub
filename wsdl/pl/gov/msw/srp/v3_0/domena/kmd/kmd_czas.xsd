@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+	<xsd:include schemaLocation="kmd_wspolne.xsd"/>
+	<xsd:simpleType name="Czas">
+		<xsd:annotation>
+			<xsd:documentation>Type reprezentujący czas.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:dateTime">
+			<xsd:minInclusive value="1800-01-01T00:00:00"/>
+			<xsd:maxInclusive value="2099-12-31T00:00:00"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Data">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający datę zdarzenia biznesowego spisaną z dokumentu. Może to być data lub data spoza kalendarza zapisana w postaci 8 cyfr w formacie RRRRMMDD.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d{8}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+    <xsd:simpleType name="DataICzas">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający datę i czas zdarzenia biznesowego spisaną z dokumentu. Może to być data lub data spoza kalendarza zapisana w postaci 14 cyfr w formacie RRRRMMDDHHMMSS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{14}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+	<xsd:simpleType name="DataKalendarzowa">
+		<xsd:annotation>
+			<xsd:documentation>Typ reprezentujący datę kalendarzową.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:date">
+			<xsd:minInclusive value="1800-01-01"/>
+			<xsd:maxInclusive value="2199-12-31"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DataOpisowa">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający nieformalną datę zdarzenia biznesowego spisaną z dokumentu. Może to być data opisowa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="kmd:ZnakiSRP">
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="DataRozszerzona">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający datę. Zawiera typ Data pozwalający wprowadzić datę poprawną składniowo, która może być spoza kalendarza oraz typ dla dat opisowych (nieformalnych).Data opisowa jest opcjonalna ale gdy występuje musi być uzupełniona datą poprawną składniowo.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="data" type="kmd:Data" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Data kalendarzowa lub data spoza kalendarza.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataOpisowa" type="kmd:DataOpisowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data opisowa.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PrzedzialCzasu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określajacy przedział czasu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="czasOd" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Od kiedy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czasDo" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Do kiedy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ZakresDat">
+		<xsd:annotation>
+			<xsd:documentation>Typ okreslajacy zestaw pol zakresu dat obowiazywania.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataOd" type="kmd:DataRozszerzona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Od kiedy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataDo" type="kmd:DataRozszerzona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Do kiedy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

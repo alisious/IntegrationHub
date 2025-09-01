@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="weryfikacja" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                    xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                    xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                    xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/weryfikacja/"
+                    xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/">
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/"
+                        schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/"
+                        schemaLocation="../parametry/parametry.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/weryfikacja/"
+                        schemaLocation="../parametry/weryfikacja.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                        schemaLocation="../../../domena/dowody/dowody.xsd"/>
+
+            <xsd:element name="weryfikujDaneDowodu">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneDowoduDoWeryfikacji" type="xsd_1:WeryfikowaneDaneDowodu">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane dowodu do weryfikacji. Zakres danych, które mają zostać
+                                    zweryfikowane podawany jest w parametrze zakresDanychDoWeryfikacji.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikujDaneDowoduResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="weryfikacjaPozytywna" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="sprawdzCzyUniewazniony">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="seriaINumer" type="dow:SeriaINumerDokumentuTozsamosci">
+                            <xsd:annotation>
+                                <xsd:documentation>Seria i numer dowodu osobistego.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="sprawdzCzyUniewaznionyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="weryfikacjaPozytywna" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="statusDowodu" type="dow:StatusDowodu" minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Status dowodu jest zwracany, gdy dowód znajduje się w statusie: zawieszony</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="sprawdzCzyObywatelMozeZarejestrowacWniosek">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="requestId" type="wsp:IdentyfikatorZadania">
+                            <xsd:annotation>
+                                <xsd:documentation>Unikalny identyfikator żądania.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="pesel" type="dow:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer pesel obywatela.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="sprawdzCzyObywatelMozeZarejestrowacWniosekResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="status" type="xsd_1:StatusWeryfikacjiWniosku">
+                            <xsd:annotation>
+                                <xsd:documentation>Status weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="komunikat" type="xsd:string"  minOccurs="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Pole to jest wykorzystywane w połączeniu ze statusem "ISTNIEJE_AKTYWNY_WNIOSEK_LUB_DOWOD".
+                                    Zawiera szczegóły odnośnie istniejącego wniosku/dowodu .
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+            <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="weryfikujDaneDowoduRequest">
+        <wsdl:part element="tns:weryfikujDaneDowodu" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikujDaneDowoduResponse">
+        <wsdl:part element="tns:weryfikujDaneDowoduResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sprawdzCzyUniewaznionyRequest">
+        <wsdl:part element="tns:sprawdzCzyUniewazniony" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sprawdzCzyUniewaznionyResponse">
+        <wsdl:part element="tns:sprawdzCzyUniewaznionyResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sprawdzCzyObywatelMozeZarejestrowacWniosekRequest">
+        <wsdl:part element="tns:sprawdzCzyObywatelMozeZarejestrowacWniosek" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sprawdzCzyObywatelMozeZarejestrowacWniosekResponse">
+        <wsdl:part element="tns:sprawdzCzyObywatelMozeZarejestrowacWniosekResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="bladBiznesowyFault">
+        <wsdl:part element="tns:bladBiznesowy" name="fault6"/>
+    </wsdl:message>
+    <wsdl:message name="bladTechnicznyFault">
+        <wsdl:part element="tns:bladTechniczny" name="fault7"/>
+    </wsdl:message>
+    <wsdl:portType name="DowodyWeryfikacja">
+        <wsdl:documentation>Interfejs zawiera zbiór usług umożliwiających weryfikację danych osobowych z rejestrem
+            RDO.
+        </wsdl:documentation>
+        <wsdl:operation name="weryfikujDaneDowodu">
+            <wsdl:documentation>Usługa weryfikuje podane przez system zewnętrzny dane dowodu osobistego osoby z danymi w
+                systemie RDO
+            </wsdl:documentation>
+            <wsdl:input message="tns:weryfikujDaneDowoduRequest"/>
+            <wsdl:output message="tns:weryfikujDaneDowoduResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="sprawdzCzyUniewazniony">
+            <wsdl:documentation>Usługa sprawdza czy podany dowód osobisty jest unieważniony.
+            </wsdl:documentation>
+            <wsdl:input message="tns:sprawdzCzyUniewaznionyRequest"/>
+            <wsdl:output message="tns:sprawdzCzyUniewaznionyResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="sprawdzCzyObywatelMozeZarejestrowacWniosek">
+            <wsdl:documentation>Usługa sprawdza czy obywatel może złożyć wniosek o dowód osobisty za pomocą e-usługi
+            </wsdl:documentation>
+            <wsdl:input message="tns:sprawdzCzyObywatelMozeZarejestrowacWniosekRequest"/>
+            <wsdl:output message="tns:sprawdzCzyObywatelMozeZarejestrowacWniosekResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,1150 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/weryfikacja/" version="3.0" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/weryfikacja/">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/" schemaLocation="../../../domena/pesel/pesel.xsd"/>
+    <xsd:complexType name="WeryfikowaneDaneDowodu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych dowodu osobistego w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dokumentu tożsamości.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wystawca" type="kmd:Organ" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pole zawierające oznaczenie wystawcy dowodu osobistego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneDowoduWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych dowodu osobistego w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dokumentu tożsamości.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wystawca" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole zawierające oznaczenie organu wydającego dowód osobisty.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDanePaszportu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych paszportu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dokumentu tożsamości.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDanePaszportuWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych paszportu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dokumentu tożsamości.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneOsoby">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania wszystkich danych osoby w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="daneCudzoziemca"
+                         type="xsd_1:WeryfikowaneDaneCudzoziemca">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych cudzoziemca.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneKrajowZamieszkania"
+                         type="xsd_1:WeryfikowaneDaneKrajowZamieszkania">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych krajów zamieszkania.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0"
+                         name="daneAktualnegoPobytuCzasowego"
+                         type="xsd_1:WeryfikowaneDanePobytu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych aktualnego pobytu czasowego. Osoby
+                        zmarłe w momencie rejestrowania aktu zgonu są
+                        wymeldowywane i nie posiadają aktualnego pobytu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0"
+                         name="daneAktualnegoPobytuStalego"
+                         type="xsd_1:WeryfikowaneDanePobytu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych aktualnego pobytu stałego. Zestaw
+                        danych aktualnego pobytu czasowego. Osoby zmarłe
+                        w momencie rejestrowania aktu zgonu są
+                        wymeldowywane i nie posiadają aktualnego pobytu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneUrodzenia"
+                         type="xsd_1:WeryfikowaneDaneUrodzenia">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych urodzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneWyjazdu"
+                         type="xsd_1:WeryfikowaneDaneWyjazdu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych wyjazdu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneZgonu"
+                         type="xsd_1:WeryfikowaneDaneZgonu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych zgonu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneDowoduOsobistego"
+                         type="xsd_1:WeryfikowaneDaneDowodu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneObywatelstwa"
+                         type="xsd_1:WeryfikowaneDaneObywatelstwa">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych obywatelstwa.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneStatusuCudzoziemca"
+                         type="xsd_1:WeryfikowaneDaneStatusuCudzoziemca">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych statusu cudzoziemca.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="danePaszportu"
+                         type="xsd_1:WeryfikowaneDanePaszportu">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych paszportu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneStanuCywilnego"
+                         type="xsd_1:WeryfikowaneDaneStanuCywilnego">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych stanu cywilnego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="danePodstawowe" type="xsd_1:WeryfikowaneDanePodstawowe" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych podstawowych.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneOsobyWynik">
+        <xsd:annotation>
+            <xsd:documentation>
+                Typ służący do przekazywania wszystkich danych osoby w celach weryfikacji.
+                Nie zawiera danych wyjazdów oraz obywatelstw.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0"  name="daneCudzoziemca"
+                         type="xsd_1:WeryfikowaneDaneCudzoziemcaWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych cudzoziemca.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneKrajowZamieszkania"
+                         type="xsd_1:WeryfikowaneDaneKrajowZamieszkaniaWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych krajów zamieszkania.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneAktualnegoPobytuCzasowego"
+                         type="xsd_1:WeryfikowaneDanePobytuWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych aktualnego pobytu czasowego. Osoby
+                        zmarłe w momencie rejestrowania aktu zgonu są
+                        wymeldowywane i nie posiadają aktualnego pobytu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneAktualnegoPobytuStalego"
+                         type="xsd_1:WeryfikowaneDanePobytuWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych aktualnego pobytu stałego. Zestaw
+                        danych aktualnego pobytu czasowego. Osoby zmarłe
+                        w momencie rejestrowania aktu zgonu są
+                        wymeldowywane i nie posiadają aktualnego pobytu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneUrodzenia"
+                         type="xsd_1:WeryfikowaneDaneUrodzeniaWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych urodzenia.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneZgonu"
+                         type="xsd_1:WeryfikowaneDaneZgonuWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych zgonu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneDowoduOsobistego"
+                         type="xsd_1:WeryfikowaneDaneDowoduWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych dowodu osobistego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="danePaszportu"
+                         type="xsd_1:WeryfikowaneDanePaszportuWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych paszportu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneStanuCywilnego"
+                         type="xsd_1:WeryfikowaneDaneStanuCywilnegoWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych stanu cywilnego.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneWyjazdu"
+                         type="xsd_1:WeryfikowaneDaneWyjazduWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Wynik weryfikacji danych wyjazdu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneObywatelstwa"
+                         type="xsd_1:WeryfikowaneDaneObywatelstwaWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Wynik weryfikacji danych obywatelstwa.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="daneStatusuCudzoziemca"
+                         type="xsd_1:WeryfikowaneDaneStatusuCudzoziemcaWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Wynik weryfikacji danych statusu cudzoziemca.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="danePodstawowe" type="xsd_1:WeryfikowaneDanePodstawoweWynik">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Zestaw danych podstawowych.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WeryfikowaneDaneKrajowZamieszkania">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych o krajach
+                zamieszkania osoby w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="krajZamieszkania" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Kraj miejsca zamieszkania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="krajZamieszkaniaPoprzedni" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Kraj miejsca zamieszkania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneKrajowZamieszkaniaWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych o krajach
+                zamieszkania osoby w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="krajZamieszkania" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kraj miejsca zamieszkania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="krajZamieszkaniaPoprzedni" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kraj miejsca zamieszkania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneWyjazdu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych wyjazdu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="nazwaKraju" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa kraju.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataWyjazdu" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Data wyjazdu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataPowrotu" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Data powrotu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="przewidywanyOkresPobytu" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Przewidywany okres pobytu poza granicami Rzeczypospolitej Polskiej trwający dłużej niż 6 miesięcy..</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneWyjazduWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania wyników weryfikacji danych wyjazdu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwaKraju" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Wynik weryfikacji pola nazwa kraju.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataWyjazdu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Wynik weryfikacji pola data wyjazdu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataPowrotu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Wynik weryfikacji pola data powrotu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="przewidywanyOkresPobytu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Wynik weryfikacji pola przewidywany okres pobytu.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneObywatelstwa">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych obywatelstwa w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="obywatelstwo" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa obywatelstwa.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneObywatelstwaWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych obywatelstwa w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="obywatelstwo" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa kraju obywatelstwa.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneStatusuCudzoziemca">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych statusu cudzoziemca w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="statusCudzoziemca" type="kmd:StatusCudzoziemca">
+                <xsd:annotation>
+                    <xsd:documentation>Status cudzoziemca.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneStatusuCudzoziemcaWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych statusu cudzoziemca.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="statusCudzoziemca" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Wynik weryfikacji pola statusu cudzoziemca.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneCudzoziemca">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych cudzoziemca w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dokumentu tożsamości.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneCudzoziemcaWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych paszportu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataWaznosci" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data ważności dokumentu tożsamości.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Data ważności.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="seriaINumer" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Seria i numer dokumentu.
+                        Opis wyświetlany na interfejsie użytkownika dla danego pola: Seria i numer.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneZgonu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych zgonu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataZgonu" type="xsd:string"
+                         minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data zgonu. Pole może zawierać datę z kalendarza
+                        lub datę spoza kalendarza oraz datę w postaci
+                        opisowej.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerAktu"
+                         type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer aktu zgonu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organSporzadzajacyAkt" type="kmd:Organ"
+                         minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Oznaczenie organu sporządzającego akt
+                        zgonu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneZgonuWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych zgonu w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="dataZgonu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Data zgonu. Pole może zawierać datę z kalendarza
+                        lub datę spoza kalendarza oraz datę w postaci
+                        opisowej.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerAktu"
+                         type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Numer aktu zgonu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organSporzadzajacyAkt" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Oznaczenie organu sporządzającego akt
+                        zgonu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneUrodzenia">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych urodzenia w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="plec" type="kmd:Plec">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium płci osoby.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="dataUrodzenia" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium daty urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="krajUrodzenia" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium kraju urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="miejsceUrodzenia" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium miejsca urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="imieMatki" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium imienia matki. W rejestrze PESEL przechowywane jest jedynie pierwsze imię obojga rodziców.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="imieOjca" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium imienia ojca. W rejestrze PESEL przechowywane jest jedynie pierwsze imię obojga rodziców.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="nazwiskoRodoweMatki" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium nazwiska rodowego matki. Składnia kryterium jest analogiczna do parametru nazwiska rodowego w KryteriumNazwiska.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="nazwiskoRodoweOjca" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium nazwiska rodowego ojca. Składnia kryterium jest analogiczna do parametru nazwiska rodowego w KryteriumNazwiska.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="numerAktu" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numeru aktu urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="oznaczenieOrganu" type="kmd:Organ">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium kodu terytorialnego organu rejestrującego akt urodzenia. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneUrodzeniaWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych urodzenia w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="plec" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium płci osoby.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataUrodzenia" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium daty urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="krajUrodzenia" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium kraju urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejsceUrodzenia" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium miejsca urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieMatki" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium imienia matki. W rejestrze PESEL przechowywane jest jedynie pierwsze imię obojga rodziców.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieOjca" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium imienia ojca. W rejestrze PESEL przechowywane jest jedynie pierwsze imię obojga rodziców.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoRodoweMatki" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium nazwiska rodowego matki. Składnia kryterium jest analogiczna do parametru nazwiska rodowego w KryteriumNazwiska.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoRodoweOjca" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium nazwiska rodowego ojca. Składnia kryterium jest analogiczna do parametru nazwiska rodowego w KryteriumNazwiska.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerAktu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium numeru aktu urodzenia.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="oznaczenieOrganu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kryterium kodu terytorialnego organu rejestrującego akt urodzenia. Dopuszczalne są wartości z wieloznakiem po prawej stronie, np. 40*, 4065*, 4065001.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneStanuCywilnego">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych stanu cywilnego w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="stanCywilny" type="kmd:StanCywilny" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające stan cywilny po zawarciu lub rozwiązaniu związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerPeselWspolmalzonka" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>11-cyfrowy numer PESEL małżonka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieWspolmalzonka" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pole opisujące imię małżonka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoRodoweWspolmalzonka" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pole opisujące nazwisko rodowe małżonka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZawarcia" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data zawarcia związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerAktu" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Numer aktu małżeństwa w polskich księgach stanu cywilnego lub numer dokumentu organu obcego państwa stwierdzający zawarcie związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organSporzadzajacyAkt" type="kmd:Organ" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu sporządzającego akt małżeństwa. W Polsce organem jest urząd stanu cywilnego identyfikowany unikalnym kodem ze słownika urzędów stanu cywilnego USC. Organ obcego państwa będzie identyfikowany kodem i nazwą kraju.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazania" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowych" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwo" type="kmd:Organ" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazaniaUniewaznienie" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowychUniewaznienie" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwoUniewaznienie" type="kmd:Organ" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazaniaNieistnienie" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowychNieistnienie" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwoNieistnienie" type="kmd:Organ" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazaniaZgon" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowychZgon" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwoZgon" type="kmd:Organ" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneStanuCywilnegoWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych stanu cywilnego w celach weryfikacji.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="stanCywilny" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające stan cywilny po zawarciu lub rozwiązaniu związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerPeselWspolmalzonka" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>11-cyfrowy numer PESEL małżonka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieWspolmalzonka" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole opisujące imię małżonka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwiskoRodoweWspolmalzonka" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole opisujące nazwisko rodowe małżonka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataZawarcia" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data zawarcia związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerAktu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Numer aktu małżeństwa w polskich księgach stanu cywilnego lub numer dokumentu organu obcego państwa stwierdzający zawarcie związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organSporzadzajacyAkt" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu sporządzającego akt małżeństwa. W Polsce organem jest urząd stanu cywilnego identyfikowany unikalnym kodem ze słownika urzędów stanu cywilnego USC. Organ obcego państwa będzie identyfikowany kodem i nazwą kraju.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazania" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowych" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwo" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazaniaUniewaznienie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowychUniewaznienie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwoUniewaznienie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazaniaNieistnienie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowychNieistnienie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwoNieistnienie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataRozwiazaniaZgon" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sygnaturaAktSadowychZgon" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="organRozwiazujacyMalzenstwoZgon" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDanePobytu">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych pobytu w
+                celach weryfikacji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDomu" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowosc" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem
+                        miejscowości i kodem terytorialnym ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze
+                        słownikiem TERYT (plik ULIC) wraz z kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataDo" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające datę wymeldowania z adresu,
+                        przy którym jest wprowadzone.
+                        Jeśli data jest wypełniona to dany adres nie jest aktualny.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataOd" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające datę zameldowania pod danym
+                        adresem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataUplywuDeklarowanegoTerminu"
+                         type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające datę upływu zadeklarowanego
+                        pobytu pod danym adresem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDanePobytuWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający zestaw pól opisujących adres
+                zamieszkania. Zawiera podstawowe dane adresu w zakresie zgodnym z
+                art. 26 Ustawy o ewidencji ludności oraz informacje o zameldowaniu i
+                wymeldowaniu.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDomu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowosc" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem
+                        miejscowości i kodem terytorialnym ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze
+                        słownikiem TERYT (plik ULIC) wraz z kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataDo" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające datę wymeldowania z adresu,
+                        przy którym jest wprowadzone.
+                        Jeśli data jest wypełniona to dany adres nie jest aktualny.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataOd" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające datę zameldowania pod danym
+                        adresem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dataUplywuDeklarowanegoTerminu"
+                         type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające datę upływu zadeklarowanego
+                        pobytu pod danym adresem.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDanePodstawowe">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych podstawowych w
+                celach weryfikacji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwiskoRodowe" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko rodowe.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieDrugie" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Imię drugie.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imionaKolejne" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona kolejne.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDanePodstawoweWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych podstawowych w
+                celach weryfikacji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwiskoRodowe" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwisko rodowe.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieDrugie" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Imię drugie.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imionaKolejne" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Imiona kolejne.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneWeryfikacjaProsta">
+        <xsd:annotation>
+            <xsd:documentation>Typ służący do przekazywania danych pobytu w
+                celach weryfikacji prostej.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDomu" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowosc" type="xsd:string"
+                         minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem
+                        miejscowości i kodem terytorialnym ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze
+                        słownikiem TERYT (plik ULIC) wraz z kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WeryfikowaneDaneWeryfikacjaProstaWynik">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający wynik weryfikacji prostej.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerDomu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Numer domu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="kodPocztowy" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Kod pocztowy.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="numerLokalu" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Numer lokalu.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="miejscowosc" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę miejscowości (dzielnicy) z kodem
+                        miejscowości i kodem terytorialnym ze słownika TERYT.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ulica" type="kmd:StatusWeryfikacji">
+                <xsd:annotation>
+                    <xsd:documentation>Zawiera nazwę ulicy o strukturze zgodnej ze
+                        słownikiem TERYT (plik ULIC) wraz z kodem ulicy z tego słownika.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

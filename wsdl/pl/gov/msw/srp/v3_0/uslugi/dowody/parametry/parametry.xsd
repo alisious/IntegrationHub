@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/" version="3.0" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/">
+  <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+
+  <xsd:simpleType name="IdOsoby">
+    <xsd:annotation>
+      <xsd:documentation>Identyfikator osoby w rejestrze OEWIUDO.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int"/>
+  </xsd:simpleType>
+  <xsd:complexType name="Kontekst">
+    <xsd:annotation>
+      <xsd:documentation>Typ zawiera informacje czy wyszukiwanie lub udostepnianie danych odbywa sie w ramach prowadzonego postepowania (TAK/NIE). Dodatkowo kontekst moze zawierac informacje o identyfikatorze sprawy, w zwiazku z ktora wykonywana jest operacja. Identyfikator sprawy jest zapisywany w rejestrze udostepnien danych OEWIUDO.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="numerSprawy" type="kmd:KrotkiTekst">
+        <xsd:annotation>
+          <xsd:documentation>Opcjonalna informacja o numerze sprawy, w zwiazku z ktora udostepniane sa dane z rejestru OEWIUDO.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="postepowanie" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Informacja czy dane udostepniane sa w ramach prowadzonego postepowania (TAK/NIE).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+    <xsd:simpleType name="NumerDecyzji">
+        <xsd:annotation>
+            <xsd:documentation>Numer decycji administracyjnej.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="32"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

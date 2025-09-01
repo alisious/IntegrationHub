@@ -1,0 +1,3357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/pesel/" version="3.0">
+
+	<xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../kmd/kmd.xsd"/>
+
+	<xsd:complexType name="DaneDowodu">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować serię i numer oraz datę ważności ostatniego wydanego dowodu osobistego obywatela polskiego oraz oznaczenie organu wydającego dokument – art. 8 p. 22 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneDowodu">
+				<xsd:sequence>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneDokumentu.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneImion">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane imion osoby o których mowa w art. 8 p. 1 Ustawy o ewidencji ludności. Zawiera podstawowe dane imion, podstawę wpisu, datę zmiany i znacznik usuwania niezgodności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:Imiona">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole okreslajace date ostatniej aktualizacji grupy pol DaneImion.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneImion2">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane imion osoby o których mowa w art. 8 p. 1 Ustawy o ewidencji ludności. Zawiera podstawowe dane imion, podstawę wpisu, datę zmiany i znacznik usuwania niezgodności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole okreslajace date ostatniej aktualizacji grupy pol DaneImion.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imiePierwsze" type="kmd:ZapisImieniaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie pierwsze imię osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieDrugie" type="kmd:ZapisImieniaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie drugie imię osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneMalzonka">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól identyczny jak dla typu DaneMalzonkaOut rozszerzony o dane zgonu współmałżonka.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:DaneMalzonkaOut">
+				<xsd:sequence>
+					<xsd:element name="daneZgonu" type="pes:PodstawoweDaneZgonu" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Dane o zgonie małżonka</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneNazwiska">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane nazwiska osoby – art. 8 p. 1 Ustawy o ewidencji ludności. Zawiera podstawowe dane nazwiska, podstawę wpisu, datę zmiany i znacznik usuwania niezgodności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:Nazwisko">
+				<xsd:sequence>
+					<xsd:element name="nazwiskoRodowe" type="kmd:Nazwisko" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zapisu brzmienia nazwiska rodowego. Dla Polaków jest to nazwisko występujące na akcie urodzenia.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneNazwiska.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneNazwiska2">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane nazwiska osoby – art. 8 p. 1 Ustawy o ewidencji ludności. Zawiera podstawowe dane nazwiska, podstawę wpisu, datę zmiany i znacznik usuwania niezgodności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole okreslajace date ostatniej aktualizacji grupy pol DaneImion.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Podstawowa forma zapisu brzmienia nazwiska.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneNowejOsoby">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane nowej osoby, przekazywane do rejestru PESEL w celu nadania numeru PESEL zgodnie a art. 17 ust. 2 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="danePobytuCzasowego" type="pes:PodstawoweDanePobytu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o adresie czasowym osoby.
+						Odpowiada sekcji Adres czasowy w interfejsie graficznym.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:PodstawoweDanePobytu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących adres i datę zameldowania na pobyt stały – art. 8 p. 14 Ustawy o ewidencji ludności. Pole dataDo nie może być wypełnione.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneCudzoziemca" type="pes:PodstawoweDaneCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dane o dokumencie poświadczających tożsamość i obywatelstwo cudzoziemca – art. 8 p. 24 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStatusuCudzoziemca" type="pes:DaneStatusuCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Status cudzoziemca wraz z informacjami o dacie zmiany oraz organem dokonującym zmiany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneImion" type="kmd:Imiona">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących imiona osoby – art. 8 p. 1 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneNazwiska" type="kmd:Nazwisko">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących nazwisko osoby – art. 8 p. 1 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneNazwiskaRodowego" type="kmd:Nazwisko" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko rodowe osoby - art. 8 p. 2 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneUrodzenia" type="pes:PodstawoweDaneUrodzenia">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych dane o urodzeniu osoby – art. 8 punkty 3, 4, 5, 6, 8, 9.
+						Odpowiada sekcji Dane o urodzeniu w interfejsie graficznym.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneObywatelstwa" type="kmd:Kraj">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących obywatelstwo osoby – art. 8 p. 11 Ustawy o ewidencji lidności. Dopuszczalne wartości zawiera słowik krajów rozszerzony o wskazanie statusu bezpaństwowca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneKrajowZamieszkania" type="pes:PodstawoweDaneKrajowZamieszkania" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujący kraj miejsca zamieszkania i kraj poprzedniego miejsca zamieszkania – art. 8 punkty 15 i 16 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePaszportu" type="kmd:PodstawoweDaneDokumentu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Paszport obywatela polskiego – art. 8 p. 23 Ustawy o ewidencji lidności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneDowoduOsobistego" type="pes:PodstawoweDaneDowodu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dowodzie osobistym obywatela polskiego – art. 8 p. 22 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStanuCywilnego" type="pes:PodstawoweDaneStanuCywilnego" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o stanie cywilnym osoby art. 8 punkty 12 i 13 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organWnioskujacyOPesel" type="kmd:Organ">
+				<xsd:annotation>
+					<xsd:documentation>Organ wnioskujący o nadanie numeru PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Obywatelstwo">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane obywatelstwa osoby o których mówi art. 8 p. 11 Ustawy o ewidencji ludnosci.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól Obywatelstwo.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwo" type="kmd:Kraj" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie kraju, którego obywatelstwo posiada osoba lub statusu bezpaństwowca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacjiOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności. Określają one organ, z którego działania wynika nabycie obywatelstwa, oraz datę jego nabycia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOsobyUKR">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane osoby o statusie UKR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numerPesel" type="kmd:Pesel">
+				<xsd:annotation>
+					<xsd:documentation>Numer pesel.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiska">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imiePierwsze" type="kmd:Imie">
+				<xsd:annotation>
+					<xsd:documentation>Imię pierwsze.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieDrugie" type="kmd:Imie" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię drugie.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plec" type="kmd:Plec">
+				<xsd:annotation>
+					<xsd:documentation>Płeć.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataUrodzenia" type="kmd:Data">
+				<xsd:annotation>
+					<xsd:documentation>Data urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="krajUrodzenia" type="kmd:NazwaKraju" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kraj urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="miejsceUrodzenia" type="kmd:NazwaMiejscowosci" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Miejsce urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriaNumerDokumentu" type="kmd:SeriaNumerDokumentu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Seria i numer dokumentu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataWaznosci" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ważności dokumentu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwo" type="kmd:Kraj">
+				<xsd:annotation>
+					<xsd:documentation>Obywatelstwo osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="zdjecie" type="xsd:base64Binary">
+				<xsd:annotation>
+					<xsd:documentation>Zdjęcie.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOpiekuna">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane opiekuna.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numerPesel" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer pesel opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imiePierwsze" type="kmd:Imie">
+				<xsd:annotation>
+					<xsd:documentation>Imię pierwsze opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieDrugie" type="kmd:Imie" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię drugie opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imionaKolejne" type="kmd:ImionaKolejne" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imiona kolejne opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiska">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwo" type="kmd:Kraj">
+				<xsd:annotation>
+					<xsd:documentation>Obywatelstwo opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataUrodzenia" type="kmd:Data">
+				<xsd:annotation>
+					<xsd:documentation>Data urodzenia opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plec" type="kmd:Plec">
+				<xsd:annotation>
+					<xsd:documentation>Płeć opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rodzajDokumentu" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Rodzaj dokumentu opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriaNumerDokumentu" type="kmd:SeriaINumer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Rodzaj dokumentu opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pokrewienstwo" type="kmd:OpiekunStopienPokrewienstwa">
+				<xsd:annotation>
+					<xsd:documentation>Pokrewieństwo opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pokrewienstwoOpis" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Opis pokrewieństwa opiekuna.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PelneDaneOsobyUKR">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane osoby o statusie UKR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="daneOsobyUKR" type="pes:DaneOsobyUKR">
+				<xsd:annotation>
+					<xsd:documentation>Podstawowe dane osoby o statusie UKR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerEwidencyjnyUkr" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer ewidencyjny UKR.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataWjazdu" type="kmd:DataKalendarzowa">
+				<xsd:annotation>
+					<xsd:documentation>Data przejścia przez granicę zadeklarowana przez osobę</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZlozeniaWniosku" type="kmd:DataKalendarzowa">
+				<xsd:annotation>
+					<xsd:documentation>Data złożenia wniosku UKR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneOpiekuna" type="pes:DaneOpiekuna" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dane opiekuna</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czyPobranoOdciski" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Czy pobrano odciski palców od osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOsoby">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących wszystkie dane osoby przechowywane w rejestrze.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="czyAnulowano" type="xsd:boolean"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Znacznik czy numer ewidencyjny został anulowany
+						(1 - ANULOWANO, null - NIE ANULOWANO). Opis
+						wyświetlany na interfejsie użytkownika dla
+						danego pola: Rekord anulowany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneCudzoziemca"
+						 type="pes:DaneCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Dane o dokumentach poświadczających tożsamość
+						cudzoziemca - art. 8 . p. 24 Ustawy o ewidencji
+						ludności. Dopuszczalne są albo dane o dokumencie
+						podróży cudzoziemca (seria i numer oraz data
+						ważności) albo dane o innym dokumencie
+						potwierdzającym jego tożsamość i obywatelstwo
+						(tutaj dopuszczalna jest forma opisowa zamiast
+						serii i numeru).
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStatusuCudzoziemca" type="pes:DaneStatusuCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Status cudzoziemca wraz z informacjami o dacie zmiany oraz organem dokonującym zmiany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneDowoduOsobistego"
+						 type="pes:DaneDowodu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o dowodzie osobistym
+						obywatela polskiego – art. 8 p. 22 Ustawy o
+						ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneImion" type="pes:DaneImion"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o imionach osoby –
+						art. 8 p. 1 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneKrajowZamieszkania"
+						 type="pes:DaneKrajowZamieszkania" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujący kraj miejsca zamieszkania i
+						kraj poprzedniego miejsca zamieszkania – art. 8
+						punkty 15 i 16 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneNazwiska" type="pes:DaneNazwiska"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane nazwiska osoby –
+						art. 8 p. 1 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneObywatelstwa" type="pes:Obywatelstwo"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Oznaczenie kraju, którego obywatelstwo posiada
+						osoba lub wskazanie statusu bezpaństwowca – art.
+						8 p. 11 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePaszportu" type="pes:DanePaszportu"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Paszport obywatela polskiego – art. 8 p. 23
+						Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuCzasowego"
+						 type="pes:DanePobytu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o adresie czasowym
+						osoby - art. 8 punkty 18 i 19 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:DanePobytu"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o adresie stałym
+						osoby - art. 8 punkty 14 i 17 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePoprzednie" type="pes:DanePoprzednie"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących poprzednie dane osoby
+						których na mocy art. 10 ust. 6 Ustawy o
+						ewidencji ludności nie usunięto przy rejestracji
+						zmiany danych.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStanuCywilnego"
+						 type="pes:DaneStanuCywilnegoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o stanie cywilnym
+						osoby – art. 8 punkty 7, 12 i 13 Ustawy o
+						ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneUrodzenia" type="pes:DaneUrodzenia"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o urodzeniu osoby –
+						art. 8 punkty 4, 5, 6, 8 i 9 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneWyjazdu" type="pes:DaneWyjazdu"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane wyjazdu osoby poza
+						granice Rzeczpospolitej Polskiej trwającego
+						dłużej niż sześć miesięcy – art. 8 punkty 20 i
+						21 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneZgonu" type="pes:DaneZgonu"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o zgonie osoby –
+						art. 8 p. 26 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę ostatniej aktualizacji
+						dowolnej grupy pól. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAnulowaniaRekordu" type="kmd:DataKalendarzowa"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę anulowania rekordu dla
+						danego numeru PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZalozeniaRekordu" type="kmd:Czas"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę założenia rekordu dla
+						danego numeru PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="idOsoby" type="pes:IdDaneOsoby"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające identyfikator danych osoby w
+						bazie danych PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel"
+						 nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające aktualny numer PESEL osoby –
+						art. 8 p. 10 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nastepnyNumerPesel" type="kmd:Pesel"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Numer PESEL zapisywany w rekordzie anulowanym w
+						wypadku nadania osobie nowego numeru.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organWnioskujacyOPesel" type="kmd:Organ"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Organ wnioskujący o nadanie numeru PESEL.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wersjaRekordu" type="pes:WersjaElementu"
+						 nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>
+						Przechowuje znacznik stanu danych w całym
+						rekordzie. Jest aktualizowana przy każdej
+						modyfikacji danych zawartych w rekordzie. Wersja
+						rekordu jest używana w usługach rejestrujących
+						zmianę danych w grupach danych tworzących
+						strukturę DaneOsoby. Zmiana danych będzie
+						możliwa, gdy pobrana wersja rekordu przed zmianą
+						i w trakcie jej realizacji w rejestrze PESEL
+						będą zgodne. Wersja rekordu może być opcjonalnie
+						używana również w usługach usuwających
+						niezgodności w jednej z grup danych lub jej
+						danych poprzednich, na przykład w przypadku, gdy
+						istnieje konieczność zapewnienia niezmienności
+						danych osoby w czasie usuwania niezgodności w
+						danej grupie danych i jej danych poprzednich.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPeselDataAktualizacji" type="kmd:Czas" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Data aktualizacji numeru ewidenyjnego PESEL.</xsd:documentation>
+				</xsd:annotation>
+		</xsd:element>
+
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOsoby2">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących wybrane dane osoby przechowywane w rejestrze do udostępnienia.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające identyfikator danych osoby w
+						bazie danych PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czyAnulowano" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>
+						Znacznik czy numer ewidencyjny został anulowany
+						(1 - ANULOWANO, null - NIE ANULOWANO). Opis
+						wyświetlany na interfejsie użytkownika dla
+						danego pola: Rekord anulowany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające aktualny numer PESEL osoby –
+						art. 8 p. 10 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nastepnyNumerPesel" type="kmd:Pesel"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Numer PESEL zapisywany w rekordzie anulowanym w
+						wypadku nadania osobie nowego numeru.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imiePierwsze" type="kmd:ZapisImieniaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię – pierwsze osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieDrugie" type="kmd:ZapisImieniaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię – drugie osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Podstawowa forma zapisu brzmienia nazwiska.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data urodzenia. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="miejsceUrodzenia" type="kmd:MiejscowoscOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Miejscowość urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwo" type="kmd:KrajOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie kraju, którego obywatelstwo posiada osoba lub statusu bezpaństwowca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZgonu" type="kmd:Data"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Data zgonu. Pole może zawierać datę z kalendarza
+						lub datę spoza kalendarza oraz datę w postaci
+						opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZnalezieniaZwlok" type="kmd:Data"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określajace datę znalezienia zwłok, gdy nie
+						można ustalić daty zgonu.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePoprzednie" type="pes:DanePoprzednie2"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących poprzednie dane osoby
+						których na mocy art. 10 ust. 6 Ustawy o
+						ewidencji ludności nie usunięto przy rejestracji
+						zmiany danych.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę ostatniej aktualizacji
+						dowolnej grupy pól. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOsoby3">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących wybrane dane osoby przechowywane w rejestrze do udostępnienia.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="idOsoby" type="pes:IdDaneOsoby">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające identyfikator danych osoby w
+						bazie danych PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czyAnulowano" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>
+						Znacznik czy numer ewidencyjny został anulowany
+						(1 - ANULOWANO, null - NIE ANULOWANO). Opis
+						wyświetlany na interfejsie użytkownika dla
+						danego pola: Rekord anulowany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające aktualny numer PESEL osoby –
+						art. 8 p. 10 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPeselDataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data aktualizacji numeru ewidenyjnego PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nastepnyNumerPesel" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Numer PESEL zapisywany w rekordzie anulowanym w
+						wypadku nadania osobie nowego numeru.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imie" type="kmd:ImionaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imiona osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwisko" type="kmd:NazwiskoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Podstawowa forma zapisu brzmienia nazwiska.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwo" type="kmd:KrajOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie kraju, którego obywatelstwo posiada osoba lub statusu bezpaństwowca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data urodzenia. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="miejsceUrodzenia" type="kmd:MiejscowoscOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Miejscowość urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZgonu" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Data zgonu. Pole może zawierać datę z kalendarza
+						lub datę spoza kalendarza oraz datę w postaci
+						opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZnalezieniaZwlok" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określajace datę znalezienia zwłok, gdy nie
+						można ustalić daty zgonu.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dokumentPodrozy" type="kmd:PodstawoweDaneDokumentuOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dokumencie podróży cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dokumentTozsamosciCudzoziemca" type="kmd:PodstawoweDaneDokumentuOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dokumencie tożsamości cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dokumentTozsamosci" type="kmd:PodstawoweDaneDokumentuOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dowodzie osobistym.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:PodstawoweDanePobytuOut2" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o adresie stałym
+						osoby - art. 8 punkty 14 i 17 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuCzasowego" type="pes:PodstawoweDanePobytuOut2" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o adresie czasowym
+						osoby - art. 8 punkty 18 i 19 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę ostatniej aktualizacji
+						dowolnej grupy pól. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DanePaszportu">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane ostatnio wydanego paszportu obywatela polskiego zgodnie z art. 8 p. 23 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:PodstawoweDaneDokumentu">
+				<xsd:sequence>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneDokumentu.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DanePobytu">
+		<xsd:annotation>
+			<xsd:documentation>Typ służący do rejestracji adresu pobytu stałego lub czasowego w rejestrze PESEL, pozwalający zarejestrować dane wskazane w art. 8 punkty 14 i 17 lub dane wskazane w art. 8 punkty 18 i 19 Ustawy o ewidencji ludności wraz z informacjami wymaganymi przy zmianie danych – art. 10 ust. 6.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDanePobytuOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci"
+								 type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Informacja, czy dokonano usunięcia
+								niezgodności danych w trybie art. 11
+								ust. 2 Ustawy o ewidencji ludności.
+								Znacznik przy rejestracji danych i
+								rejestracji ich zmian ustawiany jest na
+								false a przy zmianie danych w trybie
+								usuwania niezgodności na true.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Pole określające datę ostatniej
+								aktualizacji grupy pól AdresZamieszkania
+								(dla każdego wpisu dotyczącego jednego
+								numeru PESEL jest wprowadzona ta sama
+								wartość).
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organMeldujacy" type="kmd:Organ"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ rejestrujący zameldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organWymeldowujacy"
+								 type="kmd:Organ" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ rejestrujący wymeldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organAnulujacyZameldowanie" type="kmd:Organ"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ anulujący zameldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAnulowaniaZameldowania" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Data anulowania zameldowania.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organAnulujacyWymeldowanie" type="kmd:Organ"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ anulujący wymeldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAnulowaniaWymeldowania" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Data anulowania wymeldowania.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DanePoprzednie">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących poprzednie dane osoby, których na mocy art. 10 ust. 6 Ustawy o Ewidencji Ludności nie usunięto przy rejestracji zmiany danych.
+				O chronologii zdarzeń w danych poprzednich decydują biznesowe daty w podstawie wpisu lub w podstawie usunięcia. Ze względu na fakt, iż dane historyczne, moga być pozbawione powyższych wyróżników chronologicznych przyjmuje się, że o chronologii zdarzeń w danych poprzednich decyduje kolejność elementów w kolekcji danych poprzednich przekazywanych w usługach.Ostatni element w kolekcji zawiera najstarsze dane.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="daneCudzoziemca" type="pes:PoprzednieDaneCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane o dokumentach poświadczających tożsamość i obywatelstwo cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStatusuCudzoziemca" type="pes:PoprzednieDaneStatusuCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane statusu cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneKrajowZamieszkania" type="pes:PoprzednieDaneKrajowZamieszkania" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane krajów zamieszkania.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuCzasowego" type="pes:PoprzednieDanePobytuCzasowego" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie adresy czasowego zamieszkania.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:PoprzednieDanePobytuStalego" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie adresy stałego zamieszkania.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneZgonu" type="pes:PoprzednieDaneZgonu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane o zgonie, które zostały zmienione bądź usunięte z danych aktualnych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="listaNumerowPesel" type="pes:PoprzedniePesele" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie numery PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imiona" type="pes:PoprzednieImiona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie imiona.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiska" type="pes:PoprzednieNazwiska" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie nazwiska.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneUrodzenia" type="pes:PoprzednieDaneUrodzenia" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane o urodzeniu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwa" type="pes:PoprzednieObywatelstwa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie obywatelstwa.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stanyCywilne" type="pes:PoprzednieStanyCywilneOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane poprzednich stanów cywilnych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wyjazdy" type="pes:PoprzednieWyjazdy" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie wyjazdy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieWyjazdy">
+		<xsd:sequence>
+			<xsd:element name="poprzedniWyjazd" type="pes:DaneWyjazdu" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie wyjazdy poza granice Rzeczpospolitej Polskiej trwające dłużej niż 6 miesięcy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieNazwiska2">
+		<xsd:sequence>
+			<xsd:element name="poprzednieNazwisko" type="pes:DaneNazwiska2" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie nazwiska.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieObywatelstwa">
+		<xsd:sequence>
+			<xsd:element name="poprzednieObywatelstwo" type="pes:Obywatelstwo" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie obywatelstwa.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieStanyCywilne">
+		<xsd:sequence>
+			<xsd:element name="poprzedniStanCywilny" type="pes:DaneStanuCywilnego" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych dane dotyczace poprzednich stanow cywilnych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DanePoprzednie2">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących poprzednie dane osoby, których na mocy art. 10 ust. 6 Ustawy o Ewidencji Ludności nie usunięto przy rejestracji zmiany danych.
+				O chronologii zdarzeń w danych poprzednich decydują biznesowe daty w podstawie wpisu lub w podstawie usunięcia. Ze względu na fakt, iż dane historyczne, moga być pozbawione powyższych wyróżników chronologicznych przyjmuje się, że o chronologii zdarzeń w danych poprzednich decyduje kolejność elementów w kolekcji danych poprzednich przekazywanych w usługach.Ostatni element w kolekcji zawiera najstarsze dane.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="imiona" type="pes:PoprzednieImiona2" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie imiona osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiska" type="pes:PoprzednieNazwiska2" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie nazwiska osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numeryPesel" type="pes:PoprzedniePesele2" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie  numery PESEL osoby</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneStanuCywilnego">
+		<xsd:annotation>
+			<xsd:documentation>Rozszerza typ PodstawoweDaneStanuCywilnego o parametry związane z modyfikacją danych. Zawiera między innymi podstawę zmiany danych w rejestrze PESEL w rozumieniu Art.10 ust. 6 Ustawy o Ewidencji Ludności. Jeżeli formaUstania wskazuje na rozwód lub unieważnienie lub nieistnienie związku małżeńskiego to jest wypełnione pole  SyganturaAktSadowych.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneStanuCywilnego">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneStanuCywilnego (dla każdego wpisu
+								dotyczącego jednego numeru PESEL jest wprowadzona ta sama wartość).</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności. Podstawia wpisu zawiera oznaczenie organu ,z którego działania wynika dokonana zmiana.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneUrodzenia">
+		<xsd:annotation>
+			<xsd:documentation>Rozszerza typ PodstawoweDaneUrodzenia o parametry związane z modyfikacją danych. Zawiera między innymi podstawę zmiany danych w rejestrze PESEL w rozumieniu Art.10 ust. 6 Ustawy o Ewidencji Ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneUrodzenia">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneUrodzenia.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól zawierających datę zmiany oraz organ lub sąd, z którego działania wynika dokonana zmiana w DanychUrodzenia. W podstawieWpisu umieszcza się organ i datę wejścia w życie zmian będących podstawą sporządzenia wzmianki na akcie urodzenia.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDanePobytuOut2">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących adres zamieszkania. Zawiera podstawowe dane adresu w zakresie zgodnym z art. 26 Ustawy o ewidencji ludności oraz informacje o zameldowaniu i wymeldowaniu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:AdresKrajowyOut">
+				<xsd:sequence>
+					<xsd:element name="dataDo" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę wymeldowania z adresu, przy którym jest wprowadzone.
+								Jeśli data jest wypełniona to dany adres nie jest aktualny.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataOd" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę zameldowania pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataUplywuDeklarowanegoTerminu" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę upływu zadeklarowanego pobytu pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneStanuCywilnego">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane stanu cywilnego na podstawie Art. 8 punkty 7, 12, 13 Ustawy o Ewidencji Ludności. Informacje o akcie zgonu współmałzonka oraz o urzędzie sporządzającym akt zgonu znajdują się w polu wspolmalzonek.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataRozwiazania" type="kmd:DataRozszerzona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZawarcia" type="kmd:DataRozszerzona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data zawarcia związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="formaUstania" type="kmd:FormaUstaniaMalzenstwa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające formę ustania małżeństwa. (np. rozwód, zgon współmałżonka).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerAktu" type="kmd:NumerAktuNieformalny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer aktu małżeństwa w polskich księgach stanu cywilnego lub numer dokumentu organu obcego państwa stwierdzający zawarcie związku małżeńskiego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stanCywilny" type="kmd:StanCywilny" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające stan cywilny po zawarciu lub rozwiązaniu związku małżeńskiego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sygnaturaAktSadowych" type="kmd:SygnaturaPisma" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organSporzadzajacyAkt" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu sporządzającego akt. W Polsce organem jest urząd stanu cywilnego identyfikowany unikalnym kodem ze słownika urzędów stanu cywilnego USC. Organ obcego państwa będzie identyfikowany kodem i nazwą kraju.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRozwiazujacyMalzenstwo" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wspolmalzonek" type="pes:DaneMalzonka" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane osobowe współmałżonka.( imię, nazwisko rodowe, numer pesel oraz informacje o jego zgonie).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czyZmienianoPlec" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>flaga czy zmieniano rodzaj stanu cywilnego podczas zmiany plci.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerKolejnosci" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer kolejności stanu cywilnego by utworzyc logiczna chronologie.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneUrodzenia">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane urodzenia na podstawie Art. 8 Ustawy o Ewidencji Ludności punkty 3-6, 8-9 - zawiera informacje o miejscu i dacie urodzenia, podstawowe dane o rodzicach oraz informacje o akcie stanu cywilnego sporządzonego w polskich księgach.Może zawierać informacje o akcie z obcych ksiąg, gdy organem wystawiającym dokument jest organ obcego państwa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data urodzenia. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieMatki" type="kmd:Imie" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię matki.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieOjca" type="kmd:Imie" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię ojca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="krajUrodzenia" type="kmd:Kraj" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kraj urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="miejsceUrodzenia" type="kmd:Miejscowosc" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Miejscowość urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiskoRodoweMatki" type="kmd:ZapisNazwiska" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko rodowe matki.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiskoRodoweOjca" type="kmd:ZapisNazwiska" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko rodowe ojca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerAktu" type="kmd:NumerAktuNieformalny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer aktu urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organSporzadzajacyAkt" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu sporządzającego akt. W Polsce organem jest urząd stanu cywilnego identyfikowany unikalnym kodem ze słownika urzędów stanu cywilnego USC. Organ obcego państwa będzie identyfikowany kodem i nazwą kraju.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plec" type="kmd:Plec" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające płeć osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="peselMatki" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>11-cyfrowy numer PESEL matki.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="peselOjca" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>11-cyfrowy numer PESEL ojca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneWyjazdu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane wyjazdu poza granice RP trwającego dłużej niż 6 miesięcy wskazane w art. 8 punkty 20 i 21 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataPowrotu" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę powrotu z zagranicy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataWyjazdu" type="kmd:DataKalendarzowa" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę wyjazdu za granice Polski.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="krajWyjazdu" type="kmd:Kraj" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające kraj wyjazdu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+            <xsd:element name="wyjazdNaStale" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające czy wyjazd na stałe.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="przewidywanyOkresPobytu" type="kmd:DataKalendarzowa" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające przewidywany okres pobytu poza granicami Rzeczypospolitej Polskiej trwający dłużej niż 6 miesięcy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+			<xsd:element name="organRejestrujacyWyjazd" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organ rejestrujący wyjazd.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRejestrujacyPowrot" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organ rejestrujący powrót z wyjazdu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDanePobytuCzasowego">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDanePobytuCzasowego" type="pes:DanePobytu" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie adresy zamieszkania czasowego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDanePobytuStalego">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDanePobytuStalego" type="pes:DanePobytu" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie adresy zamieszkania stałego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzednieImiona">
+		<xsd:sequence>
+			<xsd:element name="poprzednieImie" type="pes:DaneImion" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie imiona.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieImiona2">
+		<xsd:sequence>
+			<xsd:element name="poprzednieImie" type="pes:DaneImion2" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie imiona.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieNazwiska">
+		<xsd:sequence>
+			<xsd:element name="poprzednieNazwisko" type="pes:DaneNazwiska" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie nazwiska.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzednieDaneUrodzenia">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDaneUrodzenia" type="pes:DaneUrodzenia" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie dane urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneDowoduOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować serię i numer oraz datę ważności ostatniego wydanego dowodu
+				osobistego obywatela polskiego oraz oznaczenie organu wydającego dokument – art. 8 p. 22 Ustawy o
+				ewidencji ludności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneDowoduOut">
+				<xsd:sequence>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneDokumentu.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneImionOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane imion osoby o których mowa w art. 8 p. 1 Ustawy o
+				ewidencji ludności. Zawiera podstawowe dane imion, podstawę wpisu, datę zmiany i znacznik usuwania
+				niezgodności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:ImionaOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11
+								ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich
+								zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na
+								true.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole okreslajace date ostatniej aktualizacji grupy pol DaneImion.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6
+								Ustawy o ewidencji ludności.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneMalzonkaOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól danych współmałżonka zawierający dane wskazane w art. 8 punkty
+				12 i częściowo 13 Ustawy o ewidencji ludności z wyłączeniem danych zgonu współmałżonka.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="imie" type="kmd:ImieOut" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Pole opisujące imię małżonka.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>11-cyfrowy numer PESEL małżonka.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiskoRodowe" type="kmd:ZapisNazwiskaOut" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Pole opisujące nazwisko rodowe małżonka.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneNazwiskaOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane nazwiska osoby – art. 8 p. 1 Ustawy o ewidencji
+				ludności. Zawiera podstawowe dane nazwiska, podstawę wpisu, datę zmiany i znacznik usuwania
+				niezgodności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:NazwiskoOut">
+				<xsd:sequence>
+					<xsd:element name="nazwiskoRodowe" type="kmd:NazwiskoOut" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zapisu brzmienia nazwiska rodowego. Dla Polaków jest to nazwisko
+								występujące na akcie urodzenia.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11
+								ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich
+								zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na
+								true.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneNazwiska.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6
+								Ustawy o ewidencji ludności.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneNowejOsobyOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane nowej osoby, przekazywane do rejestru PESEL w
+				celu nadania numeru PESEL zgodnie a art. 17 ust. 2 Ustawy o ewidencji ludności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="danePobytuCzasowego" type="pes:PodstawoweDanePobytu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o adresie czasowym osoby.
+						Odpowiada sekcji Adres czasowy w interfejsie graficznym.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:PodstawoweDanePobytu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących adres i datę zameldowania na pobyt stały – art. 8 p. 14
+						Ustawy o ewidencji ludności. Pole dataDo nie może być wypełnione.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneCudzoziemca" type="pes:PodstawoweDaneCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dane o dokumencie poświadczających tożsamość i obywatelstwo cudzoziemca – art. 8
+						p. 24 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneImion" type="kmd:ImionaOut">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących imiona osoby – art. 8 p. 1 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneNazwiska" type="kmd:NazwiskoOut">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących nazwisko osoby – art. 8 p. 1 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneNazwiskaRodowego" type="kmd:NazwiskoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko rodowe osoby - art. 8 p. 2 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneUrodzenia" type="pes:PodstawoweDaneUrodzeniaOut">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych dane o urodzeniu osoby – art. 8 punkty 3, 4, 5, 6, 8, 9.
+						Odpowiada sekcji Dane o urodzeniu w interfejsie graficznym.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneObywatelstwa" type="kmd:Kraj">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących obywatelstwo osoby – art. 8 p. 11 Ustawy o ewidencji
+						lidności. Dopuszczalne wartości zawiera słowik krajów rozszerzony o wskazanie statusu
+						bezpaństwowca.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneKrajowZamieszkania" type="pes:PodstawoweDaneKrajowZamieszkania" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujący kraj miejsca zamieszkania i kraj poprzedniego miejsca
+						zamieszkania – art. 8 punkty 15 i 16 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePaszportu" type="kmd:PodstawoweDaneDokumentuOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Paszport obywatela polskiego – art. 8 p. 23 Ustawy o ewidencji lidności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneDowoduOsobistego" type="pes:PodstawoweDaneDowoduOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dowodzie osobistym obywatela polskiego – art. 8 p.
+						22 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStanuCywilnego" type="pes:PodstawoweDaneStanuCywilnegoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o stanie cywilnym osoby art. 8 punkty 12 i 13 Ustawy
+						o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organWnioskujacyOPesel" type="kmd:Organ">
+				<xsd:annotation>
+					<xsd:documentation>Organ wnioskujący o nadanie numeru PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ObywatelstwoOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane obywatelstwa osoby o których mówi art. 8 p. 11 Ustawy o ewidencji ludnosci.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól Obywatelstwo.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwo" type="kmd:Kraj" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie kraju, którego obywatelstwo posiada osoba lub statusu bezpaństwowca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacjiOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności. Określają one organ, z którego działania wynika nabycie obywatelstwa, oraz datę jego nabycia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOsobyOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących wszystkie dane osoby przechowywane w rejestrze.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="czyAnulowano" type="xsd:boolean"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Znacznik czy numer ewidencyjny został anulowany
+						(1 - ANULOWANO, null - NIE ANULOWANO). Opis
+						wyświetlany na interfejsie użytkownika dla
+						danego pola: Rekord anulowany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneCudzoziemca"
+						 type="pes:DaneCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Dane o dokumentach poświadczających tożsamość
+						cudzoziemca - art. 8 . p. 24 Ustawy o ewidencji
+						ludności. Dopuszczalne są albo dane o dokumencie
+						podróży cudzoziemca (seria i numer oraz data
+						ważności) albo dane o innym dokumencie
+						potwierdzającym jego tożsamość i obywatelstwo
+						(tutaj dopuszczalna jest forma opisowa zamiast
+						serii i numeru).
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStatusuCudzoziemca" type="pes:DaneStatusuCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Status cudzoziemca wraz z informacjami o dacie zmiany oraz organem dokonującym zmiany.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneDowoduOsobistego"
+						 type="pes:DaneDowoduOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o dowodzie osobistym
+						obywatela polskiego – art. 8 p. 22 Ustawy o
+						ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneImion" type="pes:DaneImionOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o imionach osoby –
+						art. 8 p. 1 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneKrajowZamieszkania"
+						 type="pes:DaneKrajowZamieszkania" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujący kraj miejsca zamieszkania i
+						kraj poprzedniego miejsca zamieszkania – art. 8
+						punkty 15 i 16 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneNazwiska" type="pes:DaneNazwiskaOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane nazwiska osoby –
+						art. 8 p. 1 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneObywatelstwa" type="pes:ObywatelstwoOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Oznaczenie kraju, którego obywatelstwo posiada
+						osoba lub wskazanie statusu bezpaństwowca – art.
+						8 p. 11 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePaszportu" type="pes:DanePaszportuOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Paszport obywatela polskiego – art. 8 p. 23
+						Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuCzasowego"
+						 type="pes:DanePobytuOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o adresie czasowym
+						osoby - art. 8 punkty 18 i 19 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:DanePobytuOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o adresie stałym
+						osoby - art. 8 punkty 14 i 17 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePoprzednie" type="pes:DanePoprzednieOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących poprzednie dane osoby
+						których na mocy art. 10 ust. 6 Ustawy o
+						ewidencji ludności nie usunięto przy rejestracji
+						zmiany danych.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStanuCywilnego"
+						 type="pes:DaneStanuCywilnegoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o stanie cywilnym
+						osoby – art. 8 punkty 7, 12 i 13 Ustawy o
+						ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneUrodzenia" type="pes:DaneUrodzeniaOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o urodzeniu osoby –
+						art. 8 punkty 4, 5, 6, 8 i 9 Ustawy o ewidencji
+						ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneWyjazdu" type="pes:DaneWyjazdu"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane wyjazdu osoby poza
+						granice Rzeczpospolitej Polskiej trwającego
+						dłużej niż sześć miesięcy – art. 8 punkty 20 i
+						21 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneZgonu" type="pes:DaneZgonuOut"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Zestaw pól opisujących dane o zgonie osoby –
+						art. 8 p. 26 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę ostatniej aktualizacji
+						dowolnej grupy pól. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAnulowaniaRekordu" type="kmd:DataKalendarzowa"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę anulowania rekordu dla
+						danego numeru PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZalozeniaRekordu" type="kmd:Czas"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające datę założenia rekordu dla
+						danego numeru PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="idOsoby" type="pes:IdDaneOsoby"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające identyfikator danych osoby w
+						bazie danych PESEL. Dana techniczna.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel"
+						 nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określające aktualny numer PESEL osoby –
+						art. 8 p. 10 Ustawy o ewidencji ludności.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nastepnyNumerPesel" type="kmd:Pesel"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Numer PESEL zapisywany w rekordzie anulowanym w
+						wypadku nadania osobie nowego numeru.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organWnioskujacyOPesel" type="kmd:Organ"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Organ wnioskujący o nadanie numeru PESEL.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wersjaRekordu" type="pes:WersjaElementu"
+						 nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>
+						Przechowuje znacznik stanu danych w całym
+						rekordzie. Jest aktualizowana przy każdej
+						modyfikacji danych zawartych w rekordzie. Wersja
+						rekordu jest używana w usługach rejestrujących
+						zmianę danych w grupach danych tworzących
+						strukturę DaneOsoby. Zmiana danych będzie
+						możliwa, gdy pobrana wersja rekordu przed zmianą
+						i w trakcie jej realizacji w rejestrze PESEL
+						będą zgodne. Wersja rekordu może być opcjonalnie
+						używana również w usługach usuwających
+						niezgodności w jednej z grup danych lub jej
+						danych poprzednich, na przykład w przypadku, gdy
+						istnieje konieczność zapewnienia niezmienności
+						danych osoby w czasie usuwania niezgodności w
+						danej grupie danych i jej danych poprzednich.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPeselDataAktualizacji" type="kmd:Czas" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Data aktualizacji numeru ewidenyjnego PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DanePaszportuOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane ostatnio wydanego paszportu obywatela polskiego
+				zgodnie z art. 8 p. 23 Ustawy o ewidencji ludności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:PodstawoweDaneDokumentuOut">
+				<xsd:sequence>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneDokumentu.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneOstatniegoPaszportuOut">
+		<xsd:annotation>
+			<xsd:documentation>
+				Typ posiadajacy dane paszportowe z rejestru PESEL dla wskazanego numeru PESEL.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:PodstawoweDaneDokumentuOut">
+				<xsd:sequence>
+					<xsd:element name="numerPeselCewiudp" type="kmd:Pesel">
+						<xsd:annotation>
+							<xsd:documentation>11-cyfrowy numer PESEL podany na wejściu.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="numerPeselAktualny" type="kmd:Pesel">
+						<xsd:annotation>
+							<xsd:documentation>11-cyfrowy aktualny numer PESEL osoby.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="imie" type="kmd:Imie" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole opisujące imię.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="nazwisko" type="kmd:ZapisNazwiska" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole opisujące nazwisko.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DanePobytuOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ służący do rejestracji adresu pobytu stałego lub czasowego w rejestrze PESEL,
+				pozwalający zarejestrować dane wskazane w art. 8 punkty 14 i 17 lub dane wskazane w art. 8 punkty 18 i
+				19 Ustawy o ewidencji ludności wraz z informacjami wymaganymi przy zmianie danych – art. 10 ust. 6.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDanePobytuWyjscioweOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci"
+								 type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Informacja, czy dokonano usunięcia
+								niezgodności danych w trybie art. 11
+								ust. 2 Ustawy o ewidencji ludności.
+								Znacznik przy rejestracji danych i
+								rejestracji ich zmian ustawiany jest na
+								false a przy zmianie danych w trybie
+								usuwania niezgodności na true.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Pole określające datę ostatniej
+								aktualizacji grupy pól AdresZamieszkania
+								(dla każdego wpisu dotyczącego jednego
+								numeru PESEL jest wprowadzona ta sama
+								wartość).
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organMeldujacy" type="kmd:Organ"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ rejestrujący zameldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organWymeldowujacy"
+								 type="kmd:Organ" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ rejestrujący wymeldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organAnulujacyZameldowanie" type="kmd:Organ"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ anulujący zameldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAnulowaniaZameldowania" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Data anulowania zameldowania.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organAnulujacyWymeldowanie" type="kmd:Organ"
+								 minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Organ anulujący wymeldowanie.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAnulowaniaWymeldowania" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>
+								Data anulowania wymeldowania.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DanePoprzednieOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących poprzednie dane osoby, których na mocy art. 10
+				ust. 6 Ustawy o Ewidencji Ludności nie usunięto przy rejestracji zmiany danych.
+				O chronologii zdarzeń w danych poprzednich decydują biznesowe daty w podstawie wpisu lub w podstawie
+				usunięcia. Ze względu na fakt, iż dane historyczne, moga być pozbawione powyższych wyróżników
+				chronologicznych przyjmuje się, że o chronologii zdarzeń w danych poprzednich decyduje kolejność
+				elementów w kolekcji danych poprzednich przekazywanych w usługach.Ostatni element w kolekcji zawiera
+				najstarsze dane.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="daneCudzoziemca" type="pes:PoprzednieDaneCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane o dokumentach poświadczających tożsamość i obywatelstwo
+						cudzoziemca.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneStatusuCudzoziemca" type="pes:PoprzednieDaneStatusuCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane statusu cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneKrajowZamieszkania" type="pes:PoprzednieDaneKrajowZamieszkania" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane krajów zamieszkania.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuCzasowego" type="pes:PoprzednieDanePobytuCzasowegoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie adresy czasowego zamieszkania.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="danePobytuStalego" type="pes:PoprzednieDanePobytuStalegoOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie adresy stałego zamieszkania.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneZgonu" type="pes:PoprzednieDaneZgonuOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane o zgonie, które zostały zmienione bądź usunięte z danych
+						aktualnych.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="listaNumerowPesel" type="pes:PoprzedniePesele" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie numery PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imiona" type="pes:PoprzednieImionaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie imiona.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiska" type="pes:PoprzednieNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie nazwiska.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="daneUrodzenia" type="pes:PoprzednieDaneUrodzeniaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Poprzednie dane o urodzeniu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="obywatelstwa" type="pes:PoprzednieObywatelstwaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie obywatelstwa.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stanyCywilne" type="pes:PoprzednieStanyCywilneOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane poprzednich stanów cywilnych.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wyjazdy" type="pes:PoprzednieWyjazdyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie wyjazdy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieWyjazdyOut">
+		<xsd:sequence>
+			<xsd:element name="poprzedniWyjazd" type="pes:DaneWyjazdu" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie wyjazdy poza granice Rzeczpospolitej Polskiej trwające dłużej niż 6 miesięcy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneStanuCywilnegoOut">
+		<xsd:annotation>
+			<xsd:documentation>Rozszerza typ PodstawoweDaneStanuCywilnego o parametry związane z modyfikacją danych.
+				Zawiera między innymi podstawę zmiany danych w rejestrze PESEL w rozumieniu Art.10 ust. 6 Ustawy o
+				Ewidencji Ludności. Jeżeli formaUstania wskazuje na rozwód lub unieważnienie lub nieistnienie związku
+				małżeńskiego to jest wypełnione pole SyganturaAktSadowych.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneStanuCywilnegoOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11
+								ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich
+								zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na
+								true.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneStanuCywilnego
+								(dla każdego wpisu
+								dotyczącego jednego numeru PESEL jest wprowadzona ta sama wartość).
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6
+								Ustawy o ewidencji ludności. Podstawia wpisu zawiera oznaczenie organu ,z którego
+								działania wynika dokonana zmiana.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DaneUrodzeniaOut">
+		<xsd:annotation>
+			<xsd:documentation>Rozszerza typ PodstawoweDaneUrodzenia o parametry związane z modyfikacją danych. Zawiera
+				między innymi podstawę zmiany danych w rejestrze PESEL w rozumieniu Art.10 ust. 6 Ustawy o Ewidencji
+				Ludności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneUrodzeniaOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11
+								ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich
+								zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na
+								true.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneUrodzenia.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól zawierających datę zmiany oraz organ lub sąd, z którego
+								działania wynika dokonana zmiana w DanychUrodzenia. W podstawieWpisu umieszcza się organ
+								i datę wejścia w życie zmian będących podstawą sporządzenia wzmianki na akcie urodzenia.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+
+	<xsd:complexType name="PodstawoweDaneDowoduOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ opisujący serię i numer oraz datę ważności ostatniego wydanego dowodu osobistego
+				obywatela polskiego oraz oznaczenie organu wydającego dokument – art. 8 p. 22 Ustawy o ewidencji
+				ludności.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:PodstawoweDaneDokumentuOut">
+				<xsd:sequence>
+					<xsd:element name="wystawca" type="kmd:Organ" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole zawierające oznaczenie organu wydającego dowód osobisty.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="PodstawoweDaneStanuCywilnegoOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane stanu cywilnego na podstawie Art. 8 punkty 7,
+				12, 13 Ustawy o Ewidencji Ludności. Informacje o akcie zgonu współmałzonka oraz o urzędzie
+				sporządzającym akt zgonu znajdują się w polu wspolmalzonek.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataRozwiazania" type="kmd:DataRozszerzona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data rozwiązania związku małżeńskiego. Pole może zawierać datę z kalendarza lub
+						datę spoza kalendarza oraz datę w postaci opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZawarcia" type="kmd:DataRozszerzona" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data zawarcia związku małżeńskiego. Pole może zawierać datę z kalendarza lub datę
+						spoza kalendarza oraz datę w postaci opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="formaUstania" type="kmd:FormaUstaniaMalzenstwa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające formę ustania małżeństwa. (np. rozwód, zgon współmałżonka).
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerAktu" type="kmd:NumerAktuNieformalnyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer aktu małżeństwa w polskich księgach stanu cywilnego lub numer dokumentu
+						organu obcego państwa stwierdzający zawarcie związku małżeńskiego.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stanCywilny" type="kmd:StanCywilny" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające stan cywilny po zawarciu lub rozwiązaniu związku małżeńskiego.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sygnaturaAktSadowych" type="kmd:SygnaturaPisma" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Sygnatura akt sądowych będących podstawą rozwiązania związku małżeńskiego.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organSporzadzajacyAkt" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu sporządzającego akt. W Polsce organem jest urząd stanu
+						cywilnego identyfikowany unikalnym kodem ze słownika urzędów stanu cywilnego USC. Organ obcego
+						państwa będzie identyfikowany kodem i nazwą kraju.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRozwiazujacyMalzenstwo" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu (sądu) rozwiązującego związek małżeński.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wspolmalzonek" type="pes:DaneMalzonkaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane osobowe współmałżonka.( imię, nazwisko rodowe, numer
+						pesel oraz informacje o jego zgonie).
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="czyZmienianoPlec" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>flaga czy zmieniano rodzaj stanu cywilnego podczas zmiany plci.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerKolejnosci" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer kolejności stanu cywilnego by utworzyc logiczna chronologie.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneUrodzeniaOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane urodzenia na podstawie Art. 8 Ustawy o
+				Ewidencji Ludności punkty 3-6, 8-9 - zawiera informacje o miejscu i dacie urodzenia, podstawowe dane o
+				rodzicach oraz informacje o akcie stanu cywilnego sporządzonego w polskich księgach.Może zawierać
+				informacje o akcie z obcych ksiąg, gdy organem wystawiającym dokument jest organ obcego państwa.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data urodzenia. Pole może zawierać datę z kalendarza lub datę spoza kalendarza
+						oraz datę w postaci opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieMatki" type="kmd:ImieOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię matki.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imieOjca" type="kmd:ImieOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Imię ojca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="krajUrodzenia" type="kmd:Kraj" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kraj urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="miejsceUrodzenia" type="kmd:MiejscowoscOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Miejscowość urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiskoRodoweMatki" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko rodowe matki.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwiskoRodoweOjca" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nazwisko rodowe ojca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerAktu" type="kmd:NumerAktuNieformalnyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Numer aktu urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organSporzadzajacyAkt" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu sporządzającego akt. W Polsce organem jest urząd stanu
+						cywilnego identyfikowany unikalnym kodem ze słownika urzędów stanu cywilnego USC. Organ obcego
+						państwa będzie identyfikowany kodem i nazwą kraju.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plec" type="kmd:Plec" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające płeć osoby.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="peselMatki" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>11-cyfrowy numer PESEL matki.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="peselOjca" type="kmd:Pesel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>11-cyfrowy numer PESEL ojca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzednieImionaOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieImie" type="pes:DaneImionOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie imiona.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieNazwiskaOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieNazwisko" type="pes:DaneNazwiskaOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie nazwiska.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="PoprzednieStanyCywilneOut">
+		<xsd:sequence>
+			<xsd:element name="poprzedniStanCywilny" type="pes:DaneStanuCywilnegoOut" minOccurs="0"
+						 maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych dane dotyczace poprzednich stanow cywilnych.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDanePobytuCzasowegoOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDanePobytuCzasowego" type="pes:DanePobytuOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie adresy zamieszkania czasowego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDanePobytuStalegoOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDanePobytuStalego" type="pes:DanePobytuOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie adresy zamieszkania stałego.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDaneUrodzeniaOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDaneUrodzenia" type="pes:DaneUrodzeniaOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie dane urodzenia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieObywatelstwaOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieObywatelstwo" type="pes:ObywatelstwoOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pol opisujacych poprzednie obywatelstwa.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneCudzoziemca">
+		<xsd:annotation>
+			<xsd:documentation>Typ uzupełniający PodstawoweDaneCudzoziemca danymi technicznymi.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneCudzoziemca">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneCudzoziemca.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych polegającej na zarejestrowaniu nowego dokumentu zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDaneCudzoziemca">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDaneCudzoziemca" type="pes:DaneCudzoziemca" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie dane dokumentu cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneIdentyfikacyjne">
+		<xsd:annotation>
+			<xsd:documentation>Struktura danych identyfikujących osobę. Wykorzystywana w usługach aktualizcji rejestru.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numerPesel" type="kmd:Pesel">
+				<xsd:annotation>
+					<xsd:documentation>11-cyfrowy numer PESEL małżonka.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imie" type="kmd:ZapisImieniaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole opisujące imię małżonka.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="nazwisko" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole opisujące nazwisko.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneIdentyfikacyjneWeryfikacjaCzyZyjeResponse">
+		<xsd:annotation>
+			<xsd:documentation>Typ rozszerzajacy dane identyfikacyjne osoby o status "czyZyje"</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:DaneIdentyfikacyjne">
+				<xsd:sequence>
+					<xsd:element name="statusCzyZyje" type="pes:statusCzyZyje">
+						<xsd:annotation>
+							<xsd:documentation>Informacja o tym czy dana osoba żyje. Jeżeli przekazane dane były nie poprawne (nie istnieje w bazie osoba o takim numerze PESEL, bądź numer pesel nie zgadza się z przekazanym imieniem / nazwiskiem to zwracana jest informacja o nieprawidłowych danych.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="statusCzyZyje">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ZYJE" />
+			<xsd:enumeration value="NIE_ZYJE" />
+			<xsd:enumeration value="NIEPRAWIDLOWE_DANE" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="DaneKrajowZamieszkania">
+		<xsd:annotation>
+			<xsd:documentation>Typ uzupełniający PodstawoweDaneKrajowZamieszkania danymi technicznymi - podstawą wpisu, datą zmiany i znacznikiem usuwania niezgodności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneKrajowZamieszkania">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacjiOut" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneNrPesel">
+		<xsd:annotation>
+			<xsd:documentation>Zestaw pól używany do przechowywania poprzednich numerów PESEL osoby.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZmiany" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę zmiany numeru pesel na inny.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel" nillable="true"/>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę zmiany dokonanej na numerze pesel na inny.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kolejnosc" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające kolejnosc numeru pesel w łańcuchu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRejestrujacy" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organ rejestrujacy PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneNrPesel2">
+		<xsd:annotation>
+			<xsd:documentation>
+				Zestaw pól używany do przechowywania poprzednich numerów PESEL osoby.
+				W porównaniu do obiektu DaneNrPesel daty tutaj przekazywane są razem z czasem.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZmiany" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę zmiany numeru pesel na inny.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerPesel" type="kmd:Pesel" nillable="true"/>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę zmiany dokonanej na numerze pesel na inny.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kolejnosc" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające kolejnosc numeru pesel w łańcuchu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRejestrujacy" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organ rejestrujacy PESEL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneZgonu">
+		<xsd:annotation>
+			<xsd:documentation>Rozszerza typ PodstawoweDaneZgonu o parametry związane z modyfikacją danych. Zawiera między innymi podstawę zmiany danych w rejestrze PESEL w rozumieniu Art.10 ust. 6 Ustawy o Ewidencji Ludności. W przypadku unieważnienia aktu zgonu wypełniane jest pole podstawaUsuniecia i DaneZgonu są przenoszone do struktury PoprzednieDaneZgonu. W danych aktualnych DaneZgonu zawierają datęZgonu albo datęZnalezieniaZwlok.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneZgonu">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneZgonu.
+								Opis wyświetlany na interfejsie użytkownika: Data aktualizacji danych o zgonie.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaUsuniecia" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych polegającej na usunięciu danych zgonu z danych aktualnych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności
+								Zawierają one datę zmiany oraz wskazanie organu lub sądu, z którego działania wynika unieważnienie  aktu zgonu.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności.
+								Zawierają one datę zmiany oraz organ lub sąd, z którego działania wynika dokonana zmiana w DanychZgonu. W podstawieWpisu umieszcza się organ i datę wejścia w życie zmian będących podstawą sporządzenia wzmianki na akcie zgon.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneZgonuOut">
+		<xsd:annotation>
+			<xsd:documentation>Rozszerza typ PodstawoweDaneZgonu o parametry związane z modyfikacją danych. Zawiera między innymi podstawę zmiany danych w rejestrze PESEL w rozumieniu Art.10 ust. 6 Ustawy o Ewidencji Ludności. W przypadku unieważnienia aktu zgonu wypełniane jest pole podstawaUsuniecia i DaneZgonu są przenoszone do struktury PoprzednieDaneZgonu. W danych aktualnych DaneZgonu zawierają datęZgonu albo datęZnalezieniaZwlok.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneZgonuOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneZgonu.
+								Opis wyświetlany na interfejsie użytkownika: Data aktualizacji danych o zgonie.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaUsuniecia" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych polegającej na usunięciu danych zgonu z danych aktualnych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności
+								Zawierają one datę zmiany oraz wskazanie organu lub sądu, z którego działania wynika unieważnienie  aktu zgonu.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="podstawaWpisu" type="pes:PodstawaAktualizacji" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Zestaw pól określających podstawę zmiany danych zgodnie z art. 10 ust. 6 Ustawy o ewidencji ludności.
+								Zawierają one datę zmiany oraz organ lub sąd, z którego działania wynika dokonana zmiana w DanychZgonu. W podstawieWpisu umieszcza się organ i datę wejścia w życie zmian będących podstawą sporządzenia wzmianki na akcie zgon.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="IdDaneOsoby">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający techniczny identyfikator danych osoby w bazie PESEL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+
+	<xsd:complexType name="PodstawoweDaneCudzoziemca">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane cudzoziemca, niezbędne do nadania numeru PESEL i wykonania obowiązku meldunkowego czyli dokument podróży lub inny dokument potwierdzający jego tożsamość i obywatelstwo zgodnie z art. 8 p. 24 Ustawy o ewidencji ludności. W grupie danych powinno być wypełnione tylko jedno z pól: dokumentPodrozy albo dokumentTozsamosci.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dokumentPodrozy" type="kmd:PodstawoweDaneDokumentu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dokumencie podróży cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dokumentTozsamosci" type="kmd:DaneDokumentuTozsamosci" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dokumencie tożsamości cudzoziemca.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NowePodstawoweDaneCudzoziemca">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować dane cudzoziemca, niezbędne do nadania numeru PESEL i wykonania obowiązku meldunkowego czyli dokument podróży lub inny dokument potwierdzający jego tożsamość i obywatelstwo zgodnie z art. 8 p. 24 Ustawy o ewidencji ludności. W grupie danych powinno być wypełnione tylko jedno z pól: dokumentPodrozy albo dokumentTozsamosci.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="rodzajDokumentu" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Rodzaj dokumentu potwierdzającego tożsamości cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dokument" type="kmd:PodstawoweDaneDokumentu" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących dane o dokumencie cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DaneStatusuCudzoziemca">
+		<xsd:annotation>
+			<xsd:documentation>Typ opakowujący status cudzoziemca o datę zmiany oraz organ rejestrujący zmianę.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZmiany" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data zmiany.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę ostatniej aktualizacji rekordu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organ" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu lub sądu, z którego działania wynika dokonana zmiana.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="statusCudzoziemca" type="kmd:StatusCudzoziemca" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Status cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzednieDaneStatusuCudzoziemca">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDaneStatusuCudzoziemca" type="pes:DaneStatusuCudzoziemca" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie dane statusu cudzoziemca.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneDowodu">
+		<xsd:annotation>
+			<xsd:documentation>Typ opisujący serię i numer oraz datę ważności ostatniego wydanego dowodu osobistego obywatela polskiego oraz oznaczenie organu wydającego dokument – art. 8 p. 22 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:PodstawoweDaneDokumentu">
+				<xsd:sequence>
+					<xsd:element name="wystawca" type="kmd:Organ" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole zawierające oznaczenie organu wydającego dowód osobisty.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneKrajowZamieszkania">
+		<xsd:annotation>
+			<xsd:documentation>Typ pozwalający zarejestrować kraj miejsca zamieszkania i kraj poprzedniego miejsca zamieszkaia wskazane w art. 8 punkty 15 i 16 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="krajZamieszkania" type="kmd:Kraj" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Kraj miejsca zamieszkania – art. 8 p. 15 Ustawy o ewidencji ludności.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDanePobytu">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących adres zamieszkania. Zawiera podstawowe dane adresu w zakresie zgodnym z art. 26 Ustawy o ewidencji ludności oraz informacje o zameldowaniu i wymeldowaniu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:AdresKrajowy">
+				<xsd:sequence>
+					<xsd:element name="dataDo" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę wymeldowania z adresu, przy którym jest wprowadzone.
+								Jeśli data jest wypełniona to dany adres nie jest aktualny.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataOd" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę zameldowania pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataUplywuDeklarowanegoTerminu" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę upływu zadeklarowanego pobytu pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDanePobytuOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących adres zamieszkania. Zawiera podstawowe dane adresu w zakresie zgodnym z art. 26 Ustawy o ewidencji ludności oraz informacje o zameldowaniu i wymeldowaniu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:AdresKrajowy">
+				<xsd:sequence>
+					<xsd:element name="dataDo" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę wymeldowania z adresu, przy którym jest wprowadzone.
+								Jeśli data jest wypełniona to dany adres nie jest aktualny.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataOd" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę zameldowania pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataUplywuDeklarowanegoTerminu" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę upływu zadeklarowanego pobytu pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDanePobytuWyjscioweOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących adres zamieszkania. Zawiera podstawowe dane adresu w zakresie zgodnym z art. 26 Ustawy o ewidencji ludności oraz informacje o zameldowaniu i wymeldowaniu.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="kmd:AdresKrajowyOut">
+				<xsd:sequence>
+					<xsd:element name="dataDo" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę wymeldowania z adresu, przy którym jest wprowadzone.
+								Jeśli data jest wypełniona to dany adres nie jest aktualny.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataOd" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę zameldowania pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataUplywuDeklarowanegoTerminu" type="kmd:DataKalendarzowa" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę upływu zadeklarowanego pobytu pod danym adresem.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawoweDaneZgonu">
+		<xsd:annotation>
+			<xsd:documentation>Typ zawierający zestaw pól opisujących dane zgonu na podstawie Art. 8 Ustawy o Ewidencji Ludności pkt 26. Może zawierać informacje o akcie z obcych ksiąg, gdy organem wystawiającym dokument jest organ obcego państwa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZgonu" type="kmd:Data"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Data zgonu. Pole może zawierać datę z kalendarza
+						lub datę spoza kalendarza oraz datę w postaci
+						opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZnalezieniaZwlok" type="kmd:Data"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określajace datę znalezienia zwłok, gdy nie
+						można ustalić daty zgonu.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataOpisowa" type="kmd:DataOpisowa"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Typ określający nieformalną datę zdarzenia
+						biznesowego spisaną z dokumentu. Może to być
+						data opisowa.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerAktu"
+						 type="kmd:NumerAktuNieformalny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Numer aktu zgonu.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organSporzadzajacyAkt" type="kmd:Organ"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Oznaczenie organu sporządzającego akt.
+						W Polsce organem jest urząd stanu
+						cywilnego identyfikowany unikalnym kodem ze
+						słownika urzędów stanu cywilnego USC. Organ
+						obcego państwa będzie identyfikowany kodem i
+						nazwą kraju.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataUniewaznieniaZgonu" type="kmd:Data" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Data unieważnienia aktu zgonu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRejestrujacyUniewaznienieZgonu" type="kmd:Organ" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Oragn rejestrujący unieważnienie aktu zgonu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sygnaturaAktuUniewaznienia" type="kmd:NumerAktuNieformalny" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Sygnatura aktu unieważnienia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PodstawoweDaneZgonuOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ zawierający zestaw pól opisujących dane zgonu na podstawie Art. 8 Ustawy o Ewidencji Ludności pkt 26. Może zawierać informacje o akcie z obcych ksiąg, gdy organem wystawiającym dokument jest organ obcego państwa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZgonu" type="kmd:Data"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Data zgonu. Pole może zawierać datę z kalendarza
+						lub datę spoza kalendarza oraz datę w postaci
+						opisowej.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataZnalezieniaZwlok" type="kmd:Data"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole określajace datę znalezienia zwłok, gdy nie
+						można ustalić daty zgonu.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataOpisowa" type="kmd:DataOpisowa"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Typ określający nieformalną datę zdarzenia
+						biznesowego spisaną z dokumentu. Może to być
+						data opisowa.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numerAktu"
+						 type="kmd:NumerAktuNieformalnyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Numer aktu zgonu.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organSporzadzajacyAkt" type="kmd:Organ"
+						 minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Oznaczenie organu sporządzającego akt.
+						W Polsce organem jest urząd stanu
+						cywilnego identyfikowany unikalnym kodem ze
+						słownika urzędów stanu cywilnego USC. Organ
+						obcego państwa będzie identyfikowany kodem i
+						nazwą kraju.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataUniewaznieniaZgonu" type="kmd:Data" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Data unieważnienia aktu zgonu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRejestrujacyUniewaznienieZgonu" type="kmd:Organ" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Oragn rejestrujący unieważnienie aktu zgonu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sygnaturaAktuUniewaznienia" type="kmd:NumerAktuNieformalnyOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Sygnatura aktu unieważnienia.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzednieDaneKrajowZamieszkania">
+		<xsd:sequence>
+			<xsd:element name="poprzedniKrajZamieszkania" type="pes:DaneKrajowZamieszkania" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Zestaw pól opisujących poprzednie dane krajów zamieszkania.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzednieDaneZgonu">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDaneZgonu" type="pes:DaneZgonu" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Informacja o anulowanych lub zmienionych informacjach o zgonie.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzednieDaneZgonuOut">
+		<xsd:sequence>
+			<xsd:element name="poprzednieDaneZgonu" type="pes:DaneZgonuOut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Informacja o anulowanych lub zmienionych informacjach o zgonie.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PoprzedniePesele">
+		<xsd:sequence>
+			<xsd:element name="poprzedniPesel" type="pes:DaneNrPesel" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Pole okreslajace poprzedni numer ewidencyjny, wypelniony jesli pole Numer PESEL kiedykolwiek bylo zmienione i posiada
+						poprzednika.
+						Opis wyswietlany na interfejsie uzytkownika dla danego pola: Numer PESEL Poprzedni.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PoprzedniePesele2">
+		<xsd:sequence>
+			<xsd:element name="poprzedniPesel" type="pes:DaneNrPesel2" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+						Pole okreslajace poprzedni numer ewidencyjny, wypelniony jesli pole Numer PESEL
+						kiedykolwiek bylo zmienione i posiada poprzednika.
+						Opis wyswietlany na interfejsie uzytkownika dla danego pola: Numer PESEL Poprzedni.
+						W porównaniu do typu PoprzedniePesele daty są podawane razem z czasem.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="WersjaElementu">
+		<xsd:annotation>
+			<xsd:documentation>Przechowuje informacje o wersji elementu. Informacja o wersji elementu jest wykorzystywana przez usługi aktualizujące dane w rejestrze PESEL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:complexType name="PodstawaAktualizacji">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących podstawę zmiany danych w rejestrze PESEL w
+				rozumieniu Art. 10 pkt 6 ustawy.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZmiany" type="kmd:DataKalendarzowa" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data zmiany.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organ" type="kmd:Organ" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu lub sądu, z którego działania wynika dokonana zmiana.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organZmiany" type="kmd:Organ" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu dokonującego zmiany.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PodstawaAktualizacjiOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących podstawę zmiany danych w rejestrze PESEL w rozumieniu Art. 10 pkt 6 ustawy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataZmiany" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data zmiany.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organ" type="kmd:Organ" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu lub sądu, z którego działania wynika dokonana zmiana.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organZmiany" type="kmd:Organ" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Oznaczenie organu dokonującego zmiany.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaneWyjazdu">
+		<xsd:annotation>
+			<xsd:documentation>Typ uzupełniający PodstawoweDaneWyjazdu danymi technicznymi.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:PodstawoweDaneWyjazduOut">
+				<xsd:sequence>
+					<xsd:element name="czyUsuwanoNiezgodnosci" type="xsd:boolean" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Informacja, czy dokonano usunięcia niezgodności danych w trybie art. 11 ust. 2 Ustawy o ewidencji ludności. Znacznik przy rejestracji danych i rejestracji ich zmian ustawiany jest na false a przy zmianie danych w trybie usuwania niezgodności na true.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataAktualizacji" type="kmd:Czas" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Pole określające datę ostatniej aktualizacji grupy pól DaneWyjazdu.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="PodstawoweDaneWyjazduOut">
+		<xsd:annotation>
+			<xsd:documentation>Typ określający zestaw pól opisujących dane wyjazdu poza granice RP trwającego dłużej niż 6 miesięcy wskazane w art. 8 punkty 20 i 21 Ustawy o ewidencji ludności.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataPowrotu" type="kmd:Data" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę powrotu z zagranicy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataWyjazdu" type="kmd:Data" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające datę wyjazdu za granice Polski.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="krajWyjazdu" type="kmd:Kraj" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające kraj wyjazdu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="wyjazdNaStale" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Pole określające czy wyjazd na stałe.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+            <xsd:element name="przewidywanyOkresPobytu" type="kmd:Data" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Pole określające przewidywany okres pobytu poza granicami Rzeczypospolitej Polskiej trwający dłużej niż 6 miesięcy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+			<xsd:element name="organRejestrujacyWyjazd" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organ rejestrujący wyjazd.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organRejestrujacyPowrot" type="kmd:Organ" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organ rejestrujący powrót z wyjazdu.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+    <xsd:complexType name="DaneDziecka">
+        <xsd:annotation>
+            <xsd:documentation>Typ określający zestaw pól opisujących wybrane dane dzieci przechowywane w rejestrze do
+                udostępnienia.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Pole określające aktualny numer PESEL dziecka –
+                        art. 8 p. 10 Ustawy o ewidencji ludności.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imiePierwsze" type="kmd:ZapisImieniaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imię – pierwsze dziecka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imieDrugie" type="kmd:ZapisImieniaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imię – drugie dziecka.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imionaKolejne" type="kmd:ImionaKolejne" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Imię trzecie i kolejne imiona osoby rozdzielone znakiem spacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nazwisko" type="kmd:ZapisNazwiskaOut" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Podstawowa forma zapisu brzmienia nazwiska.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+	<xsd:complexType name="DaneDziecka2">
+		<xsd:annotation>
+			<xsd:documentation>Typ poszerzający podstawowe dane dzieci o informacje na temat urodzenia.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pes:DaneDziecka">
+				<xsd:sequence>
+					<xsd:element name="miejsceUrodzenia" type="kmd:NazwaMiejscowosci" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Miejscowość urodzenia.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="dataUrodzenia" type="kmd:Data" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Data urodzenia. Pole może zawierać datę z kalendarza lub datę spoza kalendarza oraz datę w postaci opisowej.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="krajUrodzenia" type="kmd:Kraj" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Kraj urodzenia.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="krajZamieszkania" type="kmd:Kraj" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Kraj miejsca zamieszkania.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="adresZameldowanieStale" type="kmd:AdresKrajowyDzieckaOut" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Adres zameldowania dziecka na pobyt stały.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="adresZameldowanieCzasowe" type="kmd:AdresKrajowyDzieckaOut" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Adres zameldowania dziecka na pobyt czasowy.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="terytUrzadZameldowanieStale" type="kmd:KodTerytorialny" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Kod teryt urzedu, który zameldował dziecko pod adresem stałym.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="terytUrzadZameldowanieCzasowe" type="kmd:KodTerytorialny" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Kod teryt urzedu, który zameldował dziecko pod adresem czasowym.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

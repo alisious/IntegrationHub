@@ -17,7 +17,7 @@ namespace IntegrationHub.SRP.Models
             {
                 foreach (var os in response.znalezioneOsoby)
                 {
-                    result.Persons.Add(new BasicPersonData
+                    result.Persons.Add(new PersonData
                     {
                         OsobaId = os.osobaId,
                         NumerPesel = os.numerPesel,
@@ -36,7 +36,7 @@ namespace IntegrationHub.SRP.Models
                         ImieOjca = os.imieOjca,
                         NazwiskoRodoweMatki = os.nazwiskoRodoweMatki,
                         NazwiskoRodoweOjca = os.nazwiskoRodoweOjca,
-                        DanePobytuStalego = os.danePobytuStalego == null ? null : new AddressData
+                        DanePobytuStalego = os.danePobytuStalego == null ? null : new PersonAddress
                         {
                             NumerDomu = os.danePobytuStalego.numerDomu,
                             GminaNazwa = os.danePobytuStalego.gmina?.Value,
@@ -53,7 +53,7 @@ namespace IntegrationHub.SRP.Models
                             DataOd = os.danePobytuStalego.dataOd,
                             DataDo = os.danePobytuStalego.dataDo
                         },
-                        DanePobytuCzasowego = os.danePobytuCzasowego == null ? null : new AddressData
+                        DanePobytuCzasowego = os.danePobytuCzasowego == null ? null : new PersonAddress
                         {
                             // Analogicznie jak wyżej
                             NumerDomu = os.danePobytuCzasowego.numerDomu,

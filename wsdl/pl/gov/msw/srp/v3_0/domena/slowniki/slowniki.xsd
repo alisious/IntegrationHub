@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:slw="http://msw.gov.pl/srp/v3_0/domena/slowniki/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://msw.gov.pl/srp/v3_0/domena/slowniki/">
+
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../domena/kmd/kmd.xsd"/>
+
+	<xsd:complexType name="Slownik">
+        <xsd:annotation>
+        	<xsd:documentation>Obiekt grupujący elementy słownika i informujący o rodzaju słownika.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        	<xsd:element name="rodzaj" type="slw:RodzajSlownika"></xsd:element>
+        	<xsd:element name="listaPozycji"
+        		type="slw:ListaPozycjiSlownika">
+        	</xsd:element>
+        </xsd:sequence>
+        
+	</xsd:complexType>
+
+    <xsd:complexType name="AtrybutSlownika">
+        <xsd:annotation>
+            <xsd:documentation>
+                Obiekt zawierający listę dodatkowych atrybutów słownika.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nazwa" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Nazwa kolumny(atrybutu).</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="value" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Wartość kolumny(atrybutu) słownika.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+	<xsd:complexType name="PozycjaSlownika">
+        <xsd:annotation>
+        	<xsd:documentation>Obiekt zawierający informację o pozycji słownika</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+			<xsd:element name="key" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Klucz dla pozycji słownika (jego unikalny identyfikator).</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="value" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Wartość słownika - czytelna dla człowieka wartość słownika.</xsd:documentation>
+				</xsd:annotation></xsd:element>
+            <xsd:element name="atrybutySlownika" type="slw:AtrybutSlownika" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ListaSlownikow">
+		<xsd:annotation>
+			<xsd:documentation>
+				Obiekt zawierający listę kilku słowników.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="slowniki" type="slw:Slownik" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+    <xsd:complexType name="ListaPozycjiSlownika">
+    	<xsd:annotation>
+    		<xsd:documentation>Lista pozycji słownika.
+    		</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:sequence>
+    		<xsd:element name="pozycja" type="slw:PozycjaSlownika" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="GrupaSlownikow">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="PESEL"></xsd:enumeration>
+            <xsd:enumeration value="RDO"></xsd:enumeration>
+			<xsd:enumeration value="USC"></xsd:enumeration>
+			<xsd:enumeration value="SLOWNIKI"></xsd:enumeration>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="WersjaGrupy">
+        <xsd:annotation>
+        	<xsd:documentation>Wersja grupy słowników.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:int"></xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="RodzajSlownika">
+    	<xsd:annotation>
+    		<xsd:documentation>Rodzaj słownika.</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="PESEL_FORMA_USTANIA_MALZENSTWA"></xsd:enumeration>
+			<xsd:enumeration value="PESEL_KONSULATY"></xsd:enumeration>
+    		<xsd:enumeration value="PESEL_PLEC"></xsd:enumeration>
+    		<xsd:enumeration value="PESEL_RODZAJ_ADRESU"></xsd:enumeration>
+    		<xsd:enumeration value="PESEL_RODZAJ_DOKUMENTU"></xsd:enumeration>
+			<xsd:enumeration value="PESEL_RODZAJ_ORGANU_REJESTRUJACEGO"></xsd:enumeration>
+    		<xsd:enumeration value="PESEL_STAN_CYWILNY"></xsd:enumeration>
+    		<xsd:enumeration value="PESEL_WYSTAWCA_DOKUMENTOW_TOZSAMOSCI"></xsd:enumeration>
+			<xsd:enumeration value="PESEL_OBYWATELSTWO"></xsd:enumeration>
+			<xsd:enumeration value="PESEL_KRAJE"></xsd:enumeration>
+			<xsd:enumeration value="PESEL_NUMER_KIERUNKOWY"></xsd:enumeration>
+			<xsd:enumeration value="RDO_KOLOR_OCZU"></xsd:enumeration>
+			<xsd:enumeration value="RDO_PRZYCZYNA_UNIEWAZNIENIA"></xsd:enumeration>
+			<xsd:enumeration value="RDO_STATUS_PROP_UNIEW"></xsd:enumeration>
+			<xsd:enumeration value="RDO_ORGAN"></xsd:enumeration>
+			<xsd:enumeration value="RDO_URZAD"></xsd:enumeration>
+			<xsd:enumeration value="USC_URZEDY_STANU_CYWILNEGO"></xsd:enumeration>
+			<xsd:enumeration value="SLOWNIKI_PODMIOT_WNIOSKUJACY"></xsd:enumeration>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+	<xsd:simpleType name="RodzajOperacji">
+		<xsd:annotation>
+			<xsd:documentation>Rodzaj operacji na słowniku.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DODAJ"></xsd:enumeration>
+			<xsd:enumeration value="MODYFIKUJ"></xsd:enumeration>
+			<xsd:enumeration value="USUN"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

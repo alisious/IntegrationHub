@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Weryfikacja" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Weryfikacja/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Weryfikacja/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"
+                  xmlns:wsp="http://www.w3.org/ns/ws-policy"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+    <wsdl:import location="interfejsy/weryfikacja.wsdl" namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/"/>
+    <wsdl:binding name="DowodyWeryfikacjaBinding" type="wsdl_1:DowodyWeryfikacja">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="weryfikujDaneDowodu">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Weryfikacja/weryfikujDaneDowodu/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <!-- ////////// DOWODY OSOBISTE - OPERACJE DODANE 17.01  -->
+        <wsdl:operation name="sprawdzCzyUniewazniony">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Weryfikacja/sprawdzCzyUniewazniony/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <!-- ////////////// KONIEC -->
+
+        <wsdl:operation name="sprawdzCzyObywatelMozeZarejestrowacWniosek">
+            <soap:operation soapAction="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Weryfikacja/sprawdzCzyObywatelMozeZarejestrowacWniosek/"/>
+            <wsdl:input>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="parameters" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="bladBiznesowyFault">
+                <soap:fault name="bladBiznesowyFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="bladTechnicznyFault">
+                <soap:fault name="bladTechnicznyFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+    <wsdl:service name="DowodyWeryfikacja">
+        <wsdl:port binding="tns:DowodyWeryfikacjaBinding" name="DowodyWeryfikacjaPort">
+            <soap:address
+                    location="http://msw.gov.pl/srp/v3_0/uslugi/dowody/Weryfikacja/DowodyWeryfikacja/DowodyWeryfikacjaPort"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

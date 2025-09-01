@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="udostepnianie" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/" xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:slw="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/parametry/" xmlns:slw_1="http://msw.gov.pl/srp/v3_0/domena/slowniki/" xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/">
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/slowniki/" schemaLocation="../../../domena/slowniki/slowniki.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+      <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/slowniki/parametry/" schemaLocation="../parametry/parametry.xsd"/>
+
+      <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+      <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+
+      <xsd:element name="pobierzZawartoscSlownika">
+        <xsd:annotation>
+          <xsd:documentation>Usługa umożliwiająca pobranie zawartości słownika.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="grupa" type="slw_1:GrupaSlownikow">
+              <xsd:annotation>
+              	<xsd:documentation>Kod identyfikujący grupę słowników.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wersja" type="slw_1:WersjaGrupy" minOccurs="0">
+              <xsd:annotation>
+              	<xsd:documentation>Wersja pobranej ostatnio grupy.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="pobierzZawartoscSlownikaResponse">
+        <xsd:annotation>
+          <xsd:documentation>Lista słowników.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="listaSlownikow" type="slw_1:ListaSlownikow" minOccurs="0" maxOccurs="1" />
+          	<xsd:element name="wersja" type="slw_1:WersjaGrupy"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="bladTechnicznyFault">
+    <wsdl:part element="tns:bladTechniczny" name="fault22"/>
+  </wsdl:message>
+    <wsdl:message name="bladBiznesowyFault">
+    <wsdl:part element="tns:bladBiznesowy" name="fault23"/>
+  </wsdl:message>
+
+  <wsdl:message name="pobierzZawartoscSlownikaRequest">
+    <wsdl:part element="tns:pobierzZawartoscSlownika" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="pobierzZawartoscSlownikaResponse">
+    <wsdl:part element="tns:pobierzZawartoscSlownikaResponse" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:portType name="SlownikiUdostepnianie">
+    <wsdl:documentation>Interfejs zawierający usługi pozwalające na dostęp do rejestru słowników.</wsdl:documentation>
+    <wsdl:operation name="pobierzZawartoscSlownika">
+      <wsdl:documentation>Usługa umożliwiająca pobranie zawartości grupy słowników.</wsdl:documentation>
+      <wsdl:input message="tns:pobierzZawartoscSlownikaRequest"/>
+      <wsdl:output message="tns:pobierzZawartoscSlownikaResponse"/>
+      <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+      <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

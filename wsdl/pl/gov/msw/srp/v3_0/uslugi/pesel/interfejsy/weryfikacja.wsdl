@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="weryfikacja" targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/" xmlns:tns="http://msw.gov.pl/srp/v3_0/uslugi/pesel/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/" xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/" xmlns:wsp="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/weryfikacja/" xmlns:xsd_2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/" xmlns:pes="http://msw.gov.pl/srp/v3_0/domena/pesel/">
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/pesel/" schemaLocation="../../../domena/pesel/pesel.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wspolne/" schemaLocation="../../../uslugi/wspolne/wspolne.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/" schemaLocation="../parametry/parametry.xsd"/>
+            <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/pesel/parametry/weryfikacja/" schemaLocation="../parametry/weryfikacja.xsd"/>
+            <xsd:element name="weryfikujDaneOsoby">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneOsobyDoWeryfikacji" type="pes:DaneIdentyfikacyjne">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane osoby do weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="weryfikowaneDaneOsoby" type="xsd_1:WeryfikowaneDaneOsoby">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane osoby do weryfikacji. Zakres danych, które mają zostać zweryfikowane podawany jest w parametrze zakresDanychDoWeryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikujDaneOsobyResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="weryfikowaneDaneOsobyWynik" type="xsd_1:WeryfikowaneDaneOsobyWynik">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="bladBiznesowy" type="wsp:BladBiznesowy"/>
+            <xsd:element name="bladTechniczny" type="wsp:BladTechniczny"/>
+            <xsd:element name="weryfikujImieINazwisko">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="numerPesel" type="kmd:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL osoby, której imiona i nazwisko mają zostać zweryfikowane.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="imiePierwsze" type="kmd:Imie">
+                            <xsd:annotation>
+                                <xsd:documentation>Pierwsze imię osoby do weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="imieDrugie" type="kmd:Imie">
+                            <xsd:annotation>
+                                <xsd:documentation>Drugie imię osoby do weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="nazwisko" type="kmd:ZapisNazwiska">
+                            <xsd:annotation>
+                                <xsd:documentation>Nazwisko osoby do weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikujImieINazwiskoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="weryfikacjaPozytywna" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikujCzyZyje">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneOsobDoWeryfikacji" type="pes:DaneIdentyfikacyjne" maxOccurs="unbounded" minOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane osoby do weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikujCzyZyjeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneZweryfikowanychOsob" type="pes:DaneIdentyfikacyjneWeryfikacjaCzyZyjeResponse" maxOccurs="unbounded" minOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat weryfikacji podanych danych osobowych.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikacjaProsta">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="daneOsobyDoWeryfikacji" type="pes:DaneIdentyfikacyjne">
+                            <xsd:annotation>
+                                <xsd:documentation>Dane osoby do weryfikacji.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="weryfikowaneDaneAdresCzasowy" type="xsd_1:WeryfikowaneDaneWeryfikacjaProsta" minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>Zakres danych, które mają zostać zweryfikowane (adres czasowy).</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="weryfikowaneDaneAdresStaly" type="xsd_1:WeryfikowaneDaneWeryfikacjaProsta" minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>Zakres danych, które mają zostać zweryfikowane (adres stały).</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikacjaProstaResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    	<xsd:element
+                    		name="weryfikowaneDaneAdresStalyWynik"
+                    		type="xsd_1:WeryfikowaneDaneWeryfikacjaProstaWynik">
+                    		<xsd:annotation>
+                    			<xsd:documentation>
+                    				Rezultat weryfikacji podanych danych
+                    				osobowych.
+                    			</xsd:documentation>
+                    		</xsd:annotation>
+                    	</xsd:element>
+                    	<xsd:element name="weryfikowaneDaneAdresCzasowyWynik"
+                    		type="xsd_1:WeryfikowaneDaneWeryfikacjaProstaWynik">
+                    	</xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikacjaPowiazaniaParentyzacyjnego">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="numerPeselDziecka" type="kmd:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL dziecka, dla którego sprawdzamy powiązanie parentyzacyjne z podanym rodzicem.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="numerPeselRodzica" type="kmd:Pesel">
+                            <xsd:annotation>
+                                <xsd:documentation>Numer PESEL rodzica, który powinien posiadać powiązanie parentyzacyjne z podanym dzieckiem.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="weryfikacjaPowiazaniaParentyzacyjnegoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="weryfikacjaPozytywna" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:documentation>Rezultat weryfikacji powiązania parentyzacyjnego podanych numerów PESEL.</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="weryfikujDaneOsobyRequest">
+        <wsdl:part element="tns:weryfikujDaneOsoby" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikujDaneOsobyResponse">
+        <wsdl:part element="tns:weryfikujDaneOsobyResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="bladBiznesowyFault">
+        <wsdl:part element="tns:bladBiznesowy" name="fault16"/>
+    </wsdl:message>
+    <wsdl:message name="bladTechnicznyFault">
+        <wsdl:part element="tns:bladTechniczny" name="fault17"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikujImieINazwiskoRequest">
+        <wsdl:part element="tns:weryfikujImieINazwisko" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikujImieINazwiskoResponse">
+        <wsdl:part element="tns:weryfikujImieINazwiskoResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikujCzyZyjeRequest">
+        <wsdl:part element="tns:weryfikujCzyZyje" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikujCzyZyjeResponse">
+        <wsdl:part element="tns:weryfikujCzyZyjeResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikacjaProstaRequest">
+        <wsdl:part element="tns:weryfikacjaProsta" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikacjaProstaResponse">
+        <wsdl:part element="tns:weryfikacjaProstaResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikacjaPowiazaniaParentyzacyjnegoRequest">
+        <wsdl:part element="tns:weryfikacjaPowiazaniaParentyzacyjnego" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="weryfikacjaPowiazaniaParentyzacyjnegoResponse">
+        <wsdl:part element="tns:weryfikacjaPowiazaniaParentyzacyjnegoResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="PeselWeryfikacja">
+        <wsdl:documentation>Interfejs zawiera zbiór usług umożliwiających weryfikację danych osobowych z rejestrem PESEL.</wsdl:documentation>
+        <wsdl:operation name="weryfikujDaneOsoby">
+            <wsdl:documentation>Usługa weryfikuje podane przez system zewnętrzny dane osoby z danymi w systemie PESEL.</wsdl:documentation>
+            <wsdl:input message="tns:weryfikujDaneOsobyRequest"/>
+            <wsdl:output message="tns:weryfikujDaneOsobyResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="weryfikujImieINazwisko">
+            <wsdl:documentation>Usługa weryfikuje podane przez system zewnętrzny imiona, nazwisko i numer PESEL osoby z danymi w systemie PESEL</wsdl:documentation>
+            <wsdl:input message="tns:weryfikujImieINazwiskoRequest"/>
+            <wsdl:output message="tns:weryfikujImieINazwiskoResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="weryfikujCzyZyje">
+            <wsdl:documentation>Usługa weryfikuje, na podstawie danych podanych przez system zewnętrzny, czy osoba żyje</wsdl:documentation>
+            <wsdl:input message="tns:weryfikujCzyZyjeRequest"/>
+            <wsdl:output message="tns:weryfikujCzyZyjeResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="weryfikacjaProsta">
+            <wsdl:documentation>Usługa weryfikuje podane przez system zewnętrzny imiona, nazwisko i numer PESEL osoby z danymi w systemie PESEL</wsdl:documentation>
+            <wsdl:input message="tns:weryfikacjaProstaRequest"/>
+            <wsdl:output message="tns:weryfikacjaProstaResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="weryfikacjaPowiazaniaParentyzacyjnego">
+            <wsdl:documentation>Usługa weryfikuje podane przez system zewnętrzny numer PESEL dziecka oraz numer PESEL i sprawdza czy istnieje między nimi powiązanie parentyzacyjne.</wsdl:documentation>
+            <wsdl:input message="tns:weryfikacjaPowiazaniaParentyzacyjnegoRequest"/>
+            <wsdl:output message="tns:weryfikacjaPowiazaniaParentyzacyjnegoResponse"/>
+            <wsdl:fault message="tns:bladBiznesowyFault" name="bladBiznesowyFault"/>
+            <wsdl:fault message="tns:bladTechnicznyFault" name="bladTechnicznyFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

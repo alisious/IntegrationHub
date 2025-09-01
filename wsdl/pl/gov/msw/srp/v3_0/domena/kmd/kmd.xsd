@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" version="3.0">
+	<xsd:include schemaLocation="kmd_osoba.xsd"/>
+	<xsd:include schemaLocation="kmd_slowniki.xsd"/>
+	<xsd:include schemaLocation="kmd_adres.xsd"/>
+	<xsd:include schemaLocation="kmd_czas.xsd"/>
+	<xsd:include schemaLocation="kmd_dokument.xsd"/>
+	<xsd:include schemaLocation="kmd_wspolne.xsd"/>
+	<xsd:include schemaLocation="kmd_relacja.xsd"/>
+	<xsd:include schemaLocation="kmd_ukr.xsd"/>
+</xsd:schema>

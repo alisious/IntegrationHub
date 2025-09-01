@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dow="http://msw.gov.pl/srp/v3_0/uslugi/dowody/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dow:udostepnijOstatniDowodPoOsobaId>
+         <idOsoby>2915819472640346459</idOsoby>
+      </dow:udostepnijOstatniDowodPoOsobaId>
+   </soapenv:Body>
+</soapenv:Envelope>

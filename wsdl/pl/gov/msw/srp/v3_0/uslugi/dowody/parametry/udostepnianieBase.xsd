@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:dow="http://msw.gov.pl/srp/v3_0/domena/dowody/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsd_1="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianie/"
+            xmlns:wys="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/"
+            targetNamespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianieBase/"
+            version="3.0">
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/kmd/" schemaLocation="../../../domena/kmd/kmd_osoba.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/" schemaLocation="parametry.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/domena/dowody/"
+                schemaLocation="../../../domena/dowody/dowody.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/wyszukiwanie/"
+                schemaLocation="../../../uslugi/wyszukiwanie/wyszukiwanie.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/wyszukiwanie/"
+                schemaLocation="wyszukiwanie.xsd"/>
+    <xsd:import namespace="http://msw.gov.pl/srp/v3_0/uslugi/dowody/parametry/udostepnianie/"
+                schemaLocation="udostepnianie.xsd"/>
+
+    <xsd:complexType name="udostepnijDaneWnioskuBase">
+        <xsd:sequence>
+            <xsd:element name="idWniosku" type="dow:IdWniosku">
+                <xsd:annotation>
+                    <xsd:documentation>Id wniosku</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="udostepnijDaneWnioskowBase">
+        <xsd:sequence>
+            <xsd:element name="listaNumerowWnioskow" type="xsd_1:ListaNumerowWnioskow">
+                <xsd:annotation>
+                    <xsd:documentation>Lista numerów wniosków do pobrania.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="realizujUdostepnienieWnioskowBase">
+        <xsd:sequence>
+            <xsd:element name="listaWnioskow" type="wys:ListaWnioskow">
+                <xsd:annotation>
+                    <xsd:documentation>Lista wybranych wniosków.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="zakresDanych" type="xsd_1:ZakresDanychWniosek">
+                <xsd:annotation>
+                    <xsd:documentation>Lista wybranych dowodów.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:kmd="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+            targetNamespace="http://msw.gov.pl/srp/v3_0/domena/kmd/"
+            version="3.0"
+            jaxb:version="1.0">
+    <xsd:include schemaLocation="kmd_wspolne.xsd"/>
+    <xsd:include schemaLocation="kmd_osoba.xsd" />
+
+    <xsd:complexType name="Relacja">
+        <xsd:annotation>
+            <xsd:documentation>
+                Relacja. Element zawierający numer pesel, imie oraz nazwisko osoby, dla której wyszukiwana jest relacja w PESEL.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="numerPesel" type="kmd:Pesel" nillable="true">
+                <xsd:annotation>
+                    <xsd:documentation>Numer pesel osoby, dla której wyszukiwana jest relacja</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:sequence>
+                <xsd:element name="imie" type="kmd:Imie" nillable="true">
+                    <xsd:annotation>
+                        <xsd:documentation>Imię osoby, dla której wyszukiwana jest relacja</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="nazwisko" type="kmd:ZapisNazwiska" nillable="true">
+                    <xsd:annotation>
+                        <xsd:documentation>Nazwisko osoby, dla której wyszukiwana jest relacja</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="RelacjaOutput">
+        <xsd:annotation>
+            <xsd:documentation>
+                RelacjaOutput. Element zawierający typ relacji oraz numer pesel, dla której wyszukiwana była relacja w PESEL.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="numerPesel" type="kmd:Pesel">
+                <xsd:annotation>
+                    <xsd:documentation>Numer pesel osoby, dla której wyszukiwana była relacja.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="typRelacji" type="kmd:TypRelacji">
+                <xsd:annotation>
+                    <xsd:documentation>Typ znalezionej relacji.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="TypRelacji">
+        <xsd:annotation>
+            <xsd:documentation>Typ opisujacy rodzaj relacji.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MALZONEK">
+                <xsd:annotation>
+                    <xsd:documentation>Małżonek wnioskującego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="WSTEPNY">
+                <xsd:annotation>
+                    <xsd:documentation>Dziecko wnioskującego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ZSTEPNY">
+                <xsd:annotation>
+                    <xsd:documentation>Rodzic wnioskującego</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="BRAK_RELACJI">
+                <xsd:annotation>
+                    <xsd:documentation>Brak relacji</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

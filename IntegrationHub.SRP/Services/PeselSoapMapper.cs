@@ -93,7 +93,7 @@ namespace IntegrationHub.SRP.Services
         {
             var basicPersonDataResponse = new BasicPersonDataResponse
             {
-                Persons = new List<BasicPersonData>()
+                Persons = new List<PersonData>()
             };
 
             if (response.znalezioneOsoby?.Length > 0)
@@ -101,7 +101,7 @@ namespace IntegrationHub.SRP.Services
                     
                 foreach (var person in response.znalezioneOsoby)
                 {
-                    basicPersonDataResponse.Persons.Add(new BasicPersonData
+                    basicPersonDataResponse.Persons.Add(new PersonData
                     {
                         OsobaId = person.osobaId,
                         NumerPesel = person.numerPesel,
@@ -120,7 +120,7 @@ namespace IntegrationHub.SRP.Services
                         ImieOjca = person.imieOjca,
                         NazwiskoRodoweMatki = person.nazwiskoRodoweMatki,
                         NazwiskoRodoweOjca = person.nazwiskoRodoweOjca,
-                        DanePobytuStalego = person.danePobytuStalego != null ? new AddressData
+                        DanePobytuStalego = person.danePobytuStalego != null ? new PersonAddress
                         {
 
                             MiejscowoscKod = person.danePobytuStalego.miejscowoscDzielnica.kodTerytorialny,
@@ -140,7 +140,7 @@ namespace IntegrationHub.SRP.Services
                             Komentarz = person.danePobytuStalego.komentarz != null ? person.danePobytuStalego.komentarz : null
 
                         } : null,
-                        DanePobytuCzasowego = person.danePobytuCzasowego != null ? new AddressData
+                        DanePobytuCzasowego = person.danePobytuCzasowego != null ? new PersonAddress
                         {
                             MiejscowoscKod = person.danePobytuCzasowego.miejscowoscDzielnica.kodTerytorialny,
                             MiejscowoscNazwa = person.danePobytuCzasowego.miejscowoscDzielnica.nazwaMiejscowosci,
