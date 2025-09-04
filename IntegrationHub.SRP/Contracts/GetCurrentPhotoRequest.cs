@@ -13,7 +13,7 @@ namespace IntegrationHub.SRP.Contracts
         [JsonPropertyName("pesel")]
         public string Pesel { get; set; } = string.Empty;
         [JsonPropertyName("idOsoby")]
-        public string PersonId { get; set; } = string.Empty;
+        public string IdOsoby { get; set; } = string.Empty;
        
        
     }

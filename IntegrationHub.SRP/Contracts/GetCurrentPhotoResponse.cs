@@ -11,6 +11,7 @@ namespace IntegrationHub.SRP.Contracts
     {
         [JsonPropertyName("listaZdjec")]
         public List<string> PhotosBase64 { get; init; } = new();
+        public string GetFirstPhotoOrDefault() => PhotosBase64.FirstOrDefault() ?? string.Empty;
 
     }
 

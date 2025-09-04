@@ -41,7 +41,7 @@ public class ProxyResponse<T>
 /// <summary>
 /// Status wywołania API-proxy:
 /// Success – sukces, 
-/// BusinessError – błąd biznesowy (np. brak uprawnień, walidacja, nie znaleziono danych),
+/// BusinessError – błąd biznesowy (np. brak uprawnień, walidacja, nie znaleziono danych, znaleziono zbyt dużo danych),
 /// TechnicalError – błąd techniczny (np. problem z połączeniem, timeout, wyjątek serwera).
 /// </summary>
 public enum ProxyStatus

@@ -32,14 +32,14 @@ namespace IntegrationHub.SRP.Services
             requestId ??= Guid.NewGuid().ToString();
 
             var hasPesel = !string.IsNullOrWhiteSpace(body.Pesel);
-            var hasPersonId = !string.IsNullOrWhiteSpace(body.PersonId);
+            var hasPersonId = !string.IsNullOrWhiteSpace(body.IdOsoby);
             if (!(hasPesel && hasPersonId))
             {
                 return ProxyResponseError<GetCurrentPhotoResponse>(requestId, HttpStatusCode.BadRequest,
                     ProxyStatus.BusinessError, "Brak numeru PESEL i ID osoby do wyszukania zdjęcia.");
             }
 
-            var envelope = SoapHelper.PrepareGetCurrentPhotoRequestEnvelope(body, requestId);
+            var envelope = RequestEnvelopeHelper.PrepareGetCurrentPhotoRequestEnvelope(body, requestId);
 
             try
             {
@@ -103,7 +103,7 @@ namespace IntegrationHub.SRP.Services
                     ProxyStatus.BusinessError, "Brak numerów PESEL do wyszukania dowodów osobistych.");
             }
 
-            var envelope = SoapHelper.PrepareShareIdCardRequestEnvelope(body);
+            var envelope = RequestEnvelopeHelper.PrepareShareIdCardRequestEnvelope(body);
 
             try
             {

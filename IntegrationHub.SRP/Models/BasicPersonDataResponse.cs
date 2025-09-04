@@ -11,5 +11,6 @@ namespace IntegrationHub.SRP.Models
     {
         [JsonPropertyName("znalezioneOsoby")]
         public List<PersonData> Persons { get; set; } = new();
+      
     }
 }

@@ -19,16 +19,22 @@ namespace IntegrationHub.SRP.Contracts
         public string? Pesel { get; set; }
         [JsonPropertyName("nazwisko")]
         public string? Nazwisko { get; set; }
-        [JsonPropertyName("imie")]
+        [JsonPropertyName("imiePierwsze")]
         public string? ImiePierwsze { get; set; }
         [JsonPropertyName("imieDrugie")]
         public string? ImieDrugie { get; set; }
         [JsonPropertyName("dataUrodzenia")]
         public string? DataUrodzenia { get; set; } // przyjmie np. "1973-10-29" lub "19731029"
+        [JsonPropertyName("dataUrodzeniaOd")]
+        public string? DataUrodzeniaOd { get; set; } // przyjmie np. "1973-10-29" lub "19731029"
+        [JsonPropertyName("dataUrodzeniaDo")]
+        public string? DataUrodzeniaDo { get; set; } // przyjmie np. "1973-10-29" lub "19731029"
         [JsonPropertyName("imieOjca")]
         public string? ImieOjca { get; set; }
         [JsonPropertyName("imieMatki")]
         public string? ImieMatki { get; set; }
+        [JsonPropertyName("czyZyje")]
+        public bool? CzyZyje { get; set; } = true; // domyślnie szukaj tylko żyjących
     }
 
 

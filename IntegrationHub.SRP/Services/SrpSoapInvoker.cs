@@ -30,8 +30,8 @@ namespace IntegrationHub.SRP.Services
             using var content = new StringContent(soapEnvelope, Encoding.UTF8, "text/xml");
             content.Headers.Add("SOAPAction", soapAction);
 
-            _logger.LogInformation("SRP SOAP request start: {Action}. RequestId={RequestId}. Endpoint={Endpoint}",
-                                   soapAction, requestId, endpointUrl);
+            _logger.LogInformation("SRP SOAP request start: {Action}. RequestId={RequestId}. Endpoint={Endpoint}. Envelope={soapEnvelope}",
+                                   soapAction, requestId, endpointUrl,soapEnvelope);
 
             try
             {
@@ -39,16 +39,23 @@ namespace IntegrationHub.SRP.Services
                 var xml = await response.Content.ReadAsStringAsync(ct);
 
                 SoapFaultResponse? fault = null;
-                try { SoapHelper.TryParseSoapFault(xml, out fault); } catch { /* best-effort */ }
+                try { RequestEnvelopeHelper.TryParseSoapFault(xml, out fault); } catch { /* best-effort */ }
 
                 _logger.LogInformation("SRP SOAP request done: {Action}. RequestId={RequestId}. HTTP={Status}",
                                        soapAction, requestId, (int)response.StatusCode);
 
-                if (!response.IsSuccessStatusCode)
+                if (fault is null &&  !response.IsSuccessStatusCode)
                     throw new SrpSoapException($"HTTP {(int)response.StatusCode} from SRP",
                         endpointUrl, soapAction, requestId, response.StatusCode);
 
                 return new SoapInvokeResult(response.StatusCode, xml, fault);
+            }
+            catch (TaskCanceledException tce) when (!ct.IsCancellationRequested)
+            {
+                // HttpClient mapuje ConnectTimeout/AttemptTimeout na TaskCanceledException.
+                // Zwracamy jednoznaczny komunikat dla logów/klienta.
+                _logger.LogError(tce, "Nieosiągalny host. Connect timeout podczas wywołania SOAP: {Action}. RequestId={RequestId}", soapAction, requestId);
+                throw new SrpSoapException("Timeout połączenia (ConnectTimeout) do SRP. Nieosiągalny host.", endpointUrl, soapAction, requestId, null, tce);
             }
             catch (TimeoutException tex)
             {

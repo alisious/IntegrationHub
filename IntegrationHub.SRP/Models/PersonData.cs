@@ -12,6 +12,8 @@ namespace IntegrationHub.SRP.Models
 
         [JsonPropertyName("czyPeselAnulowany")]
         public bool? CzyPeselAnulowany { get; set; }
+        [JsonPropertyName("seriaINumerDowodu")]
+        public string? DowodSeriaNumer { get; set; }
 
         [JsonPropertyName("imiePierwsze")]
         public string? ImiePierwsze { get; set; }

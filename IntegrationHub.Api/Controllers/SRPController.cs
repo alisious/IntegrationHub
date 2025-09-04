@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using IntegrationHub.Api.Swagger.Examples.SRP;
 using IntegrationHub.Common.Configs;
 using IntegrationHub.Common.Contracts;
 using IntegrationHub.Common.Helpers;
@@ -12,6 +13,8 @@ using IntegrationHub.SRP.PESEL.SoapClient;
 using IntegrationHub.SRP.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Net.Http;
 using System.Security;
@@ -52,7 +55,7 @@ namespace IntegrationHub.Api.Controllers
         {
             var requestId = Guid.NewGuid().ToString();
             var hasPesel = !string.IsNullOrWhiteSpace(body.Pesel);
-            var hasPersonId = !string.IsNullOrWhiteSpace(body.PersonId);
+            var hasPersonId = !string.IsNullOrWhiteSpace(body.IdOsoby);
             if (!(hasPesel && hasPersonId))
             {
                 return new ProxyResponse<GetCurrentPhotoResponse>
@@ -66,7 +69,7 @@ namespace IntegrationHub.Api.Controllers
             }
 
 
-            var soapEnvelope = SoapHelper.PrepareGetCurrentPhotoRequestEnvelope(body,requestId);
+            var soapEnvelope = RequestEnvelopeHelper.PrepareGetCurrentPhotoRequestEnvelope(body,requestId);
 
             _logger.LogInformation("RDO udostepnijAktualeZdjecie start. Request: {request}",soapEnvelope);
 
@@ -185,7 +188,7 @@ namespace IntegrationHub.Api.Controllers
 
             try
             {
-                var soapEnvelope = SoapHelper.PrepareShareIdCardRequestEnvelope(body);
+                var soapEnvelope = RequestEnvelopeHelper.PrepareShareIdCardRequestEnvelope(body);
                 var httpClient = _httpClientFactory.CreateClient("SrpServiceClient");
                 var content = new StringContent(soapEnvelope, Encoding.UTF8, "text/xml");
                 content.Headers.Add("SOAPAction", @"http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneAktualnychDowodowPoPesel/");
@@ -268,10 +271,59 @@ namespace IntegrationHub.Api.Controllers
         }
 
 
-
-
+        
+        /// <summary>Wyszukaj osoby w rejestrze PESEL.</summary>
+        /// <remarks>
+        /// Wymagania wejścia:
+        /// 1) Podaj <b>PESEL</b> albo zestaw: <b>Nazwisko</b> i <b>Imię</b>
+        ///    (Imię = <c>ImiePierwsze</c>; <c>ImieDrugie</c> jest opcjonalne).
+        /// 2) Data urodzenia:
+        ///    - <c>DataUrodzenia</c> akceptuje format <c>yyyyMMdd</c> lub <c>yyyy-MM-dd</c>.
+        ///    - Zamiast dokładnej daty możesz podać zakres: <c>DataUrodzeniaOd</c>, <c>DataUrodzeniaDo</c>.
+        ///    - Nie wolno podawać dokładnej daty i zakresu jednocześnie
+        ///      (jeśli podasz dokładną datę, zakres zostanie zignorowany).
+        /// 3) Dodatkowe kryteria opcjonalne: <c>ImieMatki</c>, <c>ImieOjca</c>.
+        /// </remarks>
+        [SwaggerOperation(
+    Summary = "Wyszukaj osoby",
+    Description =
+        "Zwraca listę danych osób (ze zdjęciami) na podstawie zadanych kryteriów. " +
+        "Kryteria: PESEL **albo** (Nazwisko + Imię). " +
+        "Data urodzenia: dokładna data **lub** zakres (bez łączenia obu)."
+)]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(ProxyResponse<SearchPersonResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProxyResponse<SearchPersonResponse>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SearchPerson200Example))]
+        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(SearchPerson400Example))]
         [HttpPost("search-person")]
         public async Task<ProxyResponse<SearchPersonResponse>> SearchPerson([FromBody] SearchPersonRequest body)
+        {
+            var requestId = Guid.NewGuid().ToString();
+
+            try
+            {
+                return await _peselService.SearchPersonAsync(body, requestId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Blad SearchPerson, RequestId: {RequestId}", requestId);
+                return new ProxyResponse<SearchPersonResponse>
+                {
+                    RequestId = requestId,
+                    Data = null,
+                    Source = "SRP",
+                    Status = ProxyStatus.TechnicalError,
+                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
+
+        [HttpPost("search-person-base-data")]
+        public async Task<ProxyResponse<SearchPersonResponse>> SearchPersonBaseData([FromBody] SearchPersonRequest body)
         {
             var requestId = Guid.NewGuid().ToString();
 
@@ -310,7 +362,7 @@ namespace IntegrationHub.Api.Controllers
             }
 
             //Budowa SOAP XML
-            var soapEnvelope = SoapHelper.PrepareSearchPersonBaseDataEnvelope(body, requestId);
+            var soapEnvelope = RequestEnvelopeHelper.PrepareSearchPersonBaseDataEnvelope(body, requestId);
             _logger.LogInformation("Wysylam zadanie do uslugi PESEL (SearchBasePersonData). RequestId: {RequestId}, SOAP: {SoapEnvelope}", requestId, soapEnvelope);
 
             try
@@ -325,7 +377,7 @@ namespace IntegrationHub.Api.Controllers
                 var responseXml = await response.Content.ReadAsStringAsync();
 
                 // 1) SOAP Fault → BusinessError (np. „zawęź kryteria”, kod 150413044208)
-                if (SoapHelper.TryParseSoapFault(responseXml, out var fault))
+                if (RequestEnvelopeHelper.TryParseSoapFault(responseXml, out var fault))
                 {
                     _logger.LogWarning("SOAP Fault: {Code} {Msg}. HTTP {Status}. DetailCode={DetailCode}",
                         fault.FaultCode, fault.FaultString, (int)response.StatusCode, fault.DetailCode);
@@ -359,7 +411,7 @@ namespace IntegrationHub.Api.Controllers
 
                 // 3) Sukces HTTP i brak Faulta → parsuj odpowiedź
                 var responseObj = new SearchPersonResponse();
-                responseObj.Persons.Add(new SRP.Models.PersonData { NumerPesel = responseXml });
+                responseObj.Persons.Add(new FoundPerson { Pesel = responseXml });
                
 
                 

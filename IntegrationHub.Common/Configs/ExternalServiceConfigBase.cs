@@ -5,6 +5,7 @@
     /// </summary>
     public class ExternalServiceConfigBase
     {
+        public int? HttpMaxConnectionsPerServer { get; set; } = 16;
         public string ServiceName { get; set; } = default!;
         public string EndpointUrl { get; set; } = default!;
         public string ClientCertificateThumbprint { get; set; } = default!;

@@ -10,24 +10,30 @@ using IntegrationHub.SRP.Interfaces;
 using IntegrationHub.SRP.Services;
 using Microsoft.EntityFrameworkCore; // Add this using directive for 'UseSqlServer'
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Microsoft.Extensions.Http.Resilience;
+using Swashbuckle.AspNetCore.Filters;
 
-
+// Serilog – bootstrap logger, ¿eby logowaæ od samego pocz¹tku
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
-// KONFIGURACJA SERILOG – musi byæ przed builder.Build()
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-builder.Host.UseSerilog();
+// KONFIGURACJA SERILOG – musi byæ przed builder.Build() U¿ywaj konfiguracji Seriloga z appsettings.*.json
+builder.Logging.ClearProviders(); // usuñ domyœlnego ConsoleLoggera itp.
+builder.Host.UseSerilog((ctx, services, cfg) =>
+cfg.ReadFrom.Configuration(ctx.Configuration)
+       .ReadFrom.Services(services));
+
 
 // Add services to the container.
 // ====== DB CONTEXT ======
@@ -38,30 +44,93 @@ builder.Services.AddDbContext<PiespDbContext>(options =>
 builder.Services.AddSingleton<IClientCertificateProvider, ClientCertificateProvider>();
 // Rejestracja konfiguracji SRP
 builder.Services.Configure<SrpConfig>(builder.Configuration.GetSection("ExternalServices:SRP"));
-
-
+var srpConfig = builder.Configuration.GetSection("ExternalServices:SRP").Get<SrpConfig>();
 
 builder.Services.AddTransient<SrpHttpLoggingHandler>();
 // ====== HTTP CLIENTS ======
 // Rejestracja klienta SOAP do SRP
-builder.Services.AddHttpClient("SrpServiceClient")
-    .AddHttpMessageHandler<SrpHttpLoggingHandler>()
-    .ConfigurePrimaryHttpMessageHandler(sp =>
+//builder.Services.AddHttpClient("SrpServiceClient")
+//    .AddHttpMessageHandler<SrpHttpLoggingHandler>()
+//    .ConfigurePrimaryHttpMessageHandler(sp =>
+//    {
+//        var config = sp.GetRequiredService<IOptions<SrpConfig>>().Value;
+//        var certProvider = sp.GetRequiredService<IClientCertificateProvider>();
+
+//        var handler = new HttpClientHandler();
+
+//        if (config.TrustServerCerificate)
+//            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+//        handler.ClientCertificates.Add(certProvider.GetClientCertificate(config));
+
+//        return handler;
+//    });
+
+builder.Services.AddHttpClient("SrpServiceClient", c =>
+{
+    // Ca³kowity timeout HttpClient wy³¹czamy – kontrolujemy czas przez pipeline (Attempt/Total)
+    c.Timeout = Timeout.InfiniteTimeSpan;
+
+    // Spróbuj HTTP/2 (wenn dostêpny), z fallbackiem w dó³ – lepsze mno¿enie strumieni
+    c.DefaultRequestVersion = HttpVersion.Version20;
+    c.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+})
+// Twój logger wiadomoœci – zostaje
+.AddHttpMessageHandler<SrpHttpLoggingHandler>()
+
+// Handler gniazd – klucz do wydajnoœci równoleg³ych wywo³añ
+.ConfigurePrimaryHttpMessageHandler(sp =>
+{
+    var config = sp.GetRequiredService<IOptions<SrpConfig>>().Value;
+    var certProvider = sp.GetRequiredService<IClientCertificateProvider>();
+    var clientCert = certProvider.GetClientCertificate(config);
+
+    // ZLATA ZASADA: MaxConnectionsPerServer >= 2 * maxParallel (zapas)
+    var maxConn = Math.Max(16, (config.HttpMaxConnectionsPerServer ?? 0)); // opcjonalnie z appsettings
+    if (maxConn <= 0) maxConn = 32; // domyœlnie pod bulk
+
+    var h = new SocketsHttpHandler
     {
-        var config = sp.GetRequiredService<IOptions<SrpConfig>>().Value;
-        var certProvider = sp.GetRequiredService<IClientCertificateProvider>();
+        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+        MaxConnectionsPerServer = maxConn,
+        PooledConnectionLifetime = TimeSpan.FromMinutes(5), // rotacja po³¹czeñ (DNS/zdrowie)
+        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
+        ConnectTimeout = TimeSpan.FromSeconds(5),
+        // W .NET 8 dostêpne: utrzymanie po³¹czeñ H2 przy d³u¿szej bezczynnoœci
+        KeepAlivePingDelay = TimeSpan.FromSeconds(30),
+        KeepAlivePingTimeout = TimeSpan.FromSeconds(15),
+        KeepAlivePingPolicy = HttpKeepAlivePingPolicy.Always
+    };
 
-        var handler = new HttpClientHandler();
+    h.SslOptions = new SslClientAuthenticationOptions
+    {
+        ClientCertificates = new X509CertificateCollection { clientCert },
+        RemoteCertificateValidationCallback = config.TrustServerCerificate
+            ? new RemoteCertificateValidationCallback((_, _, _, _) => true)
+            : null
+    };
 
-        if (config.TrustServerCerificate)
-            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+    return h;
+})
 
-        handler.ClientCertificates.Add(certProvider.GetClientCertificate(config));
+// Polly v8 – gotowy „standard” z dopracowaniem czasów i progów
+.AddStandardResilienceHandler(opt =>
+{
+    // 1) Timeout pojedynczej próby (wa¿ne przy retrach)
+    opt.AttemptTimeout.Timeout = TimeSpan.FromSeconds(10);
 
-        return handler;
-    });
+    // 2) £¹czny limit czasu ca³ego ¿¹dania (przez wszystkie retry)
+    opt.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(30);
 
+    // 3) Retry – exponential + jitter (domyœlnie na 5xx/408/transport; 429 te¿ jest sensowny na odczytach)
+    opt.Retry.MaxRetryAttempts = 3;
 
+    // 4) Circuit Breaker – ¿eby nie „mêczyæ” us³ugi gdy ewidentnie ma k³opot
+    opt.CircuitBreaker.FailureRatio = 0.2;                // 20% pora¿ek w oknie => przerwa
+    opt.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(60);
+    opt.CircuitBreaker.MinimumThroughput = 20;            // minimalna liczba prób do oceny
+    opt.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(30);
+});
 
 // ====== DEPENDENCY INJECTION ======
 builder.Services.AddScoped<AuthService>();
@@ -69,7 +138,17 @@ builder.Services.AddScoped<DutyService>();
 builder.Services.AddScoped<SupervisorService>();
 builder.Services.AddTransient<ISrpSoapInvoker, SrpSoapInvoker>();
 builder.Services.AddTransient<IRdoService, RdoService>();
-builder.Services.AddTransient<IPeselService, PeselService>();
+
+if (srpConfig!.TestMode)
+{
+    // Jeœli TestMode, zarejestruj PeselService jako PeselServiceTest
+    builder.Services.AddTransient<IPeselService, PeselServiceTest>();
+}
+else
+{
+   builder.Services.AddTransient<IPeselService, PeselService>();
+}
+
 
 
 
@@ -195,11 +274,79 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-
+    options.EnableAnnotations();// ¿eby dzia³a³ [SwaggerOperation] itd.
+    options.ExampleFilters();// ¿eby dzia³a³y [SwaggerResponseExample]
 });
+
+// Wskazanie assembly, w którym s¹ klasy przyk³adów wyników dzia³ania metod SRPController:
+builder.Services.AddSwaggerExamplesFromAssemblyOf<
+    IntegrationHub.Api.Swagger.Examples.SRP.SearchPerson200Example>();
 
 // ====== BUILD ======
 var app = builder.Build();
+
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    _ = Task.Run(async () =>
+    {
+        try
+        {
+            
+
+            using var scope = app.Services.CreateScope();
+            var cfg = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            var factory = scope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
+            var client = factory.CreateClient("SrpServiceClient");
+
+            var rdoUrl = cfg["ExternalServices:SRP:RdoShareServiceUrl"];
+            if (string.IsNullOrWhiteSpace(rdoUrl)) return;
+
+            var warmupEnabled = cfg.GetValue<bool?>("ExternalServices:SRP:WarmUpEnabled") ?? false;
+            if (!warmupEnabled) return; // <-- wy³¹cza warm-up
+
+
+            // równoleg³oœæ ~ po³owa MaxConnectionsPerServer (bezpiecznie dla dziesi¹tek userów)
+            var maxConns = cfg.GetValue<int?>("ExternalServices:SRP:HttpMaxConnectionsPerServer") ?? 32;
+            var parallelism = Math.Clamp(maxConns / 2, 4, 32);
+            var attempts = 2; // po 2 lekkie strza³y
+
+            using var sem = new SemaphoreSlim(parallelism);
+            var tasks = new List<Task>();
+
+            for (int i = 0; i < attempts; i++)
+            {
+                await sem.WaitAsync();
+                tasks.Add(Task.Run(async () =>
+                {
+                    try
+                    {
+                        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                        foreach (var candidate in new[] { $"{rdoUrl}?wsdl", rdoUrl })
+                        {
+                            try
+                            {
+                                using var req = new HttpRequestMessage(HttpMethod.Get, candidate)
+                                {
+                                    Version = HttpVersion.Version20,
+                                    VersionPolicy = HttpVersionPolicy.RequestVersionOrLower
+                                };
+                                using var resp = await client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                                break; // handshake/ALPN/H2 i po³¹czenia w puli s¹ gotowe
+                            }
+                            catch { /* spróbuj kolejny candidate */ }
+                        }
+                    }
+                    finally { sem.Release(); }
+                }));
+            }
+
+            await Task.WhenAll(tasks);
+        }
+        catch { /* warm-up nie mo¿e blokowaæ startu */ }
+    });
+});
+
+
 
 // ====== MIDDLEWARE ======
 app.UseMiddleware<ErrorLoggingMiddleware>();

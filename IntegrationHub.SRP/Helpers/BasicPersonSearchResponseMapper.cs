@@ -11,9 +11,9 @@ namespace IntegrationHub.SRP.Helpers
 {
     public static class BasicPersonSearchResponseMapper
     {
-        public static SearchPersonResponse MapFromResponse(wyszukajPodstawoweDaneOsobyResponse response)
+        public static BasicPersonDataResponse MapFromResponse(wyszukajPodstawoweDaneOsobyResponse response)
         {
-            var result = new SearchPersonResponse();
+            var result = new BasicPersonDataResponse();
             if (response?.znalezioneOsoby != null)
             {
                 foreach (var os in response.znalezioneOsoby)

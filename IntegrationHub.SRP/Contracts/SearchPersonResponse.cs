@@ -10,9 +10,11 @@ namespace IntegrationHub.SRP.Contracts
 {
     public class SearchPersonResponse
     {
-
+        [JsonPropertyName("liczbaZnalezionychOsob")]
+        public int TotalCount => Persons.Count;
         [JsonPropertyName("znalezioneOsoby")]
-        public List<PersonData> Persons { get; set; } = new();
-        
+        public List<FoundPerson> Persons { get; set; } = new();
+       
+
     }
 }

@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace IntegrationHub.SRP.Helpers
 {
-    public static class SoapHelper
+    public static class RequestEnvelopeHelper
     {
 
         public static KryteriaWyszukiwaniaOsob GetCriteriaFromRequest(SearchPersonRequest body)
@@ -150,6 +150,118 @@ namespace IntegrationHub.SRP.Helpers
 
         }
 
+        /// <summary>
+        ///Zwraca SOAP Envelope do wyszukiwania osoby w SRP (PESEL). 
+        /// Wymagane: podaj <b>PESEL</b> albo zestaw: <b>Nazwisko</b> i <b>Imię</b>.
+        /// Pole <c>dataUrodzenia</c> oczekuje formatu <c>yyyyMMdd</c> lub <c>yyyy-MM-dd</c>.
+        /// Można podać dokładną datę urodzenia (pole dataUrodzenia) albo zakres dat (dataUrodzeniaOd, dataUrodzeniaDo).
+        /// Nie można podać obu naraz (jeśli podano dokładną datę, ignorujemy zakres).
+        /// </summary>
+        public static string PrepareSearchPersonEnvelope(SearchPersonRequest body, string requestId)
+        {
+            string UpperPl(string? s) => string.IsNullOrWhiteSpace(s) ? "" : s.Trim().ToUpper(new System.Globalization.CultureInfo("pl-PL"));
+            string X(string? s) => System.Security.SecurityElement.Escape(s ?? string.Empty);
+
+            var hasPesel = !string.IsNullOrWhiteSpace(body.Pesel);
+
+            var sb = new System.Text.StringBuilder();
+
+
+            sb.Append("<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:pes='http://msw.gov.pl/srp/v3_0/uslugi/pesel/'>");
+            sb.Append("<soapenv:Header/>");
+            sb.Append("<soapenv:Body>");
+            sb.Append("<pes:wyszukajOsoby>");
+            sb.Append($"<requestId>{X(requestId)}</requestId>");
+            sb.Append("<kryteriaWyszukiwania>");
+
+
+            if (hasPesel)
+            {
+                sb.Append($"<numerPesel>{X(body.Pesel!.Trim())}</numerPesel>");
+            }
+
+            // <kryteriumImienia>
+            var hasImiona = !string.IsNullOrWhiteSpace(body.ImiePierwsze) || !string.IsNullOrWhiteSpace(body.ImieDrugie);
+            if (hasImiona)
+            {
+                sb.Append("<kryteriumImienia>");
+                if (!string.IsNullOrWhiteSpace(body.ImiePierwsze))
+                    sb.Append($"<imiePierwsze>{X(UpperPl(body.ImiePierwsze))}</imiePierwsze>");
+                if (!string.IsNullOrWhiteSpace(body.ImieDrugie))
+                    sb.Append($"<imieDrugie>{X(UpperPl(body.ImieDrugie))}</imieDrugie>");
+
+
+                sb.Append($"<innyZapis>false</innyZapis>");
+                sb.Append("<zakres>DANE_AKTUALNE</zakres>");
+                sb.Append("</kryteriumImienia>");
+            }
+
+            // <kryteriumNazwiska>
+            var hasNazwisko = !string.IsNullOrWhiteSpace(body.Nazwisko);
+            if (hasNazwisko)
+            {
+                sb.Append("<kryteriumNazwiska>");
+                if (!string.IsNullOrWhiteSpace(body.Nazwisko))
+                    sb.Append($"<nazwisko>{X(UpperPl(body.Nazwisko))}</nazwisko>");
+                sb.Append($"<dowolneNazwisko>true</dowolneNazwisko>");
+                sb.Append($"<innyZapis>true</innyZapis>");
+                sb.Append("<zakres>DANE_AKTUALNE</zakres>");
+                sb.Append("</kryteriumNazwiska>");
+            }
+
+            // <kryteriumDanychUrodzenia>
+            var hasDataUrodzenia = !string.IsNullOrWhiteSpace(body.DataUrodzenia);
+            var hasDataUrodzeniaOd = !string.IsNullOrWhiteSpace(body.DataUrodzeniaOd);
+            var hasDataUrodzeniaDo = !string.IsNullOrWhiteSpace(body.DataUrodzeniaDo);
+            var hasImieOjca = !string.IsNullOrWhiteSpace(body.ImieOjca);
+            var hasImieMatki = !string.IsNullOrWhiteSpace(body.ImieMatki);
+            var hasKryteriumDatyUrodzenia = hasDataUrodzenia || hasDataUrodzeniaOd || hasDataUrodzeniaDo;
+            var hasKryteriumDanychUrodzenia = hasKryteriumDatyUrodzenia || hasImieMatki || hasImieOjca;
+
+            if (hasKryteriumDanychUrodzenia)
+            {
+                sb.Append("<kryteriumDanychUrodzenia>");
+
+                //W przpadku daty urodzenia:
+                //- można podać dokładną datę urodzenia (pole dataUrodzenia) albo zakres dat (dataUrodzeniaOd, dataUrodzeniaDo)
+                //- nie można podać obu naraz (jeśli podano dokładną datę, ignorujemy zakres)
+                if (hasKryteriumDatyUrodzenia)
+                {
+                    sb.Append("<dataUrodzenia>");
+                    if (hasDataUrodzenia)
+                        sb.Append($"<kryteriumDaty>{X(body.DataUrodzenia)}</kryteriumDaty>");
+                    else 
+                    {
+                        sb.Append("<kryteriumPrzedzialDat>");
+                        if (hasDataUrodzeniaOd)
+                            sb.Append($"<dataOd>{X(body.DataUrodzeniaOd)}</dataOd>");
+                        if (hasDataUrodzeniaDo)
+                            sb.Append($"<dataDo>{X(body.DataUrodzeniaDo)}</dataDo>");
+                        sb.Append("</kryteriumPrzedzialDat>");
+                    }
+                    sb.Append("</dataUrodzenia>");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(body.ImieMatki))
+                    sb.Append($"<imieMatki>{X(UpperPl(body.ImieMatki))}</imieMatki>");
+                if (!string.IsNullOrWhiteSpace(body.ImieOjca))
+                    sb.Append($"<imieOjca>{X(UpperPl(body.ImieOjca))}</imieOjca>");
+
+
+                sb.Append("<zakres>DANE_AKTUALNE</zakres>");
+                sb.Append("</kryteriumDanychUrodzenia>");
+            }
+
+
+            sb.Append("</kryteriaWyszukiwania>");
+            sb.Append("</pes:wyszukajOsoby>");
+            sb.Append("</soapenv:Body>");
+            sb.Append("</soapenv:Envelope>");
+
+            return sb.ToString();
+
+        }
+
 
         public static string PrepareShareIdCardRequestEnvelope(GetIdCardRequest body)
         {
@@ -180,7 +292,7 @@ namespace IntegrationHub.SRP.Helpers
             sb.Append("<soapenv:Body>");
             sb.Append("<dow:udostepnijAktualneZdjecie>");
             sb.Append($"<pesel>{X(body?.Pesel)}</pesel>");
-            sb.Append($"<idOsoby>{X(body?.PersonId)}</idOsoby>");
+            sb.Append($"<idOsoby>{X(body?.IdOsoby)}</idOsoby>");
             sb.Append($"<requestId>{X(requestId)}</requestId>");
             sb.Append("</dow:udostepnijAktualneZdjecie>");
             sb.Append("</soapenv:Body>");
