@@ -11,6 +11,6 @@ namespace IntegrationHub.SRP.Services
     public interface IRdoService
     {
         Task<ProxyResponse<GetCurrentPhotoResponse>> GetCurrentPhotoAsync(GetCurrentPhotoRequest body, string? requestId = null, CancellationToken ct = default);
-        Task<ProxyResponse<GetIdCardResponse>> ShareIdCardDataAsync(GetIdCardRequest body, string? requestId = null, CancellationToken ct = default);
+        Task<ProxyResponse<GetCurrentIdByPeselResponse>> GetCurrentIdByPeselAsync(GetCurrentIdByPeselRequest body, string? requestId = null, CancellationToken ct = default);
     }
 }

@@ -1,0 +1,116 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+   <soap:Body>
+      <ns2:udostepnijAktualneDaneOsobyPoPeselResponse xmlns:ns2="http://msw.gov.pl/srp/v3_0/uslugi/pesel/">
+         <daneOsoby>
+            <czyAnulowano>false</czyAnulowano>
+            <daneDowoduOsobistego>
+               <dataWaznosci>2033-01-30</dataWaznosci>
+               <seriaINumer>DFS088079</seriaINumer>
+               <wystawca>
+                  <kodTerytorialny>1432053</kodTerytorialny>
+                  <rodzajOrganu>BURMISTRZ</rodzajOrganu>
+               </wystawca>
+               <dataAktualizacji>2023-03-06T11:03:04.649</dataAktualizacji>
+            </daneDowoduOsobistego>
+            <daneImion>
+               <imiePierwsze>MAŁGORZATA</imiePierwsze>
+               <imieDrugie>TATIANA</imieDrugie>
+               <dataAktualizacji>2013-02-27T00:00:00.000</dataAktualizacji>
+            </daneImion>
+            <daneKrajowZamieszkania>
+               <krajZamieszkania kod="500">POLSKA</krajZamieszkania>
+               <dataAktualizacji>2013-02-27T00:00:00.000</dataAktualizacji>
+               <podstawaWpisu>
+                  <dataZmiany>19731029</dataZmiany>
+                  <organ>
+                     <kodTerytorialny>2803011</kodTerytorialny>
+                     <rodzajOrganu>ORGAN_GMINY</rodzajOrganu>
+                  </organ>
+                  <organZmiany xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+               </podstawaWpisu>
+            </daneKrajowZamieszkania>
+            <daneNazwiska>
+               <nazwisko>KORPUSIK</nazwisko>
+               <nazwiskoRodowe>
+                  <nazwisko>GROMOWSKA</nazwisko>
+               </nazwiskoRodowe>
+               <dataAktualizacji>2013-02-27T00:00:00.000</dataAktualizacji>
+               <podstawaWpisu>
+                  <dataZmiany>2012-06-11</dataZmiany>
+                  <organ xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                  <organZmiany xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+               </podstawaWpisu>
+            </daneNazwiska>
+            <daneObywatelstwa>
+               <dataAktualizacji>2002-08-13T00:00:00.000</dataAktualizacji>
+               <obywatelstwo kod="500">POLSKIE</obywatelstwo>
+            </daneObywatelstwa>
+            <danePaszportu>
+               <dataWaznosci>2029-04-01</dataWaznosci>
+               <seriaINumer>ER0655533</seriaINumer>
+               <dataAktualizacji>2019-07-11T18:43:47.798</dataAktualizacji>
+            </danePaszportu>
+            <danePobytuStalego>
+               <adresZameldowaniaId>905693108772449790</adresZameldowaniaId>
+               <numerDomu>9</numerDomu>
+               <gmina kt="1432055">ŁOMIANKI</gmina>
+               <miejscowoscDzielnica symbolMiejscowosci="0005144">
+                  <kodTerytorialny>1432055</kodTerytorialny>
+                  <nazwaMiejscowosci>KIEŁPIN</nazwaMiejscowosci>
+               </miejscowoscDzielnica>
+               <ulica symbolUlicy="000514424412">
+                  <cecha>UL.</cecha>
+                  <nazwaPierwsza>WIŚNIOWA</nazwaPierwsza>
+               </ulica>
+               <wojewodztwo woj="14">MAZOWIECKIE</wojewodztwo>
+               <komentarz xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+               <dataOd>20120509</dataOd>
+               <dataAktualizacji>2012-06-11T00:00:00.000</dataAktualizacji>
+            </danePobytuStalego>
+            <daneStanuCywilnego>
+               <dataZawarcia>
+                  <data>19960907</data>
+               </dataZawarcia>
+               <numerAktu>131/1996</numerAktu>
+               <stanCywilny>ZAMEZNA</stanCywilny>
+               <organSporzadzajacyAkt>
+                  <kodTerytorialny>2803011</kodTerytorialny>
+                  <rodzajOrganu>URZAD_STANU_CYWILNEGO</rodzajOrganu>
+               </organSporzadzajacyAkt>
+               <wspolmalzonek>
+                  <imie>JACEK</imie>
+                  <numerPesel>73020916558</numerPesel>
+                  <nazwiskoRodowe>KORPUSIK</nazwiskoRodowe>
+               </wspolmalzonek>
+               <czyZmienianoPlec>false</czyZmienianoPlec>
+               <numerKolejnosci>2</numerKolejnosci>
+               <dataAktualizacji>2012-06-11T00:00:00.000</dataAktualizacji>
+            </daneStanuCywilnego>
+            <daneUrodzenia>
+               <dataUrodzenia>19731029</dataUrodzenia>
+               <imieMatki>HANNA</imieMatki>
+               <imieOjca>KAZIMIERZ</imieOjca>
+               <krajUrodzenia kod="500">POLSKA</krajUrodzenia>
+               <miejsceUrodzenia>
+                  <nazwaMiejscowosci>DZIAŁDOWO</nazwaMiejscowosci>
+               </miejsceUrodzenia>
+               <nazwiskoRodoweMatki>SOBIESKA</nazwiskoRodoweMatki>
+               <nazwiskoRodoweOjca>GROMOWSKI</nazwiskoRodoweOjca>
+               <numerAktu>2803011/00/AU/1973/694006</numerAktu>
+               <organSporzadzajacyAkt>
+                  <kodTerytorialny>2803011</kodTerytorialny>
+                  <rodzajOrganu>URZAD_STANU_CYWILNEGO</rodzajOrganu>
+               </organSporzadzajacyAkt>
+               <plec>KOBIETA</plec>
+               <dataAktualizacji>2023-10-26T14:06:20.297</dataAktualizacji>
+            </daneUrodzenia>
+            <dataAktualizacji>2023-10-26T14:06:20.313</dataAktualizacji>
+            <dataZalozeniaRekordu>1993-05-01T00:00:00.000</dataZalozeniaRekordu>
+            <idOsoby>5913329702871812961</idOsoby>
+            <numerPesel>11111111111</numerPesel>
+            <wersjaRekordu>5</wersjaRekordu>
+         </daneOsoby>
+      </ns2:udostepnijAktualneDaneOsobyPoPeselResponse>
+   </soap:Body>
+</soap:Envelope>

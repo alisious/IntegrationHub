@@ -1,4 +1,4 @@
-﻿using IntegrationHub.Common.Configs;
+﻿using IntegrationHub.Common.Config;
 using System.Security.Cryptography.X509Certificates;
 
 namespace IntegrationHub.Common.Interfaces

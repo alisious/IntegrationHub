@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzMarki_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:complexType name="PobierzMarki">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:Identyfikatory" minOccurs="0"/>
+			<xsd:element name="indeks" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodMarki" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Marka - jest to kod po którym robione sa relacje pomiędzy tabelami model, typ i innych. Jest on nieunikalny</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="marka" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwaPodstawowa" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzMarkiRezultat">
+		<xsd:sequence>
+			<xsd:element name="marka" type="slo:Marka" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

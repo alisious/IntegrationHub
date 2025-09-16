@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 
 
@@ -17,10 +18,12 @@ namespace IntegrationHub.PIESP.Services
     public class AuthService
     {
         private readonly PiespDbContext _context;
+        private ILogger<AuthService> _logger;
 
-        public AuthService(PiespDbContext context)
+        public AuthService(PiespDbContext context,ILogger<AuthService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
 
@@ -37,12 +40,41 @@ namespace IntegrationHub.PIESP.Services
 
         public async Task<User?> LoginAsync(string badge, string pin)
         {
-            var user = await _context.Users
-                .Include(u=>u.Roles)
+            
+            try
+            {
+                _logger.LogInformation("Attempting login for badge: {BadgeNumber}", badge);
+                var user = await _context.Users
+                .Include(u => u.Roles)
                 .FirstOrDefaultAsync(u => u.BadgeNumber == badge);
-            if (user == null || string.IsNullOrEmpty(user.PinHash)) return null;
 
-            return PinHasher.Verify(pin, user.PinHash) ? user : null;
+                if (user == null)
+                {
+                    _logger.LogWarning("Login failed: Nie znaleziono użytkownika z numerem odznaki: {BadgeNumber}.", badge);
+                    return null;
+                }
+
+                if (PinHasher.Verify(pin, user.PinHash))
+                {
+                    _logger.LogInformation("Login successful for badge: {BadgeNumber}", badge);
+                    return user;
+                }
+                else
+                {
+                    _logger.LogWarning("Login failed: Nieprawidłowy kod PIN dla numeru odznaki: {BadgeNumber}.", badge);
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Logging failed");
+            }
+            return null;
+
+
+
+
         }
 
         

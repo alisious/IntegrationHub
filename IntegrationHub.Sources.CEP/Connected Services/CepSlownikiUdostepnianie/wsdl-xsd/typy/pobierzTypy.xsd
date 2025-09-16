@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:include schemaLocation="pobierzMarki.xsd"/>
+	<xsd:include schemaLocation="pobierzModele.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzTypy_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzTypy">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:Identyfikatory" minOccurs="0"/>
+			<xsd:element name="indeks" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="typ" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="zapytanieModel" type="slo:ZapytanieModel" minOccurs="0"/>
+			<xsd:element name="zapytanieMarka" type="slo:ZapytanieMarka" minOccurs="0"/>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="TypSlownika">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PROSTY"/>
+			<xsd:enumeration value="KONTEKSTOWY"/>
+			<xsd:enumeration value="ZLOZONY"/>
+			<xsd:enumeration value="DEDYKOWANY"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="PobierzTypyRezultat">
+		<xsd:sequence>
+			<xsd:element name="typ" type="slo:Typ" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Typ">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:IdentyfikatoryRezultat"/>
+			<xsd:element name="indeks" type="xsd:integer"/>
+			<xsd:element name="idr" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="idw" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="typ" type="xsd:string"/>
+			<xsd:element name="kodRodzaju" type="xsd:string"/>
+			<xsd:element name="rekordSlownikaMarek" type="slo:Marka" maxOccurs="unbounded"/>
+			<xsd:element name="rekordSlownikaModeli" type="slo:ModelZawezony" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+			<xsd:element name="dataAktualizacji" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ModelZawezony">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:IdentyfikatoryRezultat"/>
+			<xsd:element name="indeks" type="xsd:integer"/>
+			<xsd:element name="model" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Wartość ze słownika DICT_011 Model</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="idr" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="idw" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+			<xsd:element name="pozycjeSzczegolowe" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="dataAktualizacji" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

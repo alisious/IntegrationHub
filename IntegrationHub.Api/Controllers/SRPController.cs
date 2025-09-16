@@ -1,28 +1,16 @@
-﻿using Azure.Core;
-using IntegrationHub.Api.Swagger.Examples.SRP;
-using IntegrationHub.Common.Configs;
+﻿using IntegrationHub.Api.Swagger.Examples.SRP;
 using IntegrationHub.Common.Contracts;
-using IntegrationHub.Common.Helpers;
-using IntegrationHub.Common.Interfaces;
-using IntegrationHub.Common.Models;
-using IntegrationHub.SRP.Configuration;
+using IntegrationHub.SRP.Config;
 using IntegrationHub.SRP.Contracts;
-using IntegrationHub.SRP.Dowody.SoapClient;
-using IntegrationHub.SRP.Helpers;
-using IntegrationHub.SRP.PESEL.SoapClient;
+using IntegrationHub.SRP.Extensions;
 using IntegrationHub.SRP.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
 using System.Net;
-using System.Net.Http;
-using System.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 
 
 namespace IntegrationHub.Api.Controllers
@@ -49,7 +37,7 @@ namespace IntegrationHub.Api.Controllers
         }
 
 
-
+        [SwaggerOperation(Summary = "Udostępianie aktualnego zdjęcia na podstawie PESEL i Id osoby z rejestru PESEL.")]
         [HttpPost("get-current-photo")]
         public async Task<ProxyResponse<GetCurrentPhotoResponse>> GetCurrentPhoto([FromBody] GetCurrentPhotoRequest body)
         {
@@ -63,7 +51,7 @@ namespace IntegrationHub.Api.Controllers
                     RequestId = requestId,
                     Source = "SRP",
                     Status = ProxyStatus.BusinessError,
-                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    SourceStatusCode = (int)HttpStatusCode.BadRequest,
                     ErrorMessage = "Brak numeru PESEL i ID osoby do wyszukania zdjęcia."
                 };
             }
@@ -88,7 +76,7 @@ namespace IntegrationHub.Api.Controllers
 
                 _logger.LogInformation("RDO udostepnijAktualeZdjecie success. RequestId={RequestId}. Response: {responseXml}",requestId, responseXml);
 
-                var getCurrentPhotoResponse = SrpResponseParser.ParseGetCurrentPhotoResponse(
+                var getCurrentPhotoResponse = RdoGetCurrentPhotoResponseXmlMapper.Parse(
                     responseXml, 
                     _logger, 
                     requestId,
@@ -103,7 +91,7 @@ namespace IntegrationHub.Api.Controllers
                     Data = getCurrentPhotoResponse,
                     Source = "SRP",
                     Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
+                    SourceStatusCode = (int)HttpStatusCode.OK
                 };
 
             }
@@ -115,7 +103,7 @@ namespace IntegrationHub.Api.Controllers
                     RequestId = requestId,
                     Source = "SRP",
                     Status = ProxyStatus.BusinessError,
-                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    SourceStatusCode = (int)HttpStatusCode.BadRequest,
                     ErrorMessage = fe.Message
                 };
             }
@@ -127,7 +115,7 @@ namespace IntegrationHub.Api.Controllers
                     RequestId = requestId,
                     Source = "SRP",
                     Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.RequestTimeout,
+                    SourceStatusCode = (int)HttpStatusCode.RequestTimeout,
                     ErrorMessage = "Przekroczono czas oczekiwania na odpowiedz uslugi SRP: udostepnijDaneAktualnychDowodowPoPesel."
                 };
             }
@@ -139,7 +127,7 @@ namespace IntegrationHub.Api.Controllers
                     RequestId = requestId,
                     Source = "SRP",
                     Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.BadGateway,
+                    SourceStatusCode = (int)HttpStatusCode.BadGateway,
                     ErrorMessage = $"Blad komunikacji z usluga SRP: udostepnijDaneAktualnychDowodowPoPesel. {cex.Message}"
                 };
             }
@@ -151,7 +139,7 @@ namespace IntegrationHub.Api.Controllers
                     RequestId = requestId,
                     Source = "SRP",
                     Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    SourceStatusCode = (int)HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
                 };
             }
@@ -160,114 +148,32 @@ namespace IntegrationHub.Api.Controllers
 
         }
 
-        [HttpPost("get-id-card")]
-        public async Task<ProxyResponse<GetIdCardResponse>> GetIdCard([FromBody] GetIdCardRequest body)
+
+        /// <summary>Udostępnij aktualny dowód osobisty po PESEL.</summary>
+        [SwaggerOperation(Summary = "Udostępianie danych aktualnego dowodu osobistego na podstawie PESEL.")]
+        [HttpPost("get-current-id")]
+        [ProducesResponseType(typeof(ProxyResponse<GetCurrentIdByPeselResponse>), 200)]
+        public async Task<ProxyResponse<GetCurrentIdByPeselResponse>> GetCurrentId([FromBody] GetCurrentIdByPeselRequest body)
         {
             var requestId = Guid.NewGuid().ToString();
 
-            var hasPeselList = body.NumeryPesel != null && body.NumeryPesel.Count > 0;
-
-            if (!hasPeselList)
-            {
-                return new ProxyResponse<GetIdCardResponse>
-                {
-                    RequestId = requestId,
-                    Source = "SRP",
-                    Status = ProxyStatus.BusinessError,
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    ErrorMessage = "Brak numerów PESEL do wyszukania dowodów osobistych."
-                };
-            }
-
-
-            _logger.LogInformation("RDO udostepnijDaneAktualnychDowodowPoPesel start. RequestId={RequestId}. Liczba PESELi: {Count}",
-                               requestId, body.NumeryPesel!.Count);
-
-
-
-
             try
             {
-                var soapEnvelope = RequestEnvelopeHelper.PrepareShareIdCardRequestEnvelope(body);
-                var httpClient = _httpClientFactory.CreateClient("SrpServiceClient");
-                var content = new StringContent(soapEnvelope, Encoding.UTF8, "text/xml");
-                content.Headers.Add("SOAPAction", @"http://msw.gov.pl/srp/v3_0/uslugi/dowody/Udostepnianie/udostepnijDaneAktualnychDowodowPoPesel/");
-                var endpointUrl = _srpConfig.RdoShareServiceUrl;
-                _logger.LogInformation("Endpoint Url: {EndpointUrl}", endpointUrl);
-
-                var response = await httpClient.PostAsync(endpointUrl, content);
-                var responseXml = await response.Content.ReadAsStringAsync();
-                              
-                _logger.LogInformation("RDO udostepnijDaneAktualnychDowodowPoPesel success. RequestId={RequestId}. Liczba wyników: {Count}",
-                              requestId, body.NumeryPesel.Count);
-
-
-                var idCardResponse = new GetIdCardResponse();
-                idCardResponse.IdCardXml = responseXml;
-
-                return new ProxyResponse<GetIdCardResponse>
-                {
-                    RequestId = requestId,
-                    Data = idCardResponse,
-                    Source = "SRP",
-                    Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
-                };
-
-            }
-            catch (FaultException fe) // SOAP Fault (jeśli kontrakt/stack go zmaterializuje)
-            {
-                _logger.LogWarning(fe, "SOAP Fault udostepnijDaneAktualnychDowodowPoPesel. RequestId={RequestId}", requestId);
-                return new ProxyResponse<GetIdCardResponse>
-                {
-                    RequestId = requestId,
-                    Source = "SRP",
-                    Status = ProxyStatus.BusinessError,
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    ErrorMessage = fe.Message
-                };
-            }
-            catch (TimeoutException tex)
-            {
-                _logger.LogError(tex, "Timeout udostepnijDaneAktualnychDowodowPoPesel. RequestId={RequestId}", requestId);
-                return new ProxyResponse<GetIdCardResponse>
-                {
-                    RequestId = requestId,
-                    Source = "SRP",
-                    Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.RequestTimeout,
-                    ErrorMessage = "Przekroczono czas oczekiwania na odpowiedz uslugi SRP: udostepnijDaneAktualnychDowodowPoPesel."
-                };
-            }
-            catch (CommunicationException cex)
-            {
-                _logger.LogError(cex, "Communication error udostepnijDaneAktualnychDowodowPoPesel. RequestId={RequestId}", requestId);
-                return new ProxyResponse<GetIdCardResponse>
-                {
-                    RequestId = requestId,
-                    Source = "SRP",
-                    Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.BadGateway,
-                    ErrorMessage = $"Blad komunikacji z usluga SRP: udostepnijDaneAktualnychDowodowPoPesel. {cex.Message}"
-                };
+                return await _rdoService.GetCurrentIdByPeselAsync(body, requestId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unexpected error udostepnijDaneAktualnychDowodowPoPesel. RequestId={RequestId}", requestId);
-                return new ProxyResponse<GetIdCardResponse>
+                _logger.LogError(ex, "Błąd GetCurrentIdByPeselAsync, RequestId: {RequestId}", requestId);
+                return new ProxyResponse<GetCurrentIdByPeselResponse>
                 {
                     RequestId = requestId,
+                    Data = null,
                     Source = "SRP",
                     Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    SourceStatusCode = (int)HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
                 };
             }
-
-
-
-
-
         }
 
 
@@ -285,12 +191,11 @@ namespace IntegrationHub.Api.Controllers
         /// 3) Dodatkowe kryteria opcjonalne: <c>ImieMatki</c>, <c>ImieOjca</c>.
         /// </remarks>
         [SwaggerOperation(
-    Summary = "Wyszukaj osoby",
-    Description =
+        Summary = "Wyszukiwanie osób w PESEL.",
+        Description =
         "Zwraca listę danych osób (ze zdjęciami) na podstawie zadanych kryteriów. " +
         "Kryteria: PESEL **albo** (Nazwisko + Imię). " +
-        "Data urodzenia: dokładna data **lub** zakres (bez łączenia obu)."
-)]
+        "Data urodzenia: dokładna data **lub** zakres (bez łączenia obu).")]
         [Produces("application/json")]
         [Consumes("application/json")]
         [ProducesResponseType(typeof(ProxyResponse<SearchPersonResponse>), StatusCodes.Status200OK)]
@@ -316,201 +221,39 @@ namespace IntegrationHub.Api.Controllers
                     Data = null,
                     Source = "SRP",
                     Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    SourceStatusCode = (int)HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
                 };
             }
         }
 
-        [HttpPost("search-person-base-data")]
-        public async Task<ProxyResponse<SearchPersonResponse>> SearchPersonBaseData([FromBody] SearchPersonRequest body)
+
+        [SwaggerOperation(Summary = "Udostępianie aktualnych danych osoby z rejestru PESEL na podstawie PESEL.")]
+        [HttpPost("get-person-by-pesel")]
+        public async Task<ProxyResponse<GetPersonByPeselResponse>> GetPersonByPesel(GetPersonByPeselRequest body)
         {
             var requestId = Guid.NewGuid().ToString();
-
-            // Walidacja: PESEL albo (Nazwisko + Imie)
-            var hasPesel = !string.IsNullOrWhiteSpace(body.Pesel);
-            var hasNamePair = !string.IsNullOrWhiteSpace(body.Nazwisko) && !string.IsNullOrWhiteSpace(body.ImiePierwsze);
-            if (!hasPesel && !hasNamePair)
-            {
-                return new ProxyResponse<SearchPersonResponse>
-                {
-                    RequestId = requestId,
-                    Source = "SRP",
-                    Status = ProxyStatus.BusinessError,
-                    StatusCode = (int)HttpStatusCode.BadRequest,
-                    ErrorMessage = "Obowiazkowo podaj PESEL albo zestaw: nazwisko i imie."
-                };
-            }
-
-            //Walidacja: dataUrodzenia jeśli podana, to w formacie yyyyMMdd
-            var hasDataUrodzenia = !string.IsNullOrWhiteSpace(body.DataUrodzenia);
-            if (hasDataUrodzenia)
-            {
-                var formatted = DateStringFormatHelper.FormatYyyyMmDd(body.DataUrodzenia);
-                if (formatted == null)
-                {
-                    return new ProxyResponse<SearchPersonResponse>
-                    {
-                        RequestId = requestId,
-                        Source = "SRP",
-                        Status = ProxyStatus.BusinessError,
-                        StatusCode = (int)HttpStatusCode.BadRequest,
-                        ErrorMessage = "Niepoprawny format parametru dataUrodzenia. Wymagany format: yyyyMMdd lub yyyy-MM-dd."
-                    };
-                }
-                body.DataUrodzenia = formatted;
-            }
-
-            //Budowa SOAP XML
-            var soapEnvelope = RequestEnvelopeHelper.PrepareSearchPersonBaseDataEnvelope(body, requestId);
-            _logger.LogInformation("Wysylam zadanie do uslugi PESEL (SearchBasePersonData). RequestId: {RequestId}, SOAP: {SoapEnvelope}", requestId, soapEnvelope);
-
+            
             try
             {
-                var httpClient = _httpClientFactory.CreateClient("SrpServiceClient");
-                var content = new StringContent(soapEnvelope, Encoding.UTF8, "text/xml");
-                content.Headers.Add("SOAPAction", @"http://msw.gov.pl/srp/v3_0/uslugi/pesel/Wyszukiwanie/wyszukajOsoby/");
-                var endpointUrl = _srpConfig.PeselSearchServiceUrl;
-                _logger.LogInformation("Endpoint Url: {EndpointUrl}", endpointUrl);
-
-                var response = await httpClient.PostAsync(endpointUrl, content);
-                var responseXml = await response.Content.ReadAsStringAsync();
-
-                // 1) SOAP Fault → BusinessError (np. „zawęź kryteria”, kod 150413044208)
-                if (RequestEnvelopeHelper.TryParseSoapFault(responseXml, out var fault))
-                {
-                    _logger.LogWarning("SOAP Fault: {Code} {Msg}. HTTP {Status}. DetailCode={DetailCode}",
-                        fault.FaultCode, fault.FaultString, (int)response.StatusCode, fault.DetailCode);
-
-                    return new ProxyResponse<SearchPersonResponse>
-                    {
-                        RequestId = requestId,
-                        Source = "SRP",
-                        Status = ProxyStatus.BusinessError,
-                        StatusCode = (int)HttpStatusCode.BadRequest, // lub własne mapowanie
-                        ErrorMessage = fault.DetailOpis ?? fault.FaultString
-                    };
-                }
-
-                // 2) Brak Faulta, ale HTTP != 2xx → TechnicalError
-                if (!response.IsSuccessStatusCode)
-                {
-                    _logger.LogError("Transport/HTTP error {Status}: {Reason}. Body: {Body}",
-                        (int)response.StatusCode, response.ReasonPhrase, responseXml);
-
-                    return new ProxyResponse<SearchPersonResponse>
-                    {
-                        RequestId = requestId,
-                        Source = "SRP",
-                        Status = ProxyStatus.TechnicalError,
-                        StatusCode = (int)response.StatusCode,
-                        ErrorMessage = $"HTTP {(int)response.StatusCode} {response.ReasonPhrase}"
-                    };
-                }
-
-
-                // 3) Sukces HTTP i brak Faulta → parsuj odpowiedź
-                var responseObj = new SearchPersonResponse();
-                responseObj.Persons.Add(new FoundPerson { Pesel = responseXml });
-               
-
-                
-
-                return new ProxyResponse<SearchPersonResponse>
-                {
-                    RequestId = requestId,
-                    Data = responseObj,
-                    Source = "SRP",
-                    Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
-                };
-
+                return await _peselService.GetPersonByPeselAsync(body, requestId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Blad SearchBasePersonData, RequestId: {RequestId}", requestId);
-                return new ProxyResponse<SearchPersonResponse>
+                _logger.LogError(ex, "Błąd GetPersonByPesel, RequestId: {RequestId}", requestId);
+                return new ProxyResponse<GetPersonByPeselResponse>
                 {
                     RequestId = requestId,
                     Data = null,
                     Source = "SRP",
                     Status = ProxyStatus.TechnicalError,
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    SourceStatusCode = (int)HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
                 };
             }
+
+
         }
-
-
-
-        [HttpPost("get-person")]
-        public async Task<ProxyResponse<GetPersonResponse>> GetPerson(GetPersonRequest body)
-        {
-            var requestId = Guid.NewGuid().ToString();
-            return await _peselService.GetPersonAsync(body, requestId);
-        }
-            
-
-
-
-        //[HttpPost("get-person")]
-        //public async Task<ProxyResponse<GetPersonResponse>> GetPerson(GetPersonRequest body)
-        //{
-
-
-        //    var requestId = Guid.NewGuid().ToString();
-
-
-        //        // Zrób parsowanie XML odpowiedzi i zwróć dane
-        //        // Wyodrębnij fragment <wyszukajPodstawoweDaneOsobyResponse>...</wyszukajPodstawoweDaneOsobyResponse>
-        //        string ExtractSoapBody(string xml, string localName)
-        //        {
-        //            var doc = new XmlDocument();
-        //            doc.LoadXml(xml);
-        //            var nsmgr = new XmlNamespaceManager(doc.NameTable);
-        //            nsmgr.AddNamespace("soap", "http://schemas.xmlsoap.org/soap/envelope/");
-        //            nsmgr.AddNamespace("ns2", "http://msw.gov.pl/srp/v3_0/uslugi/pesel/");
-        //            var node = doc.SelectSingleNode("//soap:Body/ns2:" + localName, nsmgr);
-        //            return node?.OuterXml;
-        //        }
-
-        //        var responseXml = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"/><soap:Body><ns2:wyszukajPodstawoweDaneOsobyResponse xmlns:ns2=\"http://msw.gov.pl/srp/v3_0/uslugi/pesel/\"><znalezioneOsoby><znalezionaOsoba><osobaId>2915819472640346459</osobaId><numerPesel>73020916558</numerPesel><czyPeselAnulowany>false</czyPeselAnulowany><imiePierwsze>JACEK</imiePierwsze><nazwisko>KORPUSIK</nazwisko><nazwiskoRodowe>KORPUSIK</nazwiskoRodowe><obywatelstwo kod=\"500\">POLSKIE</obywatelstwo><plec>MEZCZYZNA</plec><miejsceUrodzenia>DZIA&#321;DOWO</miejsceUrodzenia><dataUrodzenia>19730209</dataUrodzenia><imieMatki>MIROS&#321;AWA</imieMatki><imieOjca>JAN</imieOjca><nazwiskoRodoweMatki>IZDEBSKA</nazwiskoRodoweMatki><nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca><danePobytuStalego><numerDomu>9</numerDomu><gmina kt=\"1432055\">&#321;OMIANKI</gmina><miejscowoscDzielnica><kodTerytorialny>0005144</kodTerytorialny><nazwaMiejscowosci>KIE&#321;PIN</nazwaMiejscowosci></miejscowoscDzielnica><ulica symbolUlicy=\"000514424412\"><cecha>UL.</cecha><nazwaPierwsza>WI&#346;NIOWA</nazwaPierwsza></ulica><wojewodztwo woj=\"14\">MAZOWIECKIE</wojewodztwo><komentarz xsi:nil=\"true\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/><dataOd>20120508</dataOd></danePobytuStalego><czyZyje>true</czyZyje></znalezionaOsoba><znalezionaOsoba><osobaId>476475002159456798</osobaId><numerPesel>73090203451</numerPesel><czyPeselAnulowany>false</czyPeselAnulowany><imiePierwsze>JACEK</imiePierwsze><nazwisko>KORPUSIK</nazwisko><nazwiskoRodowe>KORPUSIK</nazwiskoRodowe><obywatelstwo kod=\"500\">POLSKIE</obywatelstwo><plec>MEZCZYZNA</plec><miejsceUrodzenia>OLSZTYN</miejsceUrodzenia><dataUrodzenia>19730902</dataUrodzenia><imieMatki>TERESA</imieMatki><imieOjca>HENRYK</imieOjca><nazwiskoRodoweMatki>KOZIO&#321;</nazwiskoRodoweMatki><nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca><danePobytuStalego><numerDomu>42</numerDomu><gmina kt=\"2814042\">DYWITY</gmina><miejscowoscDzielnica><kodTerytorialny>0473069</kodTerytorialny><nazwaMiejscowosci>R&#211;&#379;NOWO</nazwaMiejscowosci></miejscowoscDzielnica><ulica/><wojewodztwo woj=\"28\">WARMI&#323;SKO-MAZURSKIE</wojewodztwo><komentarz xsi:nil=\"true\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/><dataOd>19940721</dataOd></danePobytuStalego><czyZyje>true</czyZyje></znalezionaOsoba><znalezionaOsoba><osobaId>8501857946124445553</osobaId><numerPesel>83102803775</numerPesel><czyPeselAnulowany>false</czyPeselAnulowany><imiePierwsze>JACEK</imiePierwsze><nazwisko>KORPUSIK</nazwisko><nazwiskoRodowe>KORPUSIK</nazwiskoRodowe><obywatelstwo kod=\"500\">POLSKIE</obywatelstwo><plec>MEZCZYZNA</plec><miejsceUrodzenia>K&#280;TRZYN</miejsceUrodzenia><dataUrodzenia>19831028</dataUrodzenia><imieMatki>MARIA</imieMatki><imieOjca>JERZY</imieOjca><nazwiskoRodoweMatki>MICHA&#321;EK</nazwiskoRodoweMatki><nazwiskoRodoweOjca>KORPUSIK</nazwiskoRodoweOjca><danePobytuStalego><numerDomu>6</numerDomu><gmina kt=\"2808011\">K&#280;TRZYN</gmina><kodPocztowy>11400</kodPocztowy><numerLokalu>19</numerLokalu><miejscowoscDzielnica><kodTerytorialny>0964710</kodTerytorialny><nazwaMiejscowosci>K&#280;TRZYN</nazwaMiejscowosci></miejscowoscDzielnica><ulica symbolUlicy=\"096471005948\"><cecha>UL.</cecha><nazwaPierwsza>G&#211;RNA</nazwaPierwsza></ulica><wojewodztwo woj=\"28\">WARMI&#323;SKO-MAZURSKIE</wojewodztwo><komentarz xsi:nil=\"true\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/><dataOd>19831103</dataOd></danePobytuStalego><czyZyje>true</czyZyje></znalezionaOsoba></znalezioneOsoby></ns2:wyszukajPodstawoweDaneOsobyResponse></soap:Body></soap:Envelope>\r\n";
-
-
-        //        string responseBodyXml = ExtractSoapBody(responseXml, "wyszukajPodstawoweDaneOsobyResponse");
-
-        //        // Deserializacja do klasy
-        //        wyszukajPodstawoweDaneOsobyResponse responseObj = null;
-        //        if (!String.IsNullOrEmpty(responseBodyXml))
-        //        {
-        //            var deserializer = new XmlSerializer(typeof(wyszukajPodstawoweDaneOsobyResponse));
-        //            using var reader = new StringReader(responseBodyXml);
-        //            responseObj = (wyszukajPodstawoweDaneOsobyResponse)deserializer.Deserialize(reader);
-        //        }
-
-        //        return new ProxyResponse<wyszukajPodstawoweDaneOsobyResponse> { 
-        //            RequestId = requestId, 
-        //            Data = responseObj,
-        //            Source = "SRP", 
-        //            Status = ProxyStatus.Success, 
-        //            StatusCode = (int)HttpStatusCode.OK 
-        //        };
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        new ProxyResponse<string>
-        //        {
-        //            RequestId = requestId,
-        //            Data = "",
-        //            Source = "SRP",
-        //            Status = ProxyStatus.TechnicalError,
-        //            StatusCode = (int)HttpStatusCode.InternalServerError,
-        //            ErrorMessage = ex.Message
-        //        };
-        //        throw;
-        //    }
-        //}
-
+              
     }
 }

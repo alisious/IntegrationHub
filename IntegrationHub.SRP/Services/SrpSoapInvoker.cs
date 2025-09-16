@@ -1,6 +1,6 @@
 ﻿using IntegrationHub.Common.Exceptions;
 using IntegrationHub.SRP.Contracts;
-using IntegrationHub.SRP.Helpers;
+using IntegrationHub.SRP.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:include schemaLocation="pobierzRodzaj.xsd"/>
+	<xsd:include schemaLocation="pobierzPodrodzaj.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzPrzeznaczenie_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzPrzeznaczenie">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:Identyfikatory" minOccurs="0"/>
+			<xsd:element name="indeks" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodPrzeznaczenia" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="przeznaczenie" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="rodzaj" type="slo:ZapytanieRodzaj" minOccurs="0"/>
+			<xsd:element name="podrodzaj" type="slo:ZapytaniePodrodzaj" minOccurs="0"/>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzPrzeznaczenieRezultat">
+		<xsd:sequence>
+			<xsd:element name="przeznaczenie" type="slo:Przeznaczenie" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Przeznaczenie">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:IdentyfikatoryRezultat"/>
+			<xsd:element name="indeks" type="xsd:integer"/>
+			<xsd:element name="idr" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="idw" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="kodPrzeznaczenie" type="xsd:string"/>
+			<xsd:element name="przeznaczenie" type="xsd:string"/>
+			<xsd:element name="zrodlo" type="slo:Zrodlo" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>0 - ITS, 1 - CEP migracja, 2 - pozycja tymczasowa</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+			<xsd:element name="dataAktualizacji" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

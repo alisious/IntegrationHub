@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 (http://www.altova.com) by Marcin Kucharski (Komenda Glowna Policji) -->
+<xsd:schema xmlns:tns="http://policja.gov.pl/RuchDrogowy/SprawdzenieOsoby" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://policja.gov.pl/RuchDrogowy/SprawdzenieOsoby" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.0.1">
+	<xsd:simpleType name="NormalizedStringType">
+		<xsd:annotation>
+			<xsd:documentation>Teskt bez znaków końca linii</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NormalizedStringType200">
+		<xsd:annotation>
+			<xsd:documentation>Teskt bez znaków końca linii</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:maxLength value="200"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SystemType">
+		<xsd:annotation>
+			<xsd:documentation>Nazwa systemu przekazującego dane o opłaceniu mandatu</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="US Opole"/>
+			<xsd:enumeration value="GITD"/>
+			<xsd:enumeration value="CANARD"/>
+			<xsd:enumeration value="ŻW"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="PersonCriminalRecordClassificationType">
+		<xsd:annotation>
+			<xsd:documentation>Typ opisujący kwalifikację prawną Policji</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="LegalClassificationCode" type="tns:NormalizedStringType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kwalifikacja prawna</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ClassificationCode" type="tns:NormalizedStringType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kod czynu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="tns:NormalizedStringType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Opis czynu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersonOffencesRecordResponseType">
+		<xsd:sequence>
+			<xsd:element name="IncidentDate" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data wykroczenia</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FinePaymentDate" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data uiszczenia grzywny</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidationOfDecisonDate" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data uprawomocnienia rozstrzygniecia</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonCriminalRecordClassification" type="tns:PersonCriminalRecordClassificationType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Czyn, kwalifikacja prawna policji</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SprawdzenieOsobyRequest">
+		<xsd:annotation>
+			<xsd:documentation>Sprawdzenie osoby w ruchu drogowym</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="RequestHeader">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="RequestID" type="tns:NormalizedStringType200">
+								<xsd:annotation>
+									<xsd:documentation>Identyfikator komunikatu nadawany przes stronę wywołującą usługę. Nadawca powinien zapewnić unikalność nadanej wartości. Identyfikator pozwala m.in. zlokalizować komunikat w logach systemu</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Timestamp" type="xsd:dateTime"/>
+							<xsd:element name="AuditRecord">
+								<xsd:annotation>
+									<xsd:documentation>Dane audytowe</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="SystemName" type="tns:SystemType">
+											<xsd:annotation>
+												<xsd:documentation>Identyfikator/nazwa systemu, z którego pochodzi wywołanie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="ApplicationName" type="tns:NormalizedStringType200" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Identyfikator/nazwa aplikacji, z której pochodzi wywołanie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="ModuleName" type="tns:NormalizedStringType200" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Identyfikator/nazwa modułu, z którego pochodzi wywołanie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="TerminalName" type="tns:NormalizedStringType200" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Identyfikator/nazwa terminala, z którego pochodzi wywołanie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="UserProfile" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Dane uzytkownika</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="UserID" type="tns:NormalizedStringType200" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Identyfikator uzytkownika realizującego operację</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="UnitID" type="tns:NormalizedStringType200" minOccurs="0">
+														<xsd:annotation>
+															<xsd:documentation>Identyfikator jednostki uzytkownika</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="RequestBody">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="NrPESEL">
+								<xsd:annotation>
+									<xsd:documentation>Nr PESEL osoby</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Person">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="PersonName">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="FirstName" type="tns:NormalizedStringType200">
+														<xsd:annotation>
+															<xsd:documentation>Imię pierwsze</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="LastName" type="tns:NormalizedStringType200">
+														<xsd:annotation>
+															<xsd:documentation>Nazwisko</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="BirthDate" type="xsd:date">
+											<xsd:annotation>
+												<xsd:documentation>Data urodzenia</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SprawdzenieOsobyResponse">
+		<xsd:annotation>
+			<xsd:documentation>Odpowiedz na sprawdzenie osoby</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Person" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="PersonName">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="FirstName" type="tns:NormalizedStringType200">
+											<xsd:annotation>
+												<xsd:documentation>Imię pierwsze</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="LastName" type="tns:NormalizedStringType200">
+											<xsd:annotation>
+												<xsd:documentation>Nazwisko</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="PESELNumber" minOccurs="0">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:length value="11"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="BirthDate" type="xsd:date" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Data urodzenia</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="OffenseRecord" type="tns:PersonOffencesRecordResponseType" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Informacja o wykroczeniu osoby</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="State" type="tns:NormalizedStringType200">
+					<xsd:annotation>
+						<xsd:documentation>Lista stanow: 0 - nie znalezion osoby, 1 - znaleziono jedną osobę, 2 - znaleziono wiecej niz jedna osoobę</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ServiceFault">
+		<xsd:annotation>
+			<xsd:documentation>Struktura opisująca błąd</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Code" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Kod błędu</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="Reason" type="xsd:string" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Informacja o błędzie</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="Description" type="xsd:string" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Opis szczegółowy błędu</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="Details" type="xsd:string" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Dane techniczne związane z błędem np.: stack trace, itp.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

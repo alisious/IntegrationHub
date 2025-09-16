@@ -1,8 +1,9 @@
-﻿using IntegrationHub.Common.Configs;
+﻿using IntegrationHub.Common.Config;
 using IntegrationHub.Common.Exceptions;
 using IntegrationHub.Common.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Security.Cryptography.X509Certificates;
+
 
 public class ClientCertificateProvider : IClientCertificateProvider
 {

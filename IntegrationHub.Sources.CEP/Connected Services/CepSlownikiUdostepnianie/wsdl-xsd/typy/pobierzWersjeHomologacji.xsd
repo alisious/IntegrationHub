@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:include schemaLocation="pobierzMarki.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzWersjeHomologacji_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzWersjeHomologacji">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:Identyfikatory" minOccurs="0"/>
+			<xsd:element name="indeks" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodWersji" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="wersja" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="zapytanieMarka" type="slo:ZapytanieMarka" minOccurs="0"/>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Wartość słownikowa zostanie zwrócona w stanie na datę. Jeżeli data nie zostanie podana zostanie przyjęta aktualna (SYSDATE)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzWersjeHomologacjiRezultat">
+		<xsd:sequence>
+			<xsd:element name="wersjaHomologacji" type="slo:WersjaHomologacji" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WersjaHomologacji">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:IdentyfikatoryRezultat"/>
+			<xsd:element name="indeks" type="xsd:integer"/>
+			<xsd:element name="wersja" type="xsd:string"/>
+			<xsd:element name="kodWersji" type="xsd:string"/>
+			<xsd:element name="rekordSlownikaMarek" type="slo:Marka" maxOccurs="unbounded"/>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+			<xsd:element name="dataAktualizacji" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

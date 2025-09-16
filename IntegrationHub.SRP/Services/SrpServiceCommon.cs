@@ -96,7 +96,7 @@ internal static class SrpServiceCommon
             RequestId = requestId,
             Source = "SRP",
             Status = status,
-            StatusCode = (int)code,
+            SourceStatusCode = (int)code,
             ErrorMessage = message
         };
 }

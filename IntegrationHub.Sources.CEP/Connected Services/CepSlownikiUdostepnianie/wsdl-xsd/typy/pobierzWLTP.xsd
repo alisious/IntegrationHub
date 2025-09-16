@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzWariantyHomologacji_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzWLTP">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:Identyfikatory" minOccurs="0"/>
+			<xsd:element name="indeks" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ixKatITS" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Wartość słownikowa zostanie zwrócona w stanie na datę. Jeżeli data nie zostanie podana zostanie przyjęta aktualna (SYSDATE)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzWLTPRezultat">
+		<xsd:sequence>
+			<xsd:element name="wltp" type="slo:WLTP" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WLTP">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:IdentyfikatoryRezultat"/>
+			<xsd:element name="indeks" type="xsd:integer"/>
+			<xsd:element name="ixKatITS" type="xsd:integer"/>
+			<xsd:element name="masaPojazduPodstawowego" type="slo:WartoscZakresowaI" minOccurs="0"/>
+			<xsd:element name="masaProbna" type="slo:WartoscZakresowaI" minOccurs="0"/>
+			<xsd:element name="srednieZuzyciePaliwaPodstawowego" type="slo:WartoscZakresowaZuzycia" minOccurs="0"/>
+			<xsd:element name="srednieZuzyciePaliwaAlternatywnego1" type="slo:WartoscZakresowaZuzycia" minOccurs="0"/>
+			<xsd:element name="srednieZuzyciePaliwaAlternatywnego2" type="slo:WartoscZakresowaZuzycia" minOccurs="0"/>
+			<xsd:element name="indywidualnyPoziomEmisjiCO2PaliwaPodstawowego" type="slo:WLTPEmisjaCO2" minOccurs="0"/>
+			<xsd:element name="indywidualnyPoziomEmisjiCO2PaliwaAlternatywnego1" type="slo:WLTPEmisjaCO2" minOccurs="0"/>
+			<xsd:element name="indywidualnyPoziomEmisjiCO2PaliwaAlternatywnego2" type="slo:WLTPEmisjaCO2" minOccurs="0"/>
+			<xsd:element name="redukcjaEmisjiSpalin" type="xsd:decimal" minOccurs="0"/>
+			<xsd:element name="redukcjaEmisjiSpalinPaliwoPodstawowe" type="xsd:decimal" minOccurs="0"/>
+			<xsd:element name="redukcjaEmisjiSpalinPaliwoAlternatywne1" type="xsd:decimal" minOccurs="0"/>
+			<xsd:element name="redukcjaEmisjiSpalinPaliwoAlternatywne2" type="xsd:decimal" minOccurs="0"/>
+			<xsd:element name="wspolczynnikKorelacji" type="xsd:byte" minOccurs="0"/>
+			<xsd:element name="wspolczynnikOdchylenia" type="slo:WartoscZakresowaD" minOccurs="0"/>
+			<xsd:element name="numerIdentyfikacyjnyRodzinyPojazdow" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="kodNadwozia" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="vmax" type="slo:WartoscZakresowaD" minOccurs="0"/>
+			<xsd:element name="pojazdProdukowanyWieloetapowo" type="slo:TakNieBrakDanych" minOccurs="0"/>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+			<xsd:element name="dataAktualizacji" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="WLTPEmisjaCO2">
+		<xsd:sequence>
+			<xsd:element name="cyklMieszany" type="slo:WartoscZakresowaI" minOccurs="0"/>
+			<xsd:element name="cyklMieszanyWartoscWazona" type="slo:WartoscZakresowaI" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

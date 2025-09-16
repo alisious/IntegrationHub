@@ -1,0 +1,1591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="urn:interfaces.slowniki.api.cepik.coi.gov.pl" xmlns:exc="http://exceptions.api.cepik.coi.gov.pl" targetNamespace="urn:interfaces.slowniki.api.cepik.coi.gov.pl">
+	<wsdl:documentation>
+		    Service: SłownikiUdostepnianie
+            Version: 4.2.0
+	</wsdl:documentation>
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://slowniki.api.cepik.coi.gov.pl" schemaLocation="slownikiUdostepnianie.xsd"/>
+			<xsd:import namespace="http://exceptions.api.cepik.coi.gov.pl" schemaLocation="exceptions/exceptions.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="PobierzListeSlownikowRequest">
+		<wsdl:part name="PobierzListeSlownikow" element="slo:pobierzListeSlownikow"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzListeSlownikowResponse">
+		<wsdl:part name="PobierzListeSlownikowRezultat" element="slo:pobierzListeSlownikowRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSlownikRequest">
+		<wsdl:part name="PobierzSlownik" element="slo:pobierzSlownik"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSlownikResponse">
+		<wsdl:part name="PobierzSlownikRezultat" element="slo:pobierzSlownikRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSlownikHistoriaRequest">
+		<wsdl:part name="PobierzSlownikHistoria" element="slo:pobierzSlownikHistoria"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSlownikHistoriaResponse">
+		<wsdl:part name="PobierzSlownikHistoriaRezultat" element="slo:pobierzSlownikHistoriaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzCzynnosciRequest">
+		<wsdl:part name="PobierzCzynnosci" element="slo:pobierzCzynnosci"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzCzynnosciResponse">
+		<wsdl:part name="PobierzCzynnosciRezultat" element="slo:pobierzCzynnosciRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzPanstwaRequest">
+		<wsdl:part name="PobierzPanstwa" element="slo:pobierzPanstwa"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzPanstwaResponse">
+		<wsdl:part name="PobierzPanstwaRezultat" element="slo:pobierzPanstwaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTaryfikatorRequest">
+		<wsdl:part name="PobierzTaryfikator" element="slo:pobierzTaryfikator"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTaryfikatorResponse">
+		<wsdl:part name="PobierzTaryfikatorRezultat" element="slo:pobierzTaryfikatorRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMarkiRequest">
+		<wsdl:part name="PobierzMarki" element="slo:pobierzMarki"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMarkiResponse">
+		<wsdl:part name="PobierzMarkiRezultat" element="slo:pobierzMarkiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzModeleRequest">
+		<wsdl:part name="PobierzModele" element="slo:pobierzModele"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzModeleResponse">
+		<wsdl:part name="PobierzModeleRezultat" element="slo:pobierzModeleRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTypyRequest">
+		<wsdl:part name="PobierzTypy" element="slo:pobierzTypy"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTypyResponse">
+		<wsdl:part name="PobierzTypyRezultat" element="slo:pobierzTypyRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajRequest">
+		<wsdl:part name="PobierzRodzaj" element="slo:pobierzRodzaj"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajResponse">
+		<wsdl:part name="PobierzRodzajRezultat" element="slo:pobierzRodzajRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzPodrodzajRequest">
+		<wsdl:part name="PobierzPodrodzaj" element="slo:pobierzPodrodzaj"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzPodrodzajResponse">
+		<wsdl:part name="PobierzPodrodzajRezultat" element="slo:pobierzPodrodzajRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzPrzeznaczenieRequest">
+		<wsdl:part name="PobierzPrzeznaczenie" element="slo:pobierzPrzeznaczenie"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzPrzeznaczenieResponse">
+		<wsdl:part name="PobierzPrzeznaczenieRezultat" element="slo:pobierzPrzeznaczenieRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRPPRequest">
+		<wsdl:part name="PobierzRPP" element="slo:pobierzRPP"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRPPResponse">
+		<wsdl:part name="PobierzRPPRezultat" element="slo:pobierzRPPRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzHomologacjeRequest">
+		<wsdl:part name="PobierzHomologacje" element="slo:pobierzHomologacje"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzHomologacjeResponse">
+		<wsdl:part name="PobierzHomologacjeRezultat" element="slo:pobierzHomologacjeRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWersjeHomologacjiRequest">
+		<wsdl:part name="PobierzWersjeHomologacji" element="slo:pobierzWersjeHomologacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWersjeHomologacjiResponse">
+		<wsdl:part name="PobierzWersjeHomologacjiRezultat" element="slo:pobierzWersjeHomologacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWariantyHomologacjiRequest">
+		<wsdl:part name="PobierzWariantyHomologacji" element="slo:pobierzWariantyHomologacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWariantyHomologacjiResponse">
+		<wsdl:part name="PobierzWariantyHomologacjiRezultat" element="slo:pobierzWariantyHomologacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzProducentowRequest">
+		<wsdl:part name="PobierzProducentow" element="slo:pobierzProducentow"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzProducentowResponse">
+		<wsdl:part name="PobierzProducentowRezultat" element="slo:pobierzProducentowRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzUsterkiRequest">
+		<wsdl:part name="PobierzUsterki" element="slo:pobierzUsterki"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzUsterkiResponse">
+		<wsdl:part name="PobierzUsterkiRezultat" element="slo:pobierzUsterkiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWyroznikORRequest">
+		<wsdl:part name="PobierzWyroznikOR" element="slo:pobierzWyroznikOR"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWyroznikORResponse">
+		<wsdl:part name="PobierzWyroznikORRezultat" element="slo:pobierzWyroznikORRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMaskiTRRequest">
+		<wsdl:part name="PobierzMaskiTR" element="slo:pobierzMaskiTR"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMaskiTRResponse">
+		<wsdl:part name="PobierzMaskiTRRezultat" element="slo:pobierzMaskiTRRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzNormySpalinEURORequest">
+		<wsdl:part name="PobierzNormySpalinEURO" element="slo:pobierzNormySpalinEURO"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzNormySpalinEUROResponse">
+		<wsdl:part name="PobierzNormySpalinEURORezultat" element="slo:pobierzNormySpalinEURORezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSposobyProdukcjiRequest">
+		<wsdl:part name="PobierzSposobyProdukcji" element="slo:pobierzSposobyProdukcji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSposobyProdukcjiResponse">
+		<wsdl:part name="PobierzSposobyProdukcjiRezultat" element="slo:pobierzSposobyProdukcjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZawieszeniaRequest">
+		<wsdl:part name="PobierzRodzajeZawieszenia" element="slo:pobierzRodzajeZawieszenia"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZawieszeniaResponse">
+		<wsdl:part name="PobierzRodzajeZawieszeniaRezultat" element="slo:pobierzRodzajeZawieszeniaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnika" element="slo:pobierzRodzajeZasilenSilnika"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaRezultat" element="slo:pobierzRodzajeZasilenSilnikaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaEvh2Request">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaEvh2" element="slo:pobierzRodzajeZasilenSilnikaEvh2"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaEvh2Response">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaEvh2Rezultat" element="slo:pobierzRodzajeZasilenSilnikaEvh2Rezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaKpehRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaKpeh" element="slo:pobierzRodzajeZasilenSilnikaKpeh"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaKpehResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaKpehRezultat" element="slo:pobierzRodzajeZasilenSilnikaKpehRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeDDRRequest">
+		<wsdl:part name="PobierzRodzajeDDR" element="slo:pobierzRodzajeDDR"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeDDRResponse">
+		<wsdl:part name="PobierzRodzajeDDRRezultat" element="slo:pobierzRodzajeDDRRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzKategorieHomologacjiRequest">
+		<wsdl:part name="PobierzKategorieHomologacji" element="slo:pobierzKategorieHomologacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzKategorieHomologacjiResponse">
+		<wsdl:part name="PobierzKategorieHomologacjiRezultat" element="slo:pobierzKategorieHomologacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajePaliwRequest">
+		<wsdl:part name="PobierzRodzajePaliw" element="slo:pobierzRodzajePaliw"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajePaliwResponse">
+		<wsdl:part name="PobierzRodzajePaliwRezultat" element="slo:pobierzRodzajePaliwRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzDanePodzialuTerytorialnegoRequest">
+		<wsdl:part name="PobierzDanePodzialuTerytorialnego" element="slo:pobierzDanePodzialuTerytorialnego"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzDanePodzialuTerytorialnegoResponse">
+		<wsdl:part name="PobierzDanePodzialuTerytorialnegoRezultat" element="slo:pobierzDanePodzialuTerytorialnegoRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWLTPRequest">
+		<wsdl:part name="PobierzWLTP" element="slo:pobierzWLTP"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWLTPResponse">
+		<wsdl:part name="PobierzWLTPRezultat" element="slo:pobierzWLTPRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTypySubskrypcjaRequest">
+		<wsdl:part name="PobierzTypySubskrypcja" element="slo:pobierzTypySubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTypySubskrypcjaResponse">
+		<wsdl:part name="PobierzTypySubskrypcjaRezultat" element="slo:pobierzTypySubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzModeleSubskrypcjaRequest">
+		<wsdl:part name="PobierzModeleSubskrypcja" element="slo:pobierzModeleSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzModeleSubskrypcjaResponse">
+		<wsdl:part name="PobierzModeleSubskrypcjaRezultat" element="slo:pobierzModeleSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMarkiSubskrypcjaRequest">
+		<wsdl:part name="PobierzMarkiSubskrypcja" element="slo:pobierzMarkiSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMarkiSubskrypcjaResponse">
+		<wsdl:part name="PobierzMarkiSubskrypcjaRezultat" element="slo:pobierzMarkiSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzHomologacjeSubskrypcjaRequest">
+		<wsdl:part name="PobierzHomologacjeSubskrypcja" element="slo:pobierzHomologacjeSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzHomologacjeSubskrypcjaResponse">
+		<wsdl:part name="PobierzHomologacjeSubskrypcjaRezultat" element="slo:pobierzHomologacjeSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWersjeHomologacjiSubskrypcjaRequest">
+		<wsdl:part name="PobierzWersjeHomologacjiSubskrypcja" element="slo:pobierzWersjeHomologacjiSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWersjeHomologacjiSubskrypcjaResponse">
+		<wsdl:part name="PobierzWersjeHomologacjiSubskrypcjaRezultat" element="slo:pobierzWersjeHomologacjiSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWariantyHomologacjiSubskrypcjaRequest">
+		<wsdl:part name="PobierzWariantyHomologacjiSubskrypcja" element="slo:pobierzWariantyHomologacjiSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWariantyHomologacjiSubskrypcjaResponse">
+		<wsdl:part name="PobierzWariantyHomologacjiSubskrypcjaRezultat" element="slo:pobierzWariantyHomologacjiSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzProducentowSubskrypcjaRequest">
+		<wsdl:part name="PobierzProducentowSubskrypcja" element="slo:pobierzProducentowSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzProducentowSubskrypcjaResponse">
+		<wsdl:part name="PobierzProducentowSubskrypcjaRezultat" element="slo:pobierzProducentowSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzNormySpalinEUROSubskrypcjaRequest">
+		<wsdl:part name="PobierzNormySpalinEUROSubskrypcja" element="slo:pobierzNormySpalinEUROSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzNormySpalinEUROSubskrypcjaResponse">
+		<wsdl:part name="PobierzNormySpalinEUROSubskrypcjaRezultat" element="slo:pobierzNormySpalinEUROSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzKategorieHomologacjiSubskrypcjaRequest">
+		<wsdl:part name="PobierzKategorieHomologacjiSubskrypcja" element="slo:pobierzKategorieHomologacjiSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzKategorieHomologacjiSubskrypcjaResponse">
+		<wsdl:part name="PobierzKategorieHomologacjiSubskrypcjaRezultat" element="slo:pobierzKategorieHomologacjiSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSposobyProdukcjiSubskrypcjaRequest">
+		<wsdl:part name="PobierzSposobyProdukcjiSubskrypcja" element="slo:pobierzSposobyProdukcjiSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSposobyProdukcjiSubskrypcjaResponse">
+		<wsdl:part name="PobierzSposobyProdukcjiSubskrypcjaRezultat" element="slo:pobierzSposobyProdukcjiSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeDDRSubskrypcjaRequest">
+		<wsdl:part name="PobierzRodzajeDDRSubskrypcja" element="slo:pobierzRodzajeDDRSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeDDRSubskrypcjaResponse">
+		<wsdl:part name="PobierzRodzajeDDRSubskrypcjaRezultat" element="slo:pobierzRodzajeDDRSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZawieszeniaSubskrypcjaRequest">
+		<wsdl:part name="PobierzRodzajeZawieszeniaSubskrypcja" element="slo:pobierzRodzajeZawieszeniaSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZawieszeniaSubskrypcjaResponse">
+		<wsdl:part name="PobierzRodzajeZawieszeniaSubskrypcjaRezultat" element="slo:pobierzRodzajeZawieszeniaSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaSubskrypcjaRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaSubskrypcja" element="slo:pobierzRodzajeZasilenSilnikaSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaSubskrypcjaResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaSubskrypcjaRezultat" element="slo:pobierzRodzajeZasilenSilnikaSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaEvh2Subskrypcja" element="slo:pobierzRodzajeZasilenSilnikaEvh2Subskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRezultat" element="slo:pobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaKpehSubskrypcja" element="slo:pobierzRodzajeZasilenSilnikaKpehSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaRezultat" element="slo:pobierzRodzajeZasilenSilnikaKpehSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajePaliwSubskrypcjaRequest">
+		<wsdl:part name="PobierzRodzajePaliwSubskrypcja" element="slo:pobierzRodzajePaliwSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajePaliwSubskrypcjaResponse">
+		<wsdl:part name="PobierzRodzajePaliwSubskrypcjaRezultat" element="slo:pobierzRodzajePaliwSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWLTPSubskrypcjaRequest">
+		<wsdl:part name="PobierzWLTPSubskrypcja" element="slo:pobierzWLTPSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWLTPSubskrypcjaResponse">
+		<wsdl:part name="PobierzWLTPSubskrypcjaRezultat" element="slo:pobierzWLTPSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRPPSubskrypcjaRequest">
+		<wsdl:part name="PobierzRPPSubskrypcja" element="slo:pobierzRPPSubskrypcja"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRPPSubskrypcjaResponse">
+		<wsdl:part name="PobierzRPPSubskrypcjaRezultat" element="slo:pobierzRPPSubskrypcjaRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSlownikListaModyfikacjiRequest">
+		<wsdl:part name="PobierzSlownikListaModyfikacji" element="slo:pobierzSlownikListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSlownikListaModyfikacjiResponse">
+		<wsdl:part name="PobierzSlownikListaModyfikacjiRezultat" element="slo:pobierzSlownikListaModyfikacjiRezultat"/>
+	</wsdl:message>	
+	<wsdl:message name="PobierzTypyListaModyfikacjiRequest">
+		<wsdl:part name="PobierzTypyListaModyfikacji" element="slo:pobierzTypyListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzTypyListaModyfikacjiResponse">
+		<wsdl:part name="PobierzTypyListaModyfikacjiRezultat" element="slo:pobierzTypyListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzModeleListaModyfikacjiRequest">
+		<wsdl:part name="PobierzModeleListaModyfikacji" element="slo:pobierzModeleListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzModeleListaModyfikacjiResponse">
+		<wsdl:part name="PobierzModeleListaModyfikacjiRezultat" element="slo:pobierzModeleListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMarkiListaModyfikacjiRequest">
+		<wsdl:part name="PobierzMarkiListaModyfikacji" element="slo:pobierzMarkiListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzMarkiListaModyfikacjiResponse">
+		<wsdl:part name="PobierzMarkiListaModyfikacjiRezultat" element="slo:pobierzMarkiListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzHomologacjeListaModyfikacjiRequest">
+		<wsdl:part name="PobierzHomologacjeListaModyfikacji" element="slo:pobierzHomologacjeListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzHomologacjeListaModyfikacjiResponse">
+		<wsdl:part name="PobierzHomologacjeListaModyfikacjiRezultat" element="slo:pobierzHomologacjeListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWariantyHomologacjiListaModyfikacjiRequest">
+		<wsdl:part name="PobierzWariantyHomologacjiListaModyfikacji" element="slo:pobierzWariantyHomologacjiListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWariantyHomologacjiListaModyfikacjiResponse">
+		<wsdl:part name="PobierzWariantyHomologacjiListaModyfikacjiRezultat" element="slo:pobierzWariantyHomologacjiListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWersjeHomologacjiListaModyfikacjiRequest">
+		<wsdl:part name="PobierzWersjeHomologacjiListaModyfikacji" element="slo:pobierzWersjeHomologacjiListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWersjeHomologacjiListaModyfikacjiResponse">
+		<wsdl:part name="PobierzWersjeHomologacjiListaModyfikacjiRezultat" element="slo:pobierzWersjeHomologacjiListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzProducentowListaModyfikacjiRequest">
+		<wsdl:part name="PobierzProducentowListaModyfikacji" element="slo:pobierzProducentowListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzProducentowListaModyfikacjiResponse">
+		<wsdl:part name="PobierzProducentowListaModyfikacjiRezultat" element="slo:pobierzProducentowListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzNormySpalinEUROListaModyfikacjiRequest">
+		<wsdl:part name="PobierzNormySpalinEUROListaModyfikacji" element="slo:pobierzNormySpalinEUROListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzNormySpalinEUROListaModyfikacjiResponse">
+		<wsdl:part name="PobierzNormySpalinEUROListaModyfikacjiRezultat" element="slo:pobierzNormySpalinEUROListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzKategorieHomologacjiListaModyfikacjiRequest">
+		<wsdl:part name="PobierzKategorieHomologacjiListaModyfikacji" element="slo:pobierzKategorieHomologacjiListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzKategorieHomologacjiListaModyfikacjiResponse">
+		<wsdl:part name="PobierzKategorieHomologacjiListaModyfikacjiRezultat" element="slo:pobierzKategorieHomologacjiListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSposobyProdukcjiListaModyfikacjiRequest">
+		<wsdl:part name="PobierzSposobyProdukcjiListaModyfikacji" element="slo:pobierzSposobyProdukcjiListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzSposobyProdukcjiListaModyfikacjiResponse">
+		<wsdl:part name="PobierzSposobyProdukcjiListaModyfikacjiRezultat" element="slo:pobierzSposobyProdukcjiListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeDDRListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRodzajeDDRListaModyfikacji" element="slo:pobierzRodzajeDDRListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeDDRListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRodzajeDDRListaModyfikacjiRezultat" element="slo:pobierzRodzajeDDRListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZawieszeniaListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRodzajeZawieszeniaListaModyfikacji" element="slo:pobierzRodzajeZawieszeniaListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZawieszeniaListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRodzajeZawieszeniaListaModyfikacjiRezultat" element="slo:pobierzRodzajeZawieszeniaListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaListaModyfikacji" element="slo:pobierzRodzajeZasilenSilnikaListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaListaModyfikacjiRezultat" element="slo:pobierzRodzajeZasilenSilnikaListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacji" element="slo:pobierzRodzajeZasilenSilnikaEvh2ListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRezultat" element="slo:pobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacji" element="slo:pobierzRodzajeZasilenSilnikaKpehListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRezultat" element="slo:pobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajePaliwListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRodzajePaliwListaModyfikacji" element="slo:pobierzRodzajePaliwListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRodzajePaliwListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRodzajePaliwListaModyfikacjiRezultat" element="slo:pobierzRodzajePaliwListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWLTPListaModyfikacjiRequest">
+		<wsdl:part name="PobierzWLTPListaModyfikacji" element="slo:pobierzWLTPListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzWLTPListaModyfikacjiResponse">
+		<wsdl:part name="PobierzWLTPListaModyfikacjiRezultat" element="slo:pobierzWLTPListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRPPListaModyfikacjiRequest">
+		<wsdl:part name="PobierzRPPListaModyfikacji" element="slo:pobierzRPPListaModyfikacji"/>
+	</wsdl:message>
+	<wsdl:message name="PobierzRPPListaModyfikacjiResponse">
+		<wsdl:part name="PobierzRPPListaModyfikacjiRezultat" element="slo:pobierzRPPListaModyfikacjiRezultat"/>
+	</wsdl:message>
+	<wsdl:message name="Blad">
+		<wsdl:part name="Blad" element="exc:cepikException"/>
+	</wsdl:message>
+	<wsdl:portType name="SlownikiUdostepnianieWS">
+		<wsdl:operation name="PobierzListeSlownikow">
+			<wsdl:input name="PobierzListeSlownikowRequest" message="impl:PobierzListeSlownikowRequest"/>
+			<wsdl:output name="PobierzListeSlownikowResponse" message="impl:PobierzListeSlownikowResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSlownik">
+			<wsdl:input name="PobierzSlownikRequest" message="impl:PobierzSlownikRequest"/>
+			<wsdl:output name="PobierzSlownikResponse" message="impl:PobierzSlownikResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSlownikHistoria">
+			<wsdl:input name="PobierzSlownikHistoriaRequest" message="impl:PobierzSlownikHistoriaRequest"/>
+			<wsdl:output name="PobierzSlownikHistoriaResponse" message="impl:PobierzSlownikHistoriaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzCzynnosci">
+			<wsdl:input name="PobierzCzynnosciRequest" message="impl:PobierzCzynnosciRequest"/>
+			<wsdl:output name="PobierzCzynnosciResponse" message="impl:PobierzCzynnosciResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzPanstwa">
+			<wsdl:input name="PobierzPanstwaRequest" message="impl:PobierzPanstwaRequest"/>
+			<wsdl:output name="PobierzPanstwaResponse" message="impl:PobierzPanstwaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzTaryfikator">
+			<wsdl:input name="PobierzTaryfikatorRequest" message="impl:PobierzTaryfikatorRequest"/>
+			<wsdl:output name="PobierzTaryfikatorResponse" message="impl:PobierzTaryfikatorResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMarki">
+			<wsdl:input name="PobierzMarkiRequest" message="impl:PobierzMarkiRequest"/>
+			<wsdl:output name="PobierzMarkiResponse" message="impl:PobierzMarkiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzModele">
+			<wsdl:input name="PobierzModeleRequest" message="impl:PobierzModeleRequest"/>
+			<wsdl:output name="PobierzModeleResponse" message="impl:PobierzModeleResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzTypy">
+			<wsdl:input name="PobierzTypyRequest" message="impl:PobierzTypyRequest"/>
+			<wsdl:output name="PobierzTypyResponse" message="impl:PobierzTypyResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzaj">
+			<wsdl:input name="PobierzRodzajRequest" message="impl:PobierzRodzajRequest"/>
+			<wsdl:output name="PobierzRodzajResponse" message="impl:PobierzRodzajResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzPodrodzaj">
+			<wsdl:input name="PobierzPodrodzajRequest" message="impl:PobierzPodrodzajRequest"/>
+			<wsdl:output name="PobierzPodrodzajResponse" message="impl:PobierzPodrodzajResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzPrzeznaczenie">
+			<wsdl:input name="PobierzPrzeznaczenieRequest" message="impl:PobierzPrzeznaczenieRequest"/>
+			<wsdl:output name="PobierzPrzeznaczenieResponse" message="impl:PobierzPrzeznaczenieResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRPP">
+			<wsdl:input name="PobierzRPPRequest" message="impl:PobierzRPPRequest"/>
+			<wsdl:output name="PobierzRPPResponse" message="impl:PobierzRPPResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzHomologacje">
+			<wsdl:input name="PobierzHomologacjeRequest" message="impl:PobierzHomologacjeRequest"/>
+			<wsdl:output name="PobierzHomologacjeResponse" message="impl:PobierzHomologacjeResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWersjeHomologacji">
+			<wsdl:input name="PobierzWersjeHomologacjiRequest" message="impl:PobierzWersjeHomologacjiRequest"/>
+			<wsdl:output name="PobierzWersjeHomologacjiResponse" message="impl:PobierzWersjeHomologacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWariantyHomologacji">
+			<wsdl:input name="PobierzWariantyHomologacjiRequest" message="impl:PobierzWariantyHomologacjiRequest"/>
+			<wsdl:output name="PobierzWariantyHomologacjiResponse" message="impl:PobierzWariantyHomologacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzProducentow">
+			<wsdl:input name="PobierzProducentowRequest" message="impl:PobierzProducentowRequest"/>
+			<wsdl:output name="PobierzProducentowResponse" message="impl:PobierzProducentowResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzUsterki">
+			<wsdl:input name="PobierzUsterkiRequest" message="impl:PobierzUsterkiRequest"/>
+			<wsdl:output name="PobierzUsterkiResponse" message="impl:PobierzUsterkiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWyroznikOR">
+			<wsdl:input name="PobierzWyroznikORRequest" message="impl:PobierzWyroznikORRequest"/>
+			<wsdl:output name="PobierzWyroznikORResponse" message="impl:PobierzWyroznikORResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMaskiTR">
+			<wsdl:input name="PobierzMaskiTRRequest" message="impl:PobierzMaskiTRRequest"/>
+			<wsdl:output name="PobierzMaskiTRResponse" message="impl:PobierzMaskiTRResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzNormySpalinEURO">
+			<wsdl:input name="PobierzNormySpalinEURORequest" message="impl:PobierzNormySpalinEURORequest"/>
+			<wsdl:output name="PobierzNormySpalinEUROResponse" message="impl:PobierzNormySpalinEUROResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzKategorieHomologacji">
+			<wsdl:input name="PobierzKategorieHomologacjiRequest" message="impl:PobierzKategorieHomologacjiRequest"/>
+			<wsdl:output name="PobierzKategorieHomologacjiResponse" message="impl:PobierzKategorieHomologacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSposobyProdukcji">
+			<wsdl:input name="PobierzSposobyProdukcjiRequest" message="impl:PobierzSposobyProdukcjiRequest"/>
+			<wsdl:output name="PobierzSposobyProdukcjiResponse" message="impl:PobierzSposobyProdukcjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeDDR">
+			<wsdl:input name="PobierzRodzajeDDRRequest" message="impl:PobierzRodzajeDDRRequest"/>
+			<wsdl:output name="PobierzRodzajeDDRResponse" message="impl:PobierzRodzajeDDRResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZawieszenia">
+			<wsdl:input name="PobierzRodzajeZawieszeniaRequest" message="impl:PobierzRodzajeZawieszeniaRequest"/>
+			<wsdl:output name="PobierzRodzajeZawieszeniaResponse" message="impl:PobierzRodzajeZawieszeniaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnika">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaRequest" message="impl:PobierzRodzajeZasilenSilnikaRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaResponse" message="impl:PobierzRodzajeZasilenSilnikaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaEvh2">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaEvh2Request" message="impl:PobierzRodzajeZasilenSilnikaEvh2Request"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaEvh2Response" message="impl:PobierzRodzajeZasilenSilnikaEvh2Response"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaKpeh">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaKpehRequest" message="impl:PobierzRodzajeZasilenSilnikaKpehRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaKpehResponse" message="impl:PobierzRodzajeZasilenSilnikaKpehResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajePaliw">
+			<wsdl:input name="PobierzRodzajePaliwRequest" message="impl:PobierzRodzajePaliwRequest"/>
+			<wsdl:output name="PobierzRodzajePaliwResponse" message="impl:PobierzRodzajePaliwResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzDanePodzialuTerytorialnego">
+			<wsdl:input name="PobierzDanePodzialuTerytorialnegoRequest" message="impl:PobierzDanePodzialuTerytorialnegoRequest"/>
+			<wsdl:output name="PobierzDanePodzialuTerytorialnegoResponse" message="impl:PobierzDanePodzialuTerytorialnegoResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWLTP">
+			<wsdl:input name="PobierzWLTPRequest" message="impl:PobierzWLTPRequest"/>
+			<wsdl:output name="PobierzWLTPResponse" message="impl:PobierzWLTPResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzTypySubskrypcja">
+			<wsdl:input name="PobierzTypySubskrypcjaRequest" message="impl:PobierzTypySubskrypcjaRequest"/>
+			<wsdl:output name="PobierzTypySubskrypcjaResponse" message="impl:PobierzTypySubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzModeleSubskrypcja">
+			<wsdl:input name="PobierzModeleSubskrypcjaRequest" message="impl:PobierzModeleSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzModeleSubskrypcjaResponse" message="impl:PobierzModeleSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMarkiSubskrypcja">
+			<wsdl:input name="PobierzMarkiSubskrypcjaRequest" message="impl:PobierzMarkiSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzMarkiSubskrypcjaResponse" message="impl:PobierzMarkiSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzHomologacjeSubskrypcja">
+			<wsdl:input name="PobierzHomologacjeSubskrypcjaRequest" message="impl:PobierzHomologacjeSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzHomologacjeSubskrypcjaResponse" message="impl:PobierzHomologacjeSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWersjeHomologacjiSubskrypcja">
+			<wsdl:input name="PobierzWersjeHomologacjiSubskrypcjaRequest" message="impl:PobierzWersjeHomologacjiSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzWersjeHomologacjiSubskrypcjaResponse" message="impl:PobierzWersjeHomologacjiSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWariantyHomologacjiSubskrypcja">
+			<wsdl:input name="PobierzWariantyHomologacjiSubskrypcjaRequest" message="impl:PobierzWariantyHomologacjiSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzWariantyHomologacjiSubskrypcjaResponse" message="impl:PobierzWariantyHomologacjiSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzProducentowSubskrypcja">
+			<wsdl:input name="PobierzProducentowSubskrypcjaRequest" message="impl:PobierzProducentowSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzProducentowSubskrypcjaResponse" message="impl:PobierzProducentowSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzNormySpalinEUROSubskrypcja">
+			<wsdl:input name="PobierzNormySpalinEUROSubskrypcjaRequest" message="impl:PobierzNormySpalinEUROSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzNormySpalinEUROSubskrypcjaResponse" message="impl:PobierzNormySpalinEUROSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzKategorieHomologacjiSubskrypcja">
+			<wsdl:input name="PobierzKategorieHomologacjiSubskrypcjaRequest" message="impl:PobierzKategorieHomologacjiSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzKategorieHomologacjiSubskrypcjaResponse" message="impl:PobierzKategorieHomologacjiSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSposobyProdukcjiSubskrypcja">
+			<wsdl:input name="PobierzSposobyProdukcjiSubskrypcjaRequest" message="impl:PobierzSposobyProdukcjiSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzSposobyProdukcjiSubskrypcjaResponse" message="impl:PobierzSposobyProdukcjiSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeDDRSubskrypcja">
+			<wsdl:input name="PobierzRodzajeDDRSubskrypcjaRequest" message="impl:PobierzRodzajeDDRSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRodzajeDDRSubskrypcjaResponse" message="impl:PobierzRodzajeDDRSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZawieszeniaSubskrypcja">
+			<wsdl:input name="PobierzRodzajeZawieszeniaSubskrypcjaRequest" message="impl:PobierzRodzajeZawieszeniaSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRodzajeZawieszeniaSubskrypcjaResponse" message="impl:PobierzRodzajeZawieszeniaSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaSubskrypcja">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaSubskrypcjaRequest" message="impl:PobierzRodzajeZasilenSilnikaSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaSubskrypcjaResponse" message="impl:PobierzRodzajeZasilenSilnikaSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaEvh2Subskrypcja">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRequest" message="impl:PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaResponse" message="impl:PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaKpehSubskrypcja">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaRequest" message="impl:PobierzRodzajeZasilenSilnikaKpehSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaResponse" message="impl:PobierzRodzajeZasilenSilnikaKpehSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajePaliwSubskrypcja">
+			<wsdl:input name="PobierzRodzajePaliwSubskrypcjaRequest" message="impl:PobierzRodzajePaliwSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRodzajePaliwSubskrypcjaResponse" message="impl:PobierzRodzajePaliwSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWLTPSubskrypcja">
+			<wsdl:input name="PobierzWLTPSubskrypcjaRequest" message="impl:PobierzWLTPSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzWLTPSubskrypcjaResponse" message="impl:PobierzWLTPSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRPPSubskrypcja">
+			<wsdl:input name="PobierzRPPSubskrypcjaRequest" message="impl:PobierzRPPSubskrypcjaRequest"/>
+			<wsdl:output name="PobierzRPPSubskrypcjaResponse" message="impl:PobierzRPPSubskrypcjaResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSlownikListaModyfikacji">
+			<wsdl:input name="PobierzSlownikListaModyfikacjiRequest" message="impl:PobierzSlownikListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzSlownikListaModyfikacjiResponse" message="impl:PobierzSlownikListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>		
+		<wsdl:operation name="PobierzTypyListaModyfikacji">
+			<wsdl:input name="PobierzTypyListaModyfikacjiRequest" message="impl:PobierzTypyListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzTypyListaModyfikacjiResponse" message="impl:PobierzTypyListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzModeleListaModyfikacji">
+			<wsdl:input name="PobierzModeleListaModyfikacjiRequest" message="impl:PobierzModeleListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzModeleListaModyfikacjiResponse" message="impl:PobierzModeleListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMarkiListaModyfikacji">
+			<wsdl:input name="PobierzMarkiListaModyfikacjiRequest" message="impl:PobierzMarkiListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzMarkiListaModyfikacjiResponse" message="impl:PobierzMarkiListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzHomologacjeListaModyfikacji">
+			<wsdl:input name="PobierzHomologacjeListaModyfikacjiRequest" message="impl:PobierzHomologacjeListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzHomologacjeListaModyfikacjiResponse" message="impl:PobierzHomologacjeListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWariantyHomologacjiListaModyfikacji">
+			<wsdl:input name="PobierzWariantyHomologacjiListaModyfikacjiRequest" message="impl:PobierzWariantyHomologacjiListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzWariantyHomologacjiListaModyfikacjiResponse" message="impl:PobierzWariantyHomologacjiListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWersjeHomologacjiListaModyfikacji">
+			<wsdl:input name="PobierzWersjeHomologacjiListaModyfikacjiRequest" message="impl:PobierzWersjeHomologacjiListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzWersjeHomologacjiListaModyfikacjiResponse" message="impl:PobierzWersjeHomologacjiListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzProducentowListaModyfikacji">
+			<wsdl:input name="PobierzProducentowListaModyfikacjiRequest" message="impl:PobierzProducentowListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzProducentowListaModyfikacjiResponse" message="impl:PobierzProducentowListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzNormySpalinEUROListaModyfikacji">
+			<wsdl:input name="PobierzNormySpalinEUROListaModyfikacjiRequest" message="impl:PobierzNormySpalinEUROListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzNormySpalinEUROListaModyfikacjiResponse" message="impl:PobierzNormySpalinEUROListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzKategorieHomologacjiListaModyfikacji">
+			<wsdl:input name="PobierzKategorieHomologacjiListaModyfikacjiRequest" message="impl:PobierzKategorieHomologacjiListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzKategorieHomologacjiListaModyfikacjiResponse" message="impl:PobierzKategorieHomologacjiListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSposobyProdukcjiListaModyfikacji">
+			<wsdl:input name="PobierzSposobyProdukcjiListaModyfikacjiRequest" message="impl:PobierzSposobyProdukcjiListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzSposobyProdukcjiListaModyfikacjiResponse" message="impl:PobierzSposobyProdukcjiListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeDDRListaModyfikacji">
+			<wsdl:input name="PobierzRodzajeDDRListaModyfikacjiRequest" message="impl:PobierzRodzajeDDRListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRodzajeDDRListaModyfikacjiResponse" message="impl:PobierzRodzajeDDRListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZawieszeniaListaModyfikacji">
+			<wsdl:input name="PobierzRodzajeZawieszeniaListaModyfikacjiRequest" message="impl:PobierzRodzajeZawieszeniaListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRodzajeZawieszeniaListaModyfikacjiResponse" message="impl:PobierzRodzajeZawieszeniaListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaListaModyfikacji">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaListaModyfikacjiRequest" message="impl:PobierzRodzajeZasilenSilnikaListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaListaModyfikacjiResponse" message="impl:PobierzRodzajeZasilenSilnikaListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacji">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRequest" message="impl:PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiResponse" message="impl:PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacji">
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRequest" message="impl:PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiResponse" message="impl:PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajePaliwListaModyfikacji">
+			<wsdl:input name="PobierzRodzajePaliwListaModyfikacjiRequest" message="impl:PobierzRodzajePaliwListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRodzajePaliwListaModyfikacjiResponse" message="impl:PobierzRodzajePaliwListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWLTPListaModyfikacji">
+			<wsdl:input name="PobierzWLTPListaModyfikacjiRequest" message="impl:PobierzWLTPListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzWLTPListaModyfikacjiResponse" message="impl:PobierzWLTPListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRPPListaModyfikacji">
+			<wsdl:input name="PobierzRPPListaModyfikacjiRequest" message="impl:PobierzRPPListaModyfikacjiRequest"/>
+			<wsdl:output name="PobierzRPPListaModyfikacjiResponse" message="impl:PobierzRPPListaModyfikacjiResponse"/>
+			<wsdl:fault name="Blad" message="impl:Blad"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="slownikiSoapBinding" type="impl:SlownikiUdostepnianieWS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="PobierzListeSlownikow">
+			<soap:operation soapAction="PobierzListeSlownikow"/>
+			<wsdl:input name="PobierzListeSlownikowRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzListeSlownikowResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSlownik">
+			<soap:operation soapAction="PobierzSlownik"/>
+			<wsdl:input name="PobierzSlownikRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzSlownikResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSlownikHistoria">
+			<soap:operation soapAction="PobierzSlownikHistoria"/>
+			<wsdl:input name="PobierzSlownikHistoriaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzSlownikHistoriaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzCzynnosci">
+			<soap:operation soapAction="PobierzCzynnosci"/>
+			<wsdl:input name="PobierzCzynnosciRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzCzynnosciResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzPanstwa">
+			<soap:operation soapAction="PobierzPanstwa"/>
+			<wsdl:input name="PobierzPanstwaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzPanstwaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzTaryfikator">
+			<soap:operation soapAction="PobierzTaryfikator"/>
+			<wsdl:input name="PobierzTaryfikatorRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzTaryfikatorResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMarki">
+			<soap:operation soapAction="PobierzMarki"/>
+			<wsdl:input name="PobierzMarkiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzMarkiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzModele">
+			<soap:operation soapAction="PobierzModele"/>
+			<wsdl:input name="PobierzModeleRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzModeleResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzTypy">
+			<soap:operation soapAction="PobierzTypy"/>
+			<wsdl:input name="PobierzTypyRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzTypyResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzaj">
+			<soap:operation soapAction="PobierzRodzaj"/>
+			<wsdl:input name="PobierzRodzajRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzPodrodzaj">
+			<soap:operation soapAction="PobierzPodrodzaj"/>
+			<wsdl:input name="PobierzPodrodzajRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzPodrodzajResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzPrzeznaczenie">
+			<soap:operation soapAction="PobierzPrzeznaczenie"/>
+			<wsdl:input name="PobierzPrzeznaczenieRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzPrzeznaczenieResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRPP">
+			<soap:operation soapAction="PobierzRPP"/>
+			<wsdl:input name="PobierzRPPRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRPPResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzHomologacje">
+			<soap:operation soapAction="PobierzHomologacje"/>
+			<wsdl:input name="PobierzHomologacjeRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzHomologacjeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWersjeHomologacji">
+			<soap:operation soapAction="PobierzWersjeHomologacji"/>
+			<wsdl:input name="PobierzWersjeHomologacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWersjeHomologacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWariantyHomologacji">
+			<soap:operation soapAction="PobierzWariantyHomologacji"/>
+			<wsdl:input name="PobierzWariantyHomologacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWariantyHomologacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzProducentow">
+			<soap:operation soapAction="PobierzProducentow"/>
+			<wsdl:input name="PobierzProducentowRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzProducentowResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzUsterki">
+			<soap:operation soapAction="PobierzUsterki"/>
+			<wsdl:input name="PobierzUsterkiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzUsterkiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWyroznikOR">
+			<soap:operation soapAction="PobierzWyroznikOR"/>
+			<wsdl:input name="PobierzWyroznikORRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWyroznikORResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMaskiTR">
+			<soap:operation soapAction="PobierzMaskiTR"/>
+			<wsdl:input name="PobierzMaskiTRRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzMaskiTRResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzNormySpalinEURO">
+			<soap:operation soapAction="PobierzNormySpalinEURO"/>
+			<wsdl:input name="PobierzNormySpalinEURORequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzNormySpalinEUROResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajePaliw">
+			<soap:operation soapAction="PobierzRodzajePaliw"/>
+			<wsdl:input name="PobierzRodzajePaliwRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajePaliwResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzDanePodzialuTerytorialnego">
+			<soap:operation soapAction="PobierzDanePodzialuTerytorialnego"/>
+			<wsdl:input name="PobierzDanePodzialuTerytorialnegoRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzDanePodzialuTerytorialnegoResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzKategorieHomologacji">
+			<soap:operation soapAction="PobierzKategorieHomologacji"/>
+			<wsdl:input name="PobierzKategorieHomologacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzKategorieHomologacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeDDR">
+			<soap:operation soapAction="PobierzRodzajeDDR"/>
+			<wsdl:input name="PobierzRodzajeDDRRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeDDRResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnika">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnika"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaEvh2">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaEvh2"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaEvh2Request">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaEvh2Response">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaKpeh">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaKpeh"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaKpehRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaKpehResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZawieszenia">
+			<soap:operation soapAction="PobierzRodzajeZawieszenia"/>
+			<wsdl:input name="PobierzRodzajeZawieszeniaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZawieszeniaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSposobyProdukcji">
+			<soap:operation soapAction="PobierzSposobyProdukcji"/>
+			<wsdl:input name="PobierzSposobyProdukcjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzSposobyProdukcjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWLTP">
+			<soap:operation soapAction="PobierzWLTP"/>
+			<wsdl:input name="PobierzWLTPRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWLTPResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzTypySubskrypcja">
+			<soap:operation soapAction="PobierzTypySubskrypcja"/>
+			<wsdl:input name="PobierzTypySubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzTypySubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzModeleSubskrypcja">
+			<soap:operation soapAction="PobierzModeleSubskrypcja"/>
+			<wsdl:input name="PobierzModeleSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzModeleSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMarkiSubskrypcja">
+			<soap:operation soapAction="PobierzMarkiSubskrypcja"/>
+			<wsdl:input name="PobierzMarkiSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzMarkiSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzHomologacjeSubskrypcja">
+			<soap:operation soapAction="PobierzHomologacjeSubskrypcja"/>
+			<wsdl:input name="PobierzHomologacjeSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzHomologacjeSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWersjeHomologacjiSubskrypcja">
+			<soap:operation soapAction="PobierzWersjeHomologacjiSubskrypcja"/>
+			<wsdl:input name="PobierzWersjeHomologacjiSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWersjeHomologacjiSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWariantyHomologacjiSubskrypcja">
+			<soap:operation soapAction="PobierzWariantyHomologacjiSubskrypcja"/>
+			<wsdl:input name="PobierzWariantyHomologacjiSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWariantyHomologacjiSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzProducentowSubskrypcja">
+			<soap:operation soapAction="PobierzProducentowSubskrypcja"/>
+			<wsdl:input name="PobierzProducentowSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzProducentowSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzNormySpalinEUROSubskrypcja">
+			<soap:operation soapAction="PobierzNormySpalinEUROSubskrypcja"/>
+			<wsdl:input name="PobierzNormySpalinEUROSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzNormySpalinEUROSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzKategorieHomologacjiSubskrypcja">
+			<soap:operation soapAction="PobierzKategorieHomologacjiSubskrypcja"/>
+			<wsdl:input name="PobierzKategorieHomologacjiSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzKategorieHomologacjiSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSposobyProdukcjiSubskrypcja">
+			<soap:operation soapAction="PobierzSposobyProdukcjiSubskrypcja"/>
+			<wsdl:input name="PobierzSposobyProdukcjiSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzSposobyProdukcjiSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeDDRSubskrypcja">
+			<soap:operation soapAction="PobierzRodzajeDDRSubskrypcja"/>
+			<wsdl:input name="PobierzRodzajeDDRSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeDDRSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZawieszeniaSubskrypcja">
+			<soap:operation soapAction="PobierzRodzajeZawieszeniaSubskrypcja"/>
+			<wsdl:input name="PobierzRodzajeZawieszeniaSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZawieszeniaSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaSubskrypcja">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaSubskrypcja"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaEvh2Subskrypcja">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaEvh2Subskrypcja"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaEvh2SubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaKpehSubskrypcja">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaKpehSubskrypcja"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaKpehSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajePaliwSubskrypcja">
+			<soap:operation soapAction="PobierzRodzajePaliwSubskrypcja"/>
+			<wsdl:input name="PobierzRodzajePaliwSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajePaliwSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWLTPSubskrypcja">
+			<soap:operation soapAction="PobierzWLTPSubskrypcja"/>
+			<wsdl:input name="PobierzWLTPSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWLTPSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRPPSubskrypcja">
+			<soap:operation soapAction="PobierzRPPSubskrypcja"/>
+			<wsdl:input name="PobierzRPPSubskrypcjaRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRPPSubskrypcjaResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzNormySpalinEUROListaModyfikacji">
+			<soap:operation soapAction="PobierzNormySpalinEUROListaModyfikacji"/>
+			<wsdl:input name="PobierzNormySpalinEUROListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzNormySpalinEUROListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzModeleListaModyfikacji">
+			<soap:operation soapAction="PobierzModeleListaModyfikacji"/>
+			<wsdl:input name="PobierzModeleListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzModeleListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzMarkiListaModyfikacji">
+			<soap:operation soapAction="PobierzMarkiListaModyfikacji"/>
+			<wsdl:input name="PobierzMarkiListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzMarkiListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzHomologacjeListaModyfikacji">
+			<soap:operation soapAction="PobierzHomologacjeListaModyfikacji"/>
+			<wsdl:input name="PobierzHomologacjeListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzHomologacjeListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWersjeHomologacjiListaModyfikacji">
+			<soap:operation soapAction="PobierzWersjeHomologacjiListaModyfikacji"/>
+			<wsdl:input name="PobierzWersjeHomologacjiListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWersjeHomologacjiListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWariantyHomologacjiListaModyfikacji">
+			<soap:operation soapAction="PobierzWariantyHomologacjiListaModyfikacji"/>
+			<wsdl:input name="PobierzWariantyHomologacjiListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWariantyHomologacjiListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzProducentowListaModyfikacji">
+			<soap:operation soapAction="PobierzProducentowListaModyfikacji"/>
+			<wsdl:input name="PobierzProducentowListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzProducentowListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSlownikListaModyfikacji">
+			<soap:operation soapAction="PobierzSlownikListaModyfikacji"/>
+			<wsdl:input name="PobierzSlownikListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzSlownikListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>		
+		<wsdl:operation name="PobierzTypyListaModyfikacji">
+			<soap:operation soapAction="PobierzTypyListaModyfikacji"/>
+			<wsdl:input name="PobierzTypyListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzTypyListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzKategorieHomologacjiListaModyfikacji">
+			<soap:operation soapAction="PobierzKategorieHomologacjiListaModyfikacji"/>
+			<wsdl:input name="PobierzKategorieHomologacjiListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzKategorieHomologacjiListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzSposobyProdukcjiListaModyfikacji">
+			<soap:operation soapAction="PobierzSposobyProdukcjiListaModyfikacji"/>
+			<wsdl:input name="PobierzSposobyProdukcjiListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzSposobyProdukcjiListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeDDRListaModyfikacji">
+			<soap:operation soapAction="PobierzRodzajeDDRListaModyfikacji"/>
+			<wsdl:input name="PobierzRodzajeDDRListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeDDRListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZawieszeniaListaModyfikacji">
+			<soap:operation soapAction="PobierzRodzajeZawieszeniaListaModyfikacji"/>
+			<wsdl:input name="PobierzRodzajeZawieszeniaListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZawieszeniaListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaListaModyfikacji">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaListaModyfikacji"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacji">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacji"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacji">
+			<soap:operation soapAction="PobierzRodzajeZasilenSilnikaKpehListaModyfikacji"/>
+			<wsdl:input name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajeZasilenSilnikaKpehListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRodzajePaliwListaModyfikacji">
+			<soap:operation soapAction="PobierzRodzajePaliwListaModyfikacji"/>
+			<wsdl:input name="PobierzRodzajePaliwListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRodzajePaliwListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzWLTPListaModyfikacji">
+			<soap:operation soapAction="PobierzWLTPListaModyfikacji"/>
+			<wsdl:input name="PobierzWLTPListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzWLTPListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="PobierzRPPListaModyfikacji">
+			<soap:operation soapAction="PobierzRPPListaModyfikacji"/>
+			<wsdl:input name="PobierzRPPListaModyfikacjiRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PobierzRPPListaModyfikacjiResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Blad">
+				<soap:fault name="Blad" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SlownikiUdostepnianieService">
+		<wsdl:port name="SlownikiUdostepnianieSoapPort" binding="impl:slownikiSoapBinding">
+			<soap:address location="http://192.168.255.52:4480/slowniki-api"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

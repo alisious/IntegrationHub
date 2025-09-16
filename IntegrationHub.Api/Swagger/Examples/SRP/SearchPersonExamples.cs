@@ -1,8 +1,9 @@
 ﻿using IntegrationHub.Common.Contracts;
-using IntegrationHub.Common.Models;      // ProxyResponse<>, ProxyStatus
-using IntegrationHub.SRP.Contracts;      // SearchPersonResponse, FoundPerson (dopasuj do swoich nazw)
+using IntegrationHub.SRP.Contracts;      
+using IntegrationHub.SRP.Models;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Filters;
+
 
 namespace IntegrationHub.Api.Swagger.Examples.SRP;
 
@@ -13,11 +14,11 @@ public sealed class SearchPerson200Example : IExamplesProvider<ProxyResponse<Sea
         RequestId = "0f1c2e3d-1234-5678-9abc-def012345678",
         Source = "SRP",
         Status = ProxyStatus.Success,
-        StatusCode = StatusCodes.Status200OK,
+        SourceStatusCode = StatusCodes.Status200OK,
         Data = new SearchPersonResponse
         {
             // Uzupełnij minimalnie zgodnie z Twoim typem
-            Persons = new() { new FoundPerson 
+            Persons = new() { new OsobaZnaleziona 
             { 
                 IdOsoby = "123456789ab678cf000",
                 Pesel = "73020916558",
@@ -44,7 +45,7 @@ public sealed class SearchPerson400Example : IExamplesProvider<ProxyResponse<Sea
         RequestId = "9d8c7b6a-4321-8765-9abc-def012345678",
         Source = "SRP",
         Status = ProxyStatus.BusinessError,
-        StatusCode = StatusCodes.Status400BadRequest,
+        SourceStatusCode = StatusCodes.Status400BadRequest,
         ErrorMessage = "Podaj PESEL albo (nazwisko + imię).",
         Data = null
     };

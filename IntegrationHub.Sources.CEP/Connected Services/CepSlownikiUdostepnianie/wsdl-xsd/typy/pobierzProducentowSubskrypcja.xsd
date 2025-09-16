@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:include schemaLocation="pobierzProducentow.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzProducentowSubskrypcja_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzProducentowSubskrypcja">
+		<xsd:complexContent>
+			<xsd:extension base="slo:Subskrypcja"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzProducentowSubskrypcjaRezultat">
+		<xsd:complexContent>
+			<xsd:extension base="slo:PobierzProducentowRezultat">
+				<xsd:sequence>
+					<xsd:element name="timestamp" type="xsd:dateTime"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzDanePodzialuTerytorialnego_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzDanePodzialuTerytorialnego">
+		<xsd:sequence>
+			<xsd:element name="kodTerytWojewodztwa" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwaWojewodztwa" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodTerytPowiatu" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwaPowiatu" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodTerytGminy" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwaGminy" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodRodzajuGminy" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwaMiejscowosci" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodMiejscowosci" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodUlicy" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwaUlicy" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodCechyUlicy" type="slo:KodSlownikowy" minOccurs="0"/>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzDanePodzialuTerytorialnegoRezultat">
+		<xsd:sequence>
+			<xsd:element name="danePodzialuTerytorialnego" type="slo:DanePodzialuTerytorialnego"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DanePodzialuTerytorialnego">
+		<xsd:sequence>
+			<xsd:element name="wojewodztwo" type="slo:Wojewodztwo" minOccurs="0" maxOccurs="16"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Wojewodztwo">
+		<xsd:complexContent>
+			<xsd:extension base="slo:JednostkaTerytorialna">
+				<xsd:sequence>
+					<xsd:element name="powiat" type="slo:Powiat" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Powiat">
+		<xsd:complexContent>
+			<xsd:extension base="slo:JednostkaTerytorialna">
+				<xsd:sequence>
+					<xsd:element name="gmina" type="slo:Gmina" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="rodzajJednostkiOpis" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>powiat</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Gmina">
+		<xsd:complexContent>
+			<xsd:extension base="slo:JednostkaTerytorialna">
+				<xsd:sequence>
+					<xsd:element name="rodzajGminy" type="slo:RodzajGminy" minOccurs="1" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RodzajGminy">
+		<xsd:sequence>
+			<xsd:element name="kod">
+				<xsd:annotation>
+					<xsd:documentation>jednocyfrowy kod rodzaju gminy</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwa" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>nazwa rodzaju gminy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="miejscowosc" type="slo:MiejscowoscNadrzedna" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MiejscowoscNadrzedna">
+		<xsd:complexContent>
+			<xsd:extension base="slo:JednostkaMiejscowosc">
+				<xsd:sequence>
+					<xsd:element name="miejscowoscPodstawowa" type="slo:Miejscowosc"/>
+					<xsd:element name="rodzajJednostki" type="slo:RodzajJednostki"/>
+					<xsd:element name="ulica" type="slo:Ulica" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Miejscowosc">
+		<xsd:complexContent>
+			<xsd:extension base="slo:JednostkaMiejscowosc">
+				<xsd:sequence>
+					<xsd:element name="rodzajJednostki" type="slo:RodzajJednostki"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RodzajJednostki">
+		<xsd:sequence>
+			<xsd:element name="kod" type="xsd:string"/>
+			<xsd:element name="nazwa" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Ulica">
+		<xsd:complexContent>
+			<xsd:extension base="slo:JednostkaUlica">
+				<xsd:sequence>
+					<xsd:element name="cechaUlicy" type="slo:WartoscSlownikowa">
+						<xsd:annotation>
+							<xsd:documentation>DICT.368 Rodzaje ulic</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="JednostkaMiejscowosc">
+		<xsd:sequence>
+			<xsd:element name="kod">
+				<xsd:annotation>
+					<xsd:documentation>kod teryt jednostki terytorialnej</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="7"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwa" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>nazwa jednostki terytorialnej</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="JednostkaUlica">
+		<xsd:sequence>
+			<xsd:element name="kod">
+				<xsd:annotation>
+					<xsd:documentation>kod teryt jednostki terytorialnej</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="5"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nazwa" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>nazwa jednostki terytorialnej</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

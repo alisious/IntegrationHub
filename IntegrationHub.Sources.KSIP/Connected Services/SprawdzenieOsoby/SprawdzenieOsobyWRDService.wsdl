@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (x64) (http://www.altova.com) by hh (Komenda Glówna Policji) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://ksip.policja.gov.pl/SprawdzenieOsobyWRDService" xmlns:ns="http://policja.gov.pl/RuchDrogowy/SprawdzenieOsoby" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://ksip.policja.gov.pl/SprawdzenieOsobyWRDService">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://policja.gov.pl/RuchDrogowy/SprawdzenieOsoby" schemaLocation="types4SprawdzenieOsobyWRD.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="SprawdzenieOsobyRequest">
+		<wsdl:part name="parameter" element="ns:SprawdzenieOsobyRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SprawdzenieOsobyResponse">
+		<wsdl:part name="parameter" element="ns:SprawdzenieOsobyResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="PersonService">
+		<wsdl:documentation>Operacja pozwalająca do odpytywanie o osobę.</wsdl:documentation>
+		<wsdl:operation name="SprawdzenieOsobyWRD">
+			<wsdl:input message="tns:SprawdzenieOsobyRequest"/>
+			<wsdl:output message="tns:SprawdzenieOsobyResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PersonServiceBinding" type="tns:PersonService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="SprawdzenieOsobyWRD">
+			<soap:operation soapAction="um:opSprawdzenieOsoby"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PersonService">
+		<wsdl:port name="PersonPort" binding="tns:PersonServiceBinding">
+			<soap:address location="http://localhost:8011/SprawdzenieOsobyWRDService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

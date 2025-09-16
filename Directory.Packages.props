@@ -1,0 +1,46 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- WCF client (System.ServiceModel.*) -->
+    <PackageVersion Include="System.ServiceModel.Http" Version="8.1.2" />
+    <PackageVersion Include="System.ServiceModel.NetTcp" Version="8.1.2" />
+    <PackageVersion Include="System.ServiceModel.Primitives" Version="8.1.2" />
+
+    <!-- EF Core 8 – ujednolić w całym rozwiązaniu -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.19" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.19" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.19" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.19" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.19" />
+
+    <!-- Microsoft.Extensions.* pod .NET 8 -->
+	<PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+	<PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+	<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
+	<PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />  
+	<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="8.0.0" />
+	
+	
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="8.10.0" />
+   
+    <!-- JWT -->
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+
+    <!-- Serilog -->
+    <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+
+    <!-- Swashbuckle -->
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Filters" Version="9.0.0" />
+  </ItemGroup>
+</Project>
+

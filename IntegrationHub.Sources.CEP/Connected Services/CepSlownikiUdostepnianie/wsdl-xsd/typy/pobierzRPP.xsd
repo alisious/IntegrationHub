@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (x64) (http://www.altova.com) by Centralny Osrodek Informatyki (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzRPP_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzRPP">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:Identyfikatory" minOccurs="0"/>
+			<xsd:element name="indeks" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="38"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodRPP" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="wersja" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="zapytanieRodzaj" type="slo:ZapytanieRodzaj" minOccurs="0"/>
+			<xsd:element name="zapytaniePodrodzaj" type="slo:ZapytaniePodrodzaj" minOccurs="0"/>
+			<xsd:element name="zapytaniePrzeznaczenie" type="slo:ZapytaniePrzeznaczenie" minOccurs="0"/>
+			<xsd:element name="stanNaDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="pozycja" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Numeracja stron rozpoczyna się od "1"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzRPPRezultat">
+		<xsd:sequence>
+			<xsd:element name="kodRPP" type="slo:KodRPP" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stronicowanie" type="slo:Stronicowanie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="KodRPP">
+		<xsd:sequence>
+			<xsd:element name="identyfikatory" type="slo:IdentyfikatoryRezultat"/>
+			<xsd:element name="indeks" type="xsd:integer"/>
+			<xsd:element name="idr" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="idw" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="kodRPP" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="rodzaj" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="podrodzaj" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="przeznaczenie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="wersja" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="dataOd" type="xsd:date"/>
+			<xsd:element name="dataDo" type="xsd:date"/>
+			<xsd:element name="kodRodzaj" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="kodPodrodzaj" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="kodPrzeznaczenie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="dataAktualizacji" type="xsd:dateTime"/>
+			<xsd:element name="kodUdoRodzaj" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodUdoPodrodzaj" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="kodUdoPrzeznaczenie" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

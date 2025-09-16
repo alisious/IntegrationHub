@@ -1,12 +1,9 @@
 using IntegrationHub.Api.Middleware;
-using IntegrationHub.Common.Configs;
+using IntegrationHub.Common.Config;
 using IntegrationHub.Common.Interfaces;
 using IntegrationHub.Common.Providers;
-using IntegrationHub.Common.Services;
 using IntegrationHub.PIESP.Data;
 using IntegrationHub.PIESP.Services;
-using IntegrationHub.SRP.Configuration;
-using IntegrationHub.SRP.Interfaces;
 using IntegrationHub.SRP.Services;
 using Microsoft.EntityFrameworkCore; // Add this using directive for 'UseSqlServer'
 using Microsoft.Extensions.Options;
@@ -20,6 +17,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.Extensions.Http.Resilience;
 using Swashbuckle.AspNetCore.Filters;
+using IntegrationHub.SRP.Config;
+using IntegrationHub.Sources.CEP.Config;
 
 // Serilog – bootstrap logger, ¿eby logowaæ od samego pocz¹tku
 Log.Logger = new LoggerConfiguration()
@@ -34,6 +33,27 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
 cfg.ReadFrom.Configuration(ctx.Configuration)
        .ReadFrom.Services(services));
 
+//Konfiguracja CORS – na potrzeby testów z localhosta
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>() ?? Array.Empty<string>();
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("Frontend", p =>
+    p.SetIsOriginAllowed(origin =>
+    {
+        // zezwól na ka¿dy localhost / 127.0.0.1 (HTTP/HTTPS)
+        if (Uri.TryCreate(origin, UriKind.Absolute, out var uri))
+            return uri.IsLoopback;
+        return false;
+    })
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    //.AllowCredentials()
+    .SetPreflightMaxAge(TimeSpan.FromHours(1)));
+});
+
 
 // Add services to the container.
 // ====== DB CONTEXT ======
@@ -42,30 +62,15 @@ builder.Services.AddDbContext<PiespDbContext>(options =>
 
 //Rejestracja ClientCertificateProvider
 builder.Services.AddSingleton<IClientCertificateProvider, ClientCertificateProvider>();
+
+
+/**************************************************************/
+// ====== SRP CLIENT ======
 // Rejestracja konfiguracji SRP
 builder.Services.Configure<SrpConfig>(builder.Configuration.GetSection("ExternalServices:SRP"));
 var srpConfig = builder.Configuration.GetSection("ExternalServices:SRP").Get<SrpConfig>();
 
 builder.Services.AddTransient<SrpHttpLoggingHandler>();
-// ====== HTTP CLIENTS ======
-// Rejestracja klienta SOAP do SRP
-//builder.Services.AddHttpClient("SrpServiceClient")
-//    .AddHttpMessageHandler<SrpHttpLoggingHandler>()
-//    .ConfigurePrimaryHttpMessageHandler(sp =>
-//    {
-//        var config = sp.GetRequiredService<IOptions<SrpConfig>>().Value;
-//        var certProvider = sp.GetRequiredService<IClientCertificateProvider>();
-
-//        var handler = new HttpClientHandler();
-
-//        if (config.TrustServerCerificate)
-//            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-
-//        handler.ClientCertificates.Add(certProvider.GetClientCertificate(config));
-
-//        return handler;
-//    });
-
 builder.Services.AddHttpClient("SrpServiceClient", c =>
 {
     // Ca³kowity timeout HttpClient wy³¹czamy – kontrolujemy czas przez pipeline (Attempt/Total)
@@ -81,6 +86,17 @@ builder.Services.AddHttpClient("SrpServiceClient", c =>
 // Handler gniazd – klucz do wydajnoœci równoleg³ych wywo³añ
 .ConfigurePrimaryHttpMessageHandler(sp =>
 {
+
+    // Uwaga: NIE ³adujemy certyfikatu w trybie testowym
+    if (srpConfig?.TestMode == true)
+    {
+        
+        Log.Warning("SRP: TestMode = true, nie u¿ywam certyfikatu klienta do po³¹czeñ ze SRP.");
+        return new HttpClientHandler();
+
+    }
+
+
     var config = sp.GetRequiredService<IOptions<SrpConfig>>().Value;
     var certProvider = sp.GetRequiredService<IClientCertificateProvider>();
     var clientCert = certProvider.GetClientCertificate(config);
@@ -132,21 +148,39 @@ builder.Services.AddHttpClient("SrpServiceClient", c =>
     opt.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(30);
 });
 
+
+/**************************************************************/
+// ====== CEP CLIENT ======
+// Rejestracja konfiguracji CEP
+builder.Services.Configure<CEPConfig>(builder.Configuration.GetSection("ExternalServices:CEP"));
+var cepConfig = builder.Configuration.GetSection("ExternalServices:CEP").Get<CEPConfig>();
+
+
+
+
+
+
 // ====== DEPENDENCY INJECTION ======
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<DutyService>();
 builder.Services.AddScoped<SupervisorService>();
 builder.Services.AddTransient<ISrpSoapInvoker, SrpSoapInvoker>();
-builder.Services.AddTransient<IRdoService, RdoService>();
+
 
 if (srpConfig!.TestMode)
 {
+    
     // Jeœli TestMode, zarejestruj PeselService jako PeselServiceTest
     builder.Services.AddTransient<IPeselService, PeselServiceTest>();
+    builder.Services.AddTransient<IRdoService, RdoServiceTest>();
+    Log.Warning("=== APLIKACJA URUCHOMIONA W TRYBIE TESTOWYM === " +
+               "U¿ywam stubów: PeselServiceTest / RdoServiceTest.");
 }
 else
 {
+   builder.Services.AddTransient<IRdoService, RdoService>();
    builder.Services.AddTransient<IPeselService, PeselService>();
+    Log.Information("Aplikacja w trybie produkcyjnym.");
 }
 
 
@@ -353,6 +387,7 @@ app.UseMiddleware<ErrorLoggingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("Frontend");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -360,28 +395,28 @@ app.UseSerilogRequestLogging(); // przed MapControllers
 app.MapControllers();
 
 // ====== OPTIONAL: DATABASE SEEDING ======
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<PiespDbContext>();
-        //It checks if the Users table is empty, and if so, it adds two users with roles.
-        if (!context.Users.Any()) // Only seed if no users exist
-        {
-            context.Database.EnsureCreated(); // Ensure database is created
-            DbInitializer.Seed(context);
-        }
-    }
-}
-else
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<PiespDbContext>();
-        context.Database.Migrate(); // Apply migrations in production
-    }
-}
+//    using (var scope = app.Services.CreateScope())
+//    {
+//        var context = scope.ServiceProvider.GetRequiredService<PiespDbContext>();
+//        //It checks if the Users table is empty, and if so, it adds two users with roles.
+//        if (!context.Users.Any()) // Only seed if no users exist
+//        {
+//            context.Database.EnsureCreated(); // Ensure database is created
+//            DbInitializer.Seed(context);
+//        }
+//    }
+//}
+//else
+//{
+//    using (var scope = app.Services.CreateScope())
+//    {
+//        var context = scope.ServiceProvider.GetRequiredService<PiespDbContext>();
+//        context.Database.Migrate(); // Apply migrations in production
+//    }
+//}
 
 
 // ====== RUN APPLICATION ======

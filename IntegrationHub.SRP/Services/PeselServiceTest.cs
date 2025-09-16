@@ -1,8 +1,9 @@
-﻿using IntegrationHub.Common.Configs;
+﻿using IntegrationHub.Common.Config;
 using IntegrationHub.Common.Contracts;
 using IntegrationHub.Common.Helpers;
+using IntegrationHub.SRP.Config;
 using IntegrationHub.SRP.Contracts;
-using IntegrationHub.SRP.Helpers;
+using IntegrationHub.SRP.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -20,94 +21,80 @@ namespace IntegrationHub.SRP.Services
     public sealed class PeselServiceTest : IPeselService
     {
         private readonly SrpConfig _srp;
-        private readonly ISrpSoapInvoker _invoker;
+        //private readonly ISrpSoapInvoker _invoker;
         private readonly ILogger<PeselServiceTest> _logger;
         private readonly string _testDataDir;
 
-        public PeselServiceTest(IOptions<SrpConfig> srpConfig, ISrpSoapInvoker invoker, ILogger<PeselServiceTest> logger,IHostEnvironment env)
+        //public PeselServiceTest(IOptions<SrpConfig> srpConfig, ISrpSoapInvoker invoker, ILogger<PeselServiceTest> logger,IHostEnvironment env)
+        public PeselServiceTest(IOptions<SrpConfig> srpConfig, ILogger<PeselServiceTest> logger, IHostEnvironment env)
         {
             _srp = srpConfig.Value;
-            _invoker = invoker;
+            //_invoker = invoker;
             _logger = logger;
             _testDataDir = System.IO.Path.Combine(env.ContentRootPath, "TestData","SRP");// <contentRoot>\TestData\SRP
         }
-
-        public async Task<ProxyResponse<SearchPersonResponse>> SearchBasePersonDataAsync(SearchPersonRequest body, string? requestId = null, CancellationToken ct = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<ProxyResponse<GetPersonResponse>> GetPersonAsync(GetPersonRequest body, string? requestId = null, CancellationToken ct = default)
+        /// <summary>
+        /// Pobieranie danych osoby na podstawie numeru PESEL. Metoda zwraca dane testowe dla pesel = 11111111111.
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="requestId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<ProxyResponse<GetPersonByPeselResponse>> GetPersonByPeselAsync(GetPersonByPeselRequest body, string? requestId = null, CancellationToken ct = default)
         {
             requestId ??= Guid.NewGuid().ToString();
-
-            
+            if (string.IsNullOrWhiteSpace(body.Pesel))
+            {
+                throw new ArgumentException("Brak wymaganego parametru: pesel");
+            }
 
             try
             {
+                          
 
-                if (string.IsNullOrWhiteSpace(body.OsobaId))
+                var responseObj = new GetPersonByPeselResponse();
+
+                if (body.Pesel != "11111111111")
                 {
-                    throw new ArgumentException("Brak wymaganego parametru: osobaId");
+                    responseObj.daneOsoby = null;
+                    _logger.LogWarning("SRP:RDO Brak danych osoby w odpowiedzi SRP (PESEL={Pesel}) RID={RID}", body.Pesel, requestId);
+                        return Error<GetPersonByPeselResponse>(requestId, HttpStatusCode.NotFound,
+                            ProxyStatus.BusinessError, "Brak danych osoby dla podanego numeru PESEL.");
+                    
+
                 }
 
-                var envelope = RequestEnvelopeHelper.PrepareGetPersonEnvelope(body, requestId);
-                var result = await _invoker.InvokeAsync(_srp.PeselShareServiceUrl, SrpSoapActions.Pesel_UdostepnijAktualneDaneOsobyPoId,
-                                                        envelope, requestId, ct);
-                if (result.Fault is not null)
-                {
-                    var msg = result.Fault.DetailOpis ?? result.Fault.FaultString;
-                    if (!string.IsNullOrWhiteSpace(result.Fault.DetailOpisTechniczny))
-                        msg += $"; {result.Fault.DetailOpisTechniczny}";
 
-                    return ProxyResponseError<GetPersonResponse>(requestId, HttpStatusCode.BadRequest,
-                        ProxyStatus.BusinessError, msg);
-                }
+                // Wczytaj XML i sparsuj do DTO (parsuje też zdjęcia i podpis, jeśli są w pliku)
+                var xmlPath = Path.Combine(_testDataDir, "UdostepnijAktualneDaneOsobyPoPesel_RESPONSE.xml");
+                var xml = await File.ReadAllTextAsync(xmlPath, ct).ConfigureAwait(false);
+                // TODO: Zmapuj response XML -> GetPersonByPeselResponse 
+                responseObj = PeselGetPersonByPeselResponseXmlMapper.Parse(xml);
 
-                if ((int)result.StatusCode < 200 || (int)result.StatusCode >= 300)
-                {
-                    return ProxyResponseError<GetPersonResponse>(requestId, result.StatusCode,
-                        ProxyStatus.TechnicalError, $"HTTP {(int)result.StatusCode}");
-                }
 
-                // TODO: Zmapuj response XML -> GetPersonResponse (teraz wkładamy RAW w NumerPesel)
-                var responseObj = new GetPersonResponse();
-                responseObj.NumerPesel = result.Body;
-
-                return new ProxyResponse<GetPersonResponse>
+                return new ProxyResponse<GetPersonByPeselResponse>
                 {
                     RequestId = requestId,
                     Data = responseObj,
                     Source = "SRP",
                     Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
+                    SourceStatusCode = (int)HttpStatusCode.OK
                 };
             }
             catch (ArgumentException aex)
             {
-                return ProxyResponseError<GetPersonResponse>(requestId, HttpStatusCode.BadRequest,
+                return ProxyResponseError<GetPersonByPeselResponse>(requestId, HttpStatusCode.BadRequest,
                     ProxyStatus.BusinessError, aex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Błąd GetPerson, RequestId: {RequestId}", requestId);
-                return ProxyResponseError<GetPersonResponse>(requestId, HttpStatusCode.InternalServerError,
+                return ProxyResponseError<GetPersonByPeselResponse>(requestId, HttpStatusCode.InternalServerError,
                     ProxyStatus.TechnicalError, ex.Message);
             }
         }
 
-        private static ProxyResponse<T> ProxyResponseError<T>(string requestId, HttpStatusCode code, ProxyStatus status, string message)
-        {
-            return new ProxyResponse<T>
-            {
-                RequestId = requestId,
-                Source = "SRP",
-                Status = status,
-                StatusCode = (int)code,
-                ErrorMessage = message
-            };
-        }
-
+        
         /// <summary>
         /// Wysyłanie zapytania o wyszukanie osoby na podstawie podanych kryteriów. Metoda zwraca dane testowe.
         /// Dostępne dane testowe w plikach XML w folderze PeselTestData: 
@@ -179,10 +166,22 @@ namespace IntegrationHub.SRP.Services
                 Data = resp,
                 Source = "SRP",
                 Status = ProxyStatus.Success,
-                StatusCode = (int)HttpStatusCode.OK
+                SourceStatusCode = (int)HttpStatusCode.OK
             };
         }
 
+
+        private static ProxyResponse<T> ProxyResponseError<T>(string requestId, HttpStatusCode code, ProxyStatus status, string message)
+        {
+            return new ProxyResponse<T>
+            {
+                RequestId = requestId,
+                Source = "SRP",
+                Status = status,
+                SourceStatusCode = (int)code,
+                ErrorMessage = message
+            };
+        }
     }
 }
 

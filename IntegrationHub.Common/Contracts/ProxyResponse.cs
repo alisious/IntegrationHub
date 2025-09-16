@@ -30,7 +30,7 @@ public class ProxyResponse<T>
     /// <summary>
     /// Kod statusu zwrócony przez system zewnętrzny (np. HTTP status code, kod błędu domenowego).
     /// </summary>
-    public int? StatusCode { get; set; }
+    public int? SourceStatusCode { get; set; }
 
     /// <summary>
     /// Unikalny identyfikator żądania, pozwalający śledzić przebieg requestu w logach i systemach integracyjnych.

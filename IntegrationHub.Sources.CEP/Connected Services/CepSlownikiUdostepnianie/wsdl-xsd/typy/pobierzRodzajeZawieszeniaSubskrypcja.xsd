@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:include schemaLocation="common.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianiePobierzRodzajeZawieszeniaSubskrypcja_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PobierzRodzajeZawieszeniaSubskrypcjaRezultat">
+		<xsd:complexContent>
+			<xsd:extension base="slo:PobierzSlownikITSRezultat">
+				<xsd:sequence>
+					<xsd:element name="timestamp" type="xsd:dateTime"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PobierzRodzajeZawieszeniaSubskrypcja">
+		<xsd:complexContent>
+			<xsd:extension base="slo:Subskrypcja"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

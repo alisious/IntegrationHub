@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ex="http://exceptions.api.cepik.coi.gov.pl" targetNamespace="http://exceptions.api.cepik.coi.gov.pl" >
+	<annotation>
+		<documentation>
+			Version: 1.2.0
+		</documentation>
+	</annotation>
+
+	<element name="cepikException" type="ex:CepikException"/>
+
+	<complexType name="CepikException">
+		<sequence>
+			<annotation>
+				<documentation>Ogólny typ wyjątku</documentation>
+			</annotation>
+			<element name="komunikaty" type="ex:Komunikat" minOccurs="1" maxOccurs="unbounded">
+				<annotation>
+					<documentation>Lista komunikatów</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Komunikat">
+		<sequence>
+			<annotation>
+				<documentation>Ogólny typ wyjątku</documentation>
+			</annotation>
+			<element name="typ" type="ex:TypKomunikatu" minOccurs="1">
+				<annotation>
+					<documentation>Typ komunikatu</documentation>
+				</annotation>
+			</element>
+			<element name="kod" minOccurs="1">
+				<annotation>
+					<documentation>Kod błędu</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<maxLength value="100"/>
+						<minLength value="1"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="komunikat" minOccurs="0">
+				<annotation>
+					<documentation>Komunikat w języku naturalnym</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<maxLength value="1000"/>
+						<minLength value="1"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="szczegoly" type="string" minOccurs="0">
+				<annotation>
+					<documentation>Opis błędu</documentation>
+				</annotation>
+			</element>
+			<element name="identyfikatorBledu" type="string" minOccurs="0">
+				<annotation>
+					<documentation>Numer jednoznacznie identyfikujacy bląd (opcjonalne)</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="TypKomunikatu">
+		<restriction base="string">
+			<annotation>
+				<documentation>
+					Rodzaj wyjątku, gdzie:
+					ERROR to wyjątek blokujący np walidacji twardej,
+					WARN to wyjątek np. walidacji miękkiej
+				</documentation>
+			</annotation>
+			<enumeration value="ERROR"/>
+			<enumeration value="WARN"/>
+		</restriction>
+	</simpleType>
+
+</schema>

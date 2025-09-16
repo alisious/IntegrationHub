@@ -13,7 +13,7 @@ namespace IntegrationHub.SRP.Contracts
         [JsonPropertyName("liczbaZnalezionychOsob")]
         public int TotalCount => Persons.Count;
         [JsonPropertyName("znalezioneOsoby")]
-        public List<FoundPerson> Persons { get; set; } = new();
+        public List<OsobaZnaleziona> Persons { get; set; } = new();
        
 
     }

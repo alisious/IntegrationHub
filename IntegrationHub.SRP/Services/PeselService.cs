@@ -1,8 +1,10 @@
-﻿using IntegrationHub.Common.Configs;
+﻿using IntegrationHub.Common.Config;
 using IntegrationHub.Common.Contracts;
 using IntegrationHub.Common.Helpers;
+using IntegrationHub.SRP.Config;
 using IntegrationHub.SRP.Contracts;
-using IntegrationHub.SRP.Helpers;
+using IntegrationHub.SRP.Extensions;
+using IntegrationHub.SRP.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -30,50 +32,8 @@ namespace IntegrationHub.SRP.Services
             _logger = logger;
         }
 
-        public async Task<ProxyResponse<SearchPersonResponse>> SearchBasePersonDataAsync(SearchPersonRequest body, string? requestId = null, CancellationToken ct = default)
-        {
-            requestId ??= Guid.NewGuid().ToString();
-
-            if (!TryValidateAndNormalize(body, requestId, allowRange: false, out var err))
-                return err!;
-
-            var envelope = RequestEnvelopeHelper.PrepareSearchPersonBaseDataEnvelope(body, requestId);
-
-            try
-            {
-                var result = await _soapInvoker.InvokeAsync(
-                    _srpConfig.PeselSearchServiceUrl, SrpSoapActions.Pesel_WyszukajOsoby,
-                    envelope, requestId, ct);
-
-                if (result.Fault is not null)
-                    return Error<SearchPersonResponse>(requestId, HttpStatusCode.BadRequest,
-                        ProxyStatus.BusinessError, result.Fault.FaultString);
-
-                if ((int)result.StatusCode < 200 || (int)result.StatusCode >= 300)
-                    return Error<SearchPersonResponse>(requestId, result.StatusCode,
-                        ProxyStatus.TechnicalError, $"HTTP {(int)result.StatusCode}");
-
-                var responseObj = new SearchPersonResponse();
-                responseObj.Persons.Add(new FoundPerson { Pesel = result.Body });
-
-                return new ProxyResponse<SearchPersonResponse>
-                {
-                    RequestId = requestId,
-                    Data = responseObj,
-                    Source = "SRP",
-                    Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
-                };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Blad SearchBasePersonData, RequestId: {RequestId}", requestId);
-                return Error<SearchPersonResponse>(requestId, HttpStatusCode.InternalServerError,
-                    ProxyStatus.TechnicalError, ex.Message);
-            }
-        }
-
-        public async Task<ProxyResponse<GetPersonResponse>> GetPersonAsync(GetPersonRequest body, string? requestId = null, CancellationToken ct = default)
+        
+        public async Task<ProxyResponse<GetPersonByPeselResponse>> GetPersonByPeselAsync(GetPersonByPeselRequest body, string? requestId = null, CancellationToken ct = default)
         {
             requestId ??= Guid.NewGuid().ToString();
 
@@ -82,13 +42,13 @@ namespace IntegrationHub.SRP.Services
             try
             {
 
-                if (string.IsNullOrWhiteSpace(body.OsobaId))
+                if (string.IsNullOrWhiteSpace(body.Pesel))
                 {
-                    throw new ArgumentException("Brak wymaganego parametru: osobaId");
+                    throw new ArgumentException("Brak wymaganego parametru: pesel");
                 }
 
-                var envelope = RequestEnvelopeHelper.PrepareGetPersonEnvelope(body, requestId);
-                var result = await _soapInvoker.InvokeAsync(_srpConfig.PeselShareServiceUrl, SrpSoapActions.Pesel_UdostepnijAktualneDaneOsobyPoId,
+                var envelope = RequestEnvelopeHelper.PrepareGetPersonByPeselEnvelope(body, requestId);
+                var result = await _soapInvoker.InvokeAsync(_srpConfig.PeselShareServiceUrl, SrpSoapActions.Pesel_UdostepnijAktualneDaneOsobyPoPesel,
                                                         envelope, requestId, ct);
                 if (result.Fault is not null)
                 {
@@ -96,55 +56,47 @@ namespace IntegrationHub.SRP.Services
                     if (!string.IsNullOrWhiteSpace(result.Fault.DetailOpisTechniczny))
                         msg += $"; {result.Fault.DetailOpisTechniczny}";
 
-                    return ProxyResponseError<GetPersonResponse>(requestId, HttpStatusCode.BadRequest,
+                    return ProxyResponseError<GetPersonByPeselResponse>(requestId, HttpStatusCode.BadRequest,
                         ProxyStatus.BusinessError, msg);
                 }
 
                 if ((int)result.StatusCode < 200 || (int)result.StatusCode >= 300)
                 {
-                    return ProxyResponseError<GetPersonResponse>(requestId, result.StatusCode,
+                    return ProxyResponseError<GetPersonByPeselResponse>(requestId, result.StatusCode,
                         ProxyStatus.TechnicalError, $"HTTP {(int)result.StatusCode}");
                 }
 
                 // TODO: Zmapuj response XML -> GetPersonResponse (teraz wkładamy RAW w NumerPesel)
-                var responseObj = new GetPersonResponse();
-                responseObj.NumerPesel = result.Body;
+                var responseObj = PeselGetPersonByPeselResponseXmlMapper.Parse(result.Body);
+                if (responseObj.daneOsoby is null)
+                {
+                    return ProxyResponseError<GetPersonByPeselResponse>(requestId, HttpStatusCode.NotFound,
+                        ProxyStatus.BusinessError, "Brak osoby o podanym PESEL.");
+                }
 
-                return new ProxyResponse<GetPersonResponse>
+                return new ProxyResponse<GetPersonByPeselResponse>
                 {
                     RequestId = requestId,
                     Data = responseObj,
                     Source = "SRP",
                     Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
+                    SourceStatusCode = (int)HttpStatusCode.OK
                 };
             }
             catch (ArgumentException aex)
             {
-                return ProxyResponseError<GetPersonResponse>(requestId, HttpStatusCode.BadRequest,
+                return ProxyResponseError<GetPersonByPeselResponse>(requestId, HttpStatusCode.BadRequest,
                     ProxyStatus.BusinessError, aex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Błąd GetPerson, RequestId: {RequestId}", requestId);
-                return ProxyResponseError<GetPersonResponse>(requestId, HttpStatusCode.InternalServerError,
+                return ProxyResponseError<GetPersonByPeselResponse>(requestId, HttpStatusCode.InternalServerError,
                     ProxyStatus.TechnicalError, ex.Message);
             }
         }
 
-        private static ProxyResponse<T> ProxyResponseError<T>(string requestId, HttpStatusCode code, ProxyStatus status, string message)
-        {
-            return new ProxyResponse<T>
-            {
-                RequestId = requestId,
-                Source = "SRP",
-                Status = status,
-                StatusCode = (int)code,
-                ErrorMessage = message
-            };
-        }
-
-        async Task<ProxyResponse<SearchPersonResponse>> IPeselService.SearchPersonAsync(SearchPersonRequest body, string? requestId, CancellationToken ct)
+        public async Task<ProxyResponse<SearchPersonResponse>> SearchPersonAsync(SearchPersonRequest body, string? requestId, CancellationToken ct)
         {
             requestId ??= Guid.NewGuid().ToString();
             if (!TryValidateAndNormalize(body, requestId, allowRange: true, out var err))
@@ -214,7 +166,7 @@ namespace IntegrationHub.SRP.Services
                     Data = responseObj,
                     Source = "SRP",
                     Status = ProxyStatus.Success,
-                    StatusCode = (int)HttpStatusCode.OK
+                    SourceStatusCode = (int)HttpStatusCode.OK
                 };
             }
             catch (Exception ex)
@@ -224,6 +176,18 @@ namespace IntegrationHub.SRP.Services
                     ProxyStatus.TechnicalError, ex.Message);
             }
 
+        }
+
+        private static ProxyResponse<T> ProxyResponseError<T>(string requestId, HttpStatusCode code, ProxyStatus status, string message)
+        {
+            return new ProxyResponse<T>
+            {
+                RequestId = requestId,
+                Source = "SRP",
+                Status = status,
+                SourceStatusCode = (int)code,
+                ErrorMessage = message
+            };
         }
     }
 }

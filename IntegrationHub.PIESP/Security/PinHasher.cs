@@ -13,8 +13,9 @@ namespace IntegrationHub.PIESP.Security
             return Convert.ToBase64String(hash);
         }
 
-        public static bool Verify(string enteredPin, string storedHash)
+        public static bool Verify(string enteredPin, string? storedHash)
         {
+            if (storedHash == null) return false;
             var enteredHash = Hash(enteredPin);
             return enteredHash == storedHash;
         }

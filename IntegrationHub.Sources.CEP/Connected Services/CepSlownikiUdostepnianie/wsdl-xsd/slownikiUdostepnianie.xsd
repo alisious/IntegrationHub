@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by bmaciolek (Centralny Osrodek Informatyki) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:slo="http://slowniki.api.cepik.coi.gov.pl" targetNamespace="http://slowniki.api.cepik.coi.gov.pl">
+	<xsd:annotation>
+		<xsd:documentation>
+		    Service: SłownikiUdostepnianieSerwis
+            Packet: SłownikiUdostepnianie_4.2.0
+            Version: 4.2.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="typy/common.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzListeSlownikow.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzSlownik.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzSlownikHistoria.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzCzynnosci.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzPanstwa.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzTaryfikator.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzMarki.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzModele.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzTypy.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRodzaj.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzPodrodzaj.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzPrzeznaczenie.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRPP.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRPPSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzHomologacje.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWariantyHomologacji.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWersjeHomologacji.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzProducentow.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzUsterki.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWyroznikOR.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzMaskiTR.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzTypySubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzModeleSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzMarkiSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzHomologacjeSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWersjeHomologacjiSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWariantyHomologacjiSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzProducentowSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzKategorieHomologacji.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRodzajePaliw.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzDanePodzialuTerytorialnego.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzNormySpalinEUROSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzKategorieHomologacjiSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzSposobyProdukcjiSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRodzajeDDRSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRodzajeZawieszeniaSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRodzajeZasilenSilnikaSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzRodzajePaliwSubskrypcja.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWLTP.xsd"/>
+	<xsd:include schemaLocation="typy/pobierzWLTPSubskrypcja.xsd"/>
+	<!-- Input -->
+	<!-- Metody do pobierania wartości słownikowych -->
+	<xsd:element name="pobierzListeSlownikow" type="slo:PobierzListeSlownikow"/>
+	<xsd:element name="pobierzSlownik" type="slo:PobierzSlownik"/>
+	<xsd:element name="pobierzSlownikHistoria" type="slo:PobierzSlownikHistoria"/>
+	<!-- Słowniki dedykowane -->
+	<xsd:element name="pobierzCzynnosci" type="slo:PobierzCzynnosci"/>
+	<xsd:element name="pobierzPanstwa" type="slo:PobierzPanstwa"/>
+	<xsd:element name="pobierzTaryfikator" type="slo:PobierzTaryfikator"/>
+	<xsd:element name="pobierzMarki" type="slo:PobierzMarki"/>
+	<xsd:element name="pobierzModele" type="slo:PobierzModele"/>
+	<xsd:element name="pobierzTypy" type="slo:PobierzTypy"/>
+	<xsd:element name="pobierzRodzaj" type="slo:PobierzRodzaj"/>
+	<xsd:element name="pobierzPodrodzaj" type="slo:PobierzPodrodzaj"/>
+	<xsd:element name="pobierzPrzeznaczenie" type="slo:PobierzPrzeznaczenie"/>
+	<xsd:element name="pobierzRPP" type="slo:PobierzRPP"/>
+	<xsd:element name="pobierzHomologacje" type="slo:PobierzHomologacje"/>
+	<xsd:element name="pobierzWariantyHomologacji" type="slo:PobierzWariantyHomologacji"/>
+	<xsd:element name="pobierzWersjeHomologacji" type="slo:PobierzWersjeHomologacji"/>
+	<xsd:element name="pobierzProducentow" type="slo:PobierzProducentow"/>
+	<xsd:element name="pobierzUsterki" type="slo:PobierzUsterki"/>
+	<xsd:element name="pobierzWyroznikOR" type="slo:PobierzWyroznikOR"/>
+	<xsd:element name="pobierzMaskiTR" type="slo:PobierzMaskiTR"/>
+	<xsd:element name="pobierzNormySpalinEURO" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzSposobyProdukcji" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzRodzajeZawieszenia" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnika" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaEvh2" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaKpeh" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzRodzajeDDR" type="slo:PobierzSlownikITS"/>
+	<xsd:element name="pobierzKategorieHomologacji" type="slo:PobierzKategorieHomologacji"/>
+	<xsd:element name="pobierzRodzajePaliw" type="slo:PobierzRodzajePaliw"/>
+	<xsd:element name="pobierzDanePodzialuTerytorialnego" type="slo:PobierzDanePodzialuTerytorialnego"/>
+	<xsd:element name="pobierzWLTP" type="slo:PobierzWLTP"/>
+	<!-- Subskrypcje -->
+	<xsd:element name="pobierzTypySubskrypcja" type="slo:PobierzTypySubskrypcja"/>
+	<xsd:element name="pobierzModeleSubskrypcja" type="slo:PobierzModeleSubskrypcja"/>
+	<xsd:element name="pobierzMarkiSubskrypcja" type="slo:PobierzMarkiSubskrypcja"/>
+	<xsd:element name="pobierzHomologacjeSubskrypcja" type="slo:PobierzHomologacjeSubskrypcja"/>
+	<xsd:element name="pobierzWariantyHomologacjiSubskrypcja" type="slo:PobierzWariantyHomologacjiSubskrypcja"/>
+	<xsd:element name="pobierzWersjeHomologacjiSubskrypcja" type="slo:PobierzWersjeHomologacjiSubskrypcja"/>
+	<xsd:element name="pobierzProducentowSubskrypcja" type="slo:PobierzProducentowSubskrypcja"/>
+	<xsd:element name="pobierzNormySpalinEUROSubskrypcja" type="slo:PobierzNormySpalinEUROSubskrypcja"/>
+	<xsd:element name="pobierzKategorieHomologacjiSubskrypcja" type="slo:PobierzKategorieHomologacjiSubskrypcja"/>
+	<xsd:element name="pobierzSposobyProdukcjiSubskrypcja" type="slo:PobierzSposobyProdukcjiSubskrypcja"/>
+	<xsd:element name="pobierzRodzajeDDRSubskrypcja" type="slo:PobierzRodzajeDDRSubskrypcja"/>
+	<xsd:element name="pobierzRodzajeZawieszeniaSubskrypcja" type="slo:PobierzRodzajeZawieszeniaSubskrypcja"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaSubskrypcja" type="slo:PobierzRodzajeZasilenSilnikaSubskrypcja"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaEvh2Subskrypcja" type="slo:PobierzRodzajeZasilenSilnikaSubskrypcja"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaKpehSubskrypcja" type="slo:PobierzRodzajeZasilenSilnikaSubskrypcja"/>
+	<xsd:element name="pobierzRodzajePaliwSubskrypcja" type="slo:PobierzRodzajePaliwSubskrypcja"/>
+	<xsd:element name="pobierzWLTPSubskrypcja" type="slo:PobierzWLTPSubskrypcja"/>
+	<xsd:element name="pobierzRPPSubskrypcja" type="slo:PobierzRPPSubskrypcja"/>
+	<!-- Listy modyfikacji -->
+	<xsd:element name="pobierzSlownikListaModyfikacji" type="slo:PobierzSlownikListaModyfikacji"/>
+	<xsd:element name="pobierzTypyListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzWersjeHomologacjiListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzModeleListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzMarkiListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzHomologacjeListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzWariantyHomologacjiListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzProducentowListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzNormySpalinEUROListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzKategorieHomologacjiListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzSposobyProdukcjiListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRodzajeDDRListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRodzajeZawieszeniaListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaEvh2ListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaKpehListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRodzajePaliwListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzWLTPListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<xsd:element name="pobierzRPPListaModyfikacji" type="slo:PobierzListeModyfikacji"/>
+	<!-- Output -->
+	<xsd:element name="pobierzListeSlownikowRezultat" type="slo:PobierzListeSlownikowRezultat"/>
+	<xsd:element name="pobierzSlownikRezultat" type="slo:PobierzSlownikRezultat"/>
+	<xsd:element name="pobierzSlownikHistoriaRezultat" type="slo:PobierzSlownikRezultat"/>
+	<!-- Słowniki dedykowane -->
+	<xsd:element name="pobierzCzynnosciRezultat" type="slo:PobierzCzynnosciRezultat"/>
+	<xsd:element name="pobierzPanstwaRezultat" type="slo:PobierzPanstwaRezultat"/>
+	<xsd:element name="pobierzTaryfikatorRezultat" type="slo:PobierzTaryfikatorRezultat"/>
+	<xsd:element name="pobierzMarkiRezultat" type="slo:PobierzMarkiRezultat"/>
+	<xsd:element name="pobierzModeleRezultat" type="slo:PobierzModeleRezultat"/>
+	<xsd:element name="pobierzTypyRezultat" type="slo:PobierzTypyRezultat"/>
+	<xsd:element name="pobierzRodzajRezultat" type="slo:PobierzRodzajRezultat"/>
+	<xsd:element name="pobierzPodrodzajRezultat" type="slo:PobierzPodrodzajRezultat"/>
+	<xsd:element name="pobierzPrzeznaczenieRezultat" type="slo:PobierzPrzeznaczenieRezultat"/>
+	<xsd:element name="pobierzRPPRezultat" type="slo:PobierzRPPRezultat"/>
+	<xsd:element name="pobierzHomologacjeRezultat" type="slo:PobierzHomologacjeRezultat"/>
+	<xsd:element name="pobierzWariantyHomologacjiRezultat" type="slo:PobierzWariantyHomologacjiRezultat"/>
+	<xsd:element name="pobierzWersjeHomologacjiRezultat" type="slo:PobierzWersjeHomologacjiRezultat"/>
+	<xsd:element name="pobierzProducentowRezultat" type="slo:PobierzProducentowRezultat"/>
+	<xsd:element name="pobierzUsterkiRezultat" type="slo:PobierzUsterkiRezultat"/>
+	<xsd:element name="pobierzWyroznikORRezultat" type="slo:PobierzWyroznikORRezultat"/>
+	<xsd:element name="pobierzMaskiTRRezultat" type="slo:PobierzMaskiTRRezultat"/>
+	<xsd:element name="pobierzNormySpalinEURORezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzSposobyProdukcjiRezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzRodzajeZawieszeniaRezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaRezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaEvh2Rezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaKpehRezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzRodzajeDDRRezultat" type="slo:PobierzSlownikITSRezultat"/>
+	<xsd:element name="pobierzKategorieHomologacjiRezultat" type="slo:PobierzKategorieHomologacjiRezultat"/>
+	<xsd:element name="pobierzRodzajePaliwRezultat" type="slo:PobierzRodzajePaliwRezultat"/>
+	<xsd:element name="pobierzDanePodzialuTerytorialnegoRezultat" type="slo:PobierzDanePodzialuTerytorialnegoRezultat"/>
+	<xsd:element name="pobierzWLTPRezultat" type="slo:PobierzWLTPRezultat"/>
+	<!-- Subskrypcje -->
+	<xsd:element name="pobierzTypySubskrypcjaRezultat" type="slo:PobierzTypySubskrypcjaRezultat"/>
+	<xsd:element name="pobierzModeleSubskrypcjaRezultat" type="slo:PobierzModeleSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzMarkiSubskrypcjaRezultat" type="slo:PobierzMarkiSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzHomologacjeSubskrypcjaRezultat" type="slo:PobierzHomologacjeSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzWariantyHomologacjiSubskrypcjaRezultat" type="slo:PobierzWariantyHomologacjiSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzWersjeHomologacjiSubskrypcjaRezultat" type="slo:PobierzWersjeHomologacjiSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzProducentowSubskrypcjaRezultat" type="slo:PobierzProducentowSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzNormySpalinEUROSubskrypcjaRezultat" type="slo:PobierzNormySpalinEUROSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzKategorieHomologacjiSubskrypcjaRezultat" type="slo:PobierzKategorieHomologacjiSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzSposobyProdukcjiSubskrypcjaRezultat" type="slo:PobierzSposobyProdukcjiSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRodzajeDDRSubskrypcjaRezultat" type="slo:PobierzRodzajeDDRSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRodzajeZawieszeniaSubskrypcjaRezultat" type="slo:PobierzRodzajeZawieszeniaSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaSubskrypcjaRezultat" type="slo:PobierzRodzajeZasilenSilnikaSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaEvh2SubskrypcjaRezultat" type="slo:PobierzRodzajeZasilenSilnikaSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaKpehSubskrypcjaRezultat" type="slo:PobierzRodzajeZasilenSilnikaSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRodzajePaliwSubskrypcjaRezultat" type="slo:PobierzRodzajePaliwSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzWLTPSubskrypcjaRezultat" type="slo:PobierzWLTPSubskrypcjaRezultat"/>
+	<xsd:element name="pobierzRPPSubskrypcjaRezultat" type="slo:PobierzRPPSubskrypcjaRezultat"/>
+	<!-- Listy modyfikacji -->
+	<xsd:element name="pobierzSlownikListaModyfikacjiRezultat" type="slo:PobierzSlownikListaModyfikacjiRezultat"/>
+	<xsd:element name="pobierzTypyListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzModeleListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzMarkiListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzHomologacjeListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzWersjeHomologacjiListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzWariantyHomologacjiListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzProducentowListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzNormySpalinEUROListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzKategorieHomologacjiListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzSposobyProdukcjiListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRodzajeDDRListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRodzajeZawieszeniaListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaEvh2ListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRodzajeZasilenSilnikaKpehListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRodzajePaliwListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzWLTPListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+	<xsd:element name="pobierzRPPListaModyfikacjiRezultat" type="slo:PobierzListeModyfikacjiRezultat"/>
+</xsd:schema>
