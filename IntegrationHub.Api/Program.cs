@@ -1,24 +1,24 @@
 using IntegrationHub.Api.Middleware;
-using IntegrationHub.Common.Config;
 using IntegrationHub.Common.Interfaces;
 using IntegrationHub.Common.Providers;
 using IntegrationHub.PIESP.Data;
 using IntegrationHub.PIESP.Services;
+using IntegrationHub.Sources.CEP.Config;
+using IntegrationHub.Sources.CEP.Services;
+using IntegrationHub.SRP.Config;
 using IntegrationHub.SRP.Services;
 using Microsoft.EntityFrameworkCore; // Add this using directive for 'UseSqlServer'
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http.Resilience;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using Microsoft.Extensions.Http.Resilience;
-using Swashbuckle.AspNetCore.Filters;
-using IntegrationHub.SRP.Config;
-using IntegrationHub.Sources.CEP.Config;
 
 // Serilog – bootstrap logger, ¿eby logowaæ od samego pocz¹tku
 Log.Logger = new LoggerConfiguration()
@@ -91,7 +91,7 @@ builder.Services.AddHttpClient("SrpServiceClient", c =>
     if (srpConfig?.TestMode == true)
     {
         
-        Log.Warning("SRP: TestMode = true, nie u¿ywam certyfikatu klienta do po³¹czeñ ze SRP.");
+        Log.Warning("SRP dzia³a w TRYBIE TESTOWYM. Nie u¿ywam certyfikatu klienta.");
         return new HttpClientHandler();
 
     }
@@ -173,15 +173,27 @@ if (srpConfig!.TestMode)
     // Jeœli TestMode, zarejestruj PeselService jako PeselServiceTest
     builder.Services.AddTransient<IPeselService, PeselServiceTest>();
     builder.Services.AddTransient<IRdoService, RdoServiceTest>();
-    Log.Warning("=== APLIKACJA URUCHOMIONA W TRYBIE TESTOWYM === " +
-               "U¿ywam stubów: PeselServiceTest / RdoServiceTest.");
+    Log.Warning("SRP dzia³a w TRYBIE TESTOWYM.");
 }
 else
 {
    builder.Services.AddTransient<IRdoService, RdoService>();
    builder.Services.AddTransient<IPeselService, PeselService>();
-    Log.Information("Aplikacja w trybie produkcyjnym.");
+   Log.Information("SRP w trybie produkcyjnym.");
 }
+
+if (cepConfig!.TestMode)
+{
+    builder.Services.AddScoped<ICEPSlownikiService, CEPSlownikiServiceTest>();
+    Log.Warning("CEP dzia³a w TRYBIE TESTOWYM.");
+}
+else
+{
+    builder.Services.AddScoped<ICEPSlownikiService, CEPSlownikiService>();
+    Log.Information("CEP w trybie produkcyjnym.");
+}
+
+
 
 
 

@@ -46,6 +46,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\CEP\pobierzListeSlownikow_RESPONSE.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\SRP\UdostepnijAktualneDaneOsobyPoPesel_RESPONSE.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

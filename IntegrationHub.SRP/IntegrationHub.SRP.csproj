@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <None Update="PeselTestData\PESEL_73020916558_Response.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
