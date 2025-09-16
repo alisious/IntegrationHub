@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Security;
 using CepSlownikiUdostepnianie;
+using IntegrationHub.Common.Interfaces;
 
 namespace IntegrationHub.Sources.CEP.Services;
 
@@ -18,10 +19,10 @@ public sealed class CEPSlownikiService : ICEPSlownikiService
 {
     private readonly CEPConfig _cfg;
     private readonly ILogger<CEPSlownikiService> _logger;
-    private readonly ClientCertificateProvider _certProvider;
+    private readonly IClientCertificateProvider _certProvider;
 
     public CEPSlownikiService(IOptions<CEPConfig> cfg,
-                              ClientCertificateProvider certProvider,
+                              IClientCertificateProvider certProvider,
                               ILogger<CEPSlownikiService> logger)
     {
         _cfg = cfg.Value;
@@ -65,9 +66,15 @@ public sealed class CEPSlownikiService : ICEPSlownikiService
         try
         {
             // 4) Request: bez filtrów (wszystkie słowniki)
-            var reqBody = new CepSlownikiUdostepnianie.PobierzListeSlownikow();
-            var request = new CepSlownikiUdostepnianie.PobierzListeSlownikowRequest(reqBody); // :contentReference[oaicite:3]{index=3}
-
+            var reqBody = new PobierzListeSlownikow
+            {
+                // opcjonalne filtry, jeśli będziesz potrzebował:
+                // idSlownika = "...",
+                // nazwaSlownika = "...",
+                // typSlownika = new KodSlownikowy { kod = "..." },
+                // dataSubskrypcji = DateTime.UtcNow, dataSubskrypcjiSpecified = true
+            };
+            
             var response = await client.PobierzListeSlownikowAsync(reqBody);                   // :contentReference[oaicite:4]{index=4}
             var headers = response?.pobierzListeSlownikowRezultat ?? Array.Empty<NaglowekSlownika>(); // :contentReference[oaicite:5]{index=5}
 

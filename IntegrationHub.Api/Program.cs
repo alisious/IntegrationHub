@@ -190,7 +190,7 @@ if (cepConfig!.TestMode)
 else
 {
     builder.Services.AddScoped<ICEPSlownikiService, CEPSlownikiService>();
-    Log.Information("CEP w trybie produkcyjnym.");
+    Log.Information("CEP dzia³a w trybie produkcyjnym.");
 }
 
 

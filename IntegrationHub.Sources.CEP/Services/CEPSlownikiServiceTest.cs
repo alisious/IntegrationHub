@@ -29,7 +29,7 @@ public sealed class CEPSlownikiServiceTest : ICEPSlownikiService
         if (!File.Exists(xmlPath))
             throw new FileNotFoundException($"Brak pliku z danymi testowymi: {xmlPath}");
 
-        _logger.LogInformation("SRP działa w TRYBIE TESTOWYM. Nie używam certyfikatu klienta.");
+        _logger.LogInformation("CEP działa w TRYBIE TESTOWYM. Nie używam certyfikatu klienta.");
         _logger.LogInformation("CEPSlownikiServiceTest: wczytuję {Path}", xmlPath);
 
         await using var fs = File.OpenRead(xmlPath);
