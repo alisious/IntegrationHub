@@ -32,9 +32,17 @@ public sealed class CEPSlownikiService : ICEPSlownikiService
 
     public async Task<List<SlownikNaglowekDto>> PobierzListeSlownikowAsync(CancellationToken ct = default)
     {
+
+        var endpointUrl = _cfg.DictionaryShareServiceUrl;
+        if (string.IsNullOrWhiteSpace(endpointUrl))
+            throw new InvalidOperationException("Brak 'DictionaryShareServiceUrl' w konfiguracji CEP.");
+
+        _logger.LogInformation("CEP Slowniki: używam endpointu SOAP: {EndpointUrl}", endpointUrl);
+
+
         // 1) Binding dopasowany do Twojego klienta (generated uses BasicHttpBinding)
         //    Ustawiamy HTTPS + certyfikat klienta jeżeli EndpointUrl jest https://
-        var useHttps = _cfg.EndpointUrl?.StartsWith("https", StringComparison.OrdinalIgnoreCase) == true;
+        var useHttps = endpointUrl?.StartsWith("https", StringComparison.OrdinalIgnoreCase) == true;
 
         var binding = new BasicHttpBinding(useHttps ? BasicHttpSecurityMode.Transport : BasicHttpSecurityMode.None)
         {
@@ -50,7 +58,7 @@ public sealed class CEPSlownikiService : ICEPSlownikiService
             binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
         }
 
-        var address = new EndpointAddress(_cfg.EndpointUrl); // zamiast defaultu z referencji
+        var address = new EndpointAddress(endpointUrl); // zamiast defaultu z referencji
         using var client = new SlownikiUdostepnianieWSClient(binding, address); // :contentReference[oaicite:2]{index=2}
 
         // 2) Certyfikat klienta – z Twojego providera
