@@ -1,10 +1,11 @@
-﻿using System.IO.Compression;
-using System.Text;
-using System.Text.Json;
-using IntegrationHub.Api.Contracts.Excel;
+﻿using IntegrationHub.Api.Contracts.Excel;
+using IntegrationHub.Common.Data;
 using IntegrationHub.Common.Tools.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.IO.Compression;
+using System.Text;
+using System.Text.Json;
 
 namespace IntegrationHub.Api.Controllers;
 
@@ -13,6 +14,16 @@ namespace IntegrationHub.Api.Controllers;
 [ApiExplorerSettings(GroupName = "v1")]
 public class ExcelValidationController : ControllerBase
 {
+
+
+    private readonly IHorkosDictionaryService _dict;
+
+    public ExcelValidationController(IHorkosDictionaryService dict)
+    {
+        _dict = dict;
+    }
+
+
     /// <summary>
     /// Waliduje XLSX (wymagane wartości we wszystkich kolumnach; opcjonalnie: PESEL, duplikaty PESEL,
     /// zgodność 'Stopień' i 'Nazwa jednostki wojskowej' z listami referencyjnymi).
@@ -31,10 +42,26 @@ public class ExcelValidationController : ControllerBase
         OperationId = "Tools_ValidateExcel",
         Tags = new[] { "Excel" }
     )]
-    public async Task<IActionResult> Validate([FromForm] ExcelValidateForm form)
+    public async Task<IActionResult> Validate([FromForm] ExcelValidateForm form, CancellationToken ct)
     {
         if (form.File is null || form.File.Length == 0)
             return BadRequest("Brak pliku lub plik pusty.");
+
+        // Jeśli włączona walidacja i NIE podano listy – pobierz z bazy
+        string[]? rankRef = form.RankReferenceList;
+        if ((form.ValidateRank ?? false) && (rankRef is null || rankRef.Length == 0))
+        {
+            var fromDb = await _dict.GetRankReferenceListAsync(ct);
+            rankRef = fromDb.ToArray();
+        }
+
+        string[]? unitRef = form.UnitNameReferenceList;
+        if ((form.ValidateUnitName ?? false) && (unitRef is null || unitRef.Length == 0))
+        {
+            var fromDb = await _dict.GetUnitNameReferenceListAsync(ct);
+            unitRef = fromDb.ToArray();
+        }
+
 
         await using var inMs = new MemoryStream();
         await form.File.CopyToAsync(inMs);

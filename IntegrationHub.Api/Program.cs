@@ -1,4 +1,5 @@
 using IntegrationHub.Api.Middleware;
+using IntegrationHub.Common.Data;
 using IntegrationHub.Common.Interfaces;
 using IntegrationHub.Common.Providers;
 using IntegrationHub.PIESP.Data;
@@ -62,7 +63,7 @@ builder.Services.AddDbContext<PiespDbContext>(options =>
 
 //Rejestracja ClientCertificateProvider
 builder.Services.AddSingleton<IClientCertificateProvider, ClientCertificateProvider>();
-
+builder.Services.AddScoped<IHorkosDictionaryService, HorkosDictionaryService>();
 
 /**************************************************************/
 // ====== SRP CLIENT ======

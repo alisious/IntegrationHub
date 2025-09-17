@@ -1,4 +1,6 @@
 ﻿using ClosedXML.Excel;
+using System.Globalization;
+
 
 namespace IntegrationHub.Common.Tools.Excel;
 
@@ -109,7 +111,7 @@ public static class ExcelSheetValidator
 
             if (validatePeselDuplicates)
             {
-                var pesel = GetTrimmed(ws.Cell(r, peselCol));
+                var pesel = GetPesel(ws.Cell(r, peselCol));
                 if (pesel.Length > 0)
                     peselCounts![pesel] = peselCounts.TryGetValue(pesel, out var cnt) ? cnt + 1 : 1;
             }
@@ -140,7 +142,7 @@ public static class ExcelSheetValidator
             }
 
             // Dodatkowa walidacja PESEL (jeśli włączona i wpisany)
-            var peselVal = GetTrimmed(ws.Cell(r, peselCol));
+            var peselVal = GetPesel(ws.Cell(r, peselCol));
             if (validatePesel && !string.IsNullOrWhiteSpace(peselVal))
             {
                 if (!TryValidatePesel(peselVal, out var peselReason))
@@ -210,6 +212,30 @@ public static class ExcelSheetValidator
 
     private static string GetTrimmed(IXLCell cell)
         => cell.IsEmpty() ? "" : cell.GetString().Trim();
+
+    private static string GetPesel(IXLCell cell)
+    {
+        if (cell.IsEmpty()) return "";
+
+        // Jeśli to liczba – Excel mógł „zjeść” leading zero
+        if (cell.DataType == XLDataType.Number)
+        {
+            // rzut do long i bezformatowy zapis
+            var asLong = (long)Math.Truncate(cell.GetDouble());
+            var s = asLong.ToString("0", CultureInfo.InvariantCulture);
+            // dopaduj do 11 (przywraca wiodące zera)
+            return s.Length < 11 ? s.PadLeft(11, '0') : s;
+        }
+
+        // Tekst – bierz jak jest, tylko przytnij
+        var txt = cell.GetString().Trim();
+        // Jeśli to czyste cyfry i ma mniej niż 11, to dopaduj leading zeros
+        if (txt.Length > 0 && txt.All(char.IsDigit) && txt.Length < 11)
+            txt = txt.PadLeft(11, '0');
+
+        return txt;
+    }
+
 
     private static void ApplyConditionalFormatting(IXLWorksheet ws, int headerRow, int statusCol, int lastRow)
     {
