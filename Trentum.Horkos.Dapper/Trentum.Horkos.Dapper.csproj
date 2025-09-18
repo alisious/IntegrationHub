@@ -6,11 +6,13 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<AssemblyName>Trentum.Horkos.Dapper</AssemblyName>
 		<RootNamespace>Trentum.Horkos</RootNamespace>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>C:\TRENTUM\VS\Trentum\Trentum.Horkos.BpsExtensions\temporary_key.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Trentum.Horkos.Abstractions\Trentum.Horkos.Abstractions.csproj" />
-		<PackageReference Include="Dapper"/>
+		<PackageReference Include="Dapper" />
 		<PackageReference Include="Microsoft.Data.SqlClient" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
 	</ItemGroup>

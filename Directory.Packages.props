@@ -51,7 +51,8 @@
 	  <PackageVersion Include="Dapper" Version="2.1.35" />
 	  <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.0" />
 	
-
+<!-- WEBCON 2025 -->
+	  <PackageVersion Include="WEBCON.BPS.2025.SDK.Libraries" Version="25.1.1.15" />
 
   </ItemGroup>
 </Project>

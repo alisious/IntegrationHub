@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trentum.Horkos.Abstractions
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trentum.Horkos.Dapper", "Trentum.Horkos.Dapper\Trentum.Horkos.Dapper.csproj", "{3B9AD693-83CE-42C6-C88D-53B161B8A84C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trentum.Horkos.BpsExtensions", "Trentum.Horkos.BpsExtensions\Trentum.Horkos.BpsExtensions.csproj", "{62011A90-B743-4A80-BFDC-6D183FC8652D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{3B9AD693-83CE-42C6-C88D-53B161B8A84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B9AD693-83CE-42C6-C88D-53B161B8A84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B9AD693-83CE-42C6-C88D-53B161B8A84C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62011A90-B743-4A80-BFDC-6D183FC8652D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62011A90-B743-4A80-BFDC-6D183FC8652D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62011A90-B743-4A80-BFDC-6D183FC8652D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62011A90-B743-4A80-BFDC-6D183FC8652D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

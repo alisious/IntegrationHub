@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Label="MainConfig">
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{62011a90-b743-4a80-bfdc-6d183fc8652d}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Trentum.Horkos.BpsExtensions</RootNamespace>
+    <AssemblyName>Trentum.Horkos.BpsExtensions</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<Version>1.0.0</Version>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>temporary_key.snk</AssemblyOriginatorKeyFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ActionParamsHelpers.cs" />
+    <Compile Include="DataTableHelpers.cs" />
+    <Compile Include="ValidateAnnualListAction.cs" />
+    <Compile Include="ValidateAnnualListActionConfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Trentum.Horkos.BpsExtensions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="temporary_key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Publish\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WEBCON.BPS.2025.SDK.Libraries" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Trentum.Common.Excel\Trentum.Common.Excel.csproj">
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Trentum.Horkos.Abstractions\Trentum.Horkos.Abstractions.csproj">
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Trentum.Horkos.Dapper\Trentum.Horkos.Dapper.csproj">
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+	<ItemGroup>
+		<_RefsRaw Include="@(ReferenceCopyLocalPaths->'%(FullPath)')" />
+		<!-- wyklucz typowe frameworkowe dll -->
+		<_RefsToPublish Include="@(_RefsRaw)" />
+		<_RefsToPublish Remove="**\System.*.dll;**\Microsoft.*.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ResolvedFileToPublish Include="@(_RefsToPublish)" RelativePath="%(Filename)%(Extension)" CopyToPublishDirectory="Always" />
+	</ItemGroup>
+</Project>

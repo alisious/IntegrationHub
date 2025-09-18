@@ -1,0 +1,22 @@
+﻿{
+    "extensions": [
+        {
+            "guid": "a806770f-dfd3-48d5-9288-14753abf6e41",
+            "name": "ValidateAnnualListAction",
+            "description": "Walidacja rocznej listy osób zobowiązanych.",
+            "assembly": "Trentum.Horkos.BpsExtensions",
+            "class": "Trentum.Horkos.BpsExtensions.ValidateAnnualListAction",
+            "type": "CustomAction"
+        }
+    ],
+    "dependencies": [
+        "Trentum.Horkos.BpsExtensions"
+    ],
+    "serviceDependenciesPaths": [
+        
+    ],
+    "portalDependenciesPaths": [
+        
+    ],
+    "version": null
+}
