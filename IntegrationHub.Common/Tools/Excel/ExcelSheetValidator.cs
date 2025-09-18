@@ -1,6 +1,7 @@
-﻿using ClosedXML.Excel;
-using System.Globalization;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ClosedXML.Excel;
 
 namespace IntegrationHub.Common.Tools.Excel;
 
@@ -16,17 +17,18 @@ public sealed record ExcelValidationSummary(
 public static class ExcelSheetValidator
 {
     /// <summary>
-    /// Waliduje XLSX i adnotuje STATUS WALIDACJI.
+    /// Waliduje XLSX, przycina do kolumn wymaganych i adnotuje STATUS WALIDACJI.
     /// Wymaga wartości we WSZYSTKICH kolumnach z <paramref name="requiredHeaders"/>.
-    /// Dodatkowo może walidować PESEL, duplikaty PESEL oraz zgodność Stopnia i Nazwy jednostki z listami referencyjnymi.
+    /// Opcjonalnie waliduje PESEL, duplikaty PESEL oraz zgodność Stopnia i Nazwy jednostki z listami referencyjnymi.
+    /// Funkcja jest cyklicznie uruchamialna – czyści CF i starą kolumnę STATUS na wejściu.
     /// </summary>
     public static ExcelValidationSummary ValidateAndAnnotate(
-        Stream input,
-        Stream output,
+        System.IO.Stream input,
+        System.IO.Stream output,
         string? sheetName = null,
         string[]? requiredHeaders = null,
         string peselHeader = "PESEL",
-        string nazwiskoHeader = "Nazwisko",
+        string nazwiskoHeader = "Nazwisko", // pozostawione dla kompatybilności API
         int headerRow = 1,
         bool validatePesel = true,
         bool validatePeselDuplicates = true,
@@ -45,39 +47,83 @@ public static class ExcelSheetValidator
         using var wb = new XLWorkbook(input);
         var ws = sheetName is null ? wb.Worksheet(1) : wb.Worksheet(sheetName);
 
-        var headers = BuildHeaderMap(ws, headerRow);
+        // ──────────────────────────────────────────────────────────────────────────
+        // MINI-PATCH: wyczyść CF i usuń kolumnę STATUS WALIDACJI z poprzedniego cyklu
+        // ──────────────────────────────────────────────────────────────────────────
+        ws.ConditionalFormats.RemoveAll();
+
+        var headers = ExcelCommon.BuildHeaderMap(ws, headerRow);
+        if (headers.TryGetValue("STATUS WALIDACJI", out var prevStatusCol))
+        {
+            ws.Column(prevStatusCol).Delete();
+            headers = ExcelCommon.BuildHeaderMap(ws, headerRow); // przebuduj po usunięciu
+        }
+        // ──────────────────────────────────────────────────────────────────────────
+
+        // 1) Weryfikacja braków nagłówków
         var missing = requiredHeaders.Where(h => !headers.ContainsKey(h)).ToList();
 
+        if (missing.Count > 0)
+        {
+            // Brakuje nagłówków – pokaż informację i zakończ (STATUS dodany jednorazowo)
+            var lastColNow = ws.LastColumnUsed()?.ColumnNumber() ?? headers.Values.DefaultIfEmpty(1).Max();
+            var statusColMissing = lastColNow + 1;
+
+            ws.Cell(headerRow, statusColMissing).Value = "STATUS WALIDACJI";
+            ws.Cell(headerRow, statusColMissing).Style.Font.Bold = true;
+
+            var infoCell = ws.Cell(headerRow, statusColMissing + 1);
+            infoCell.Value = $"Brak nagłówków: {string.Join(", ", missing)}";
+            infoCell.Style.Font.Bold = true;
+            infoCell.Style.Font.FontColor = XLColor.White;
+            infoCell.Style.Fill.BackgroundColor = XLColor.Red;
+
+            FinalizeSheet(ws, headerRow, statusColMissing);
+            wb.SaveAs(output); output.Position = 0;
+
+            return new ExcelValidationSummary(headerRow, 0, 0, 0, missing, new Dictionary<string, int>());
+        }
+
+        // 2) PRZYCIĘCIE: usuń wszystkie kolumny poza wymaganymi
+        var keepCols = new HashSet<int>();
+        foreach (var name in requiredHeaders)
+        {
+            if (ExcelCommon.TryResolveColumn(headers, name, out var col))
+                keepCols.Add(col);
+        }
+
+        var lastUsedColBeforeTrim = ws.LastColumnUsed()?.ColumnNumber() ?? headers.Values.DefaultIfEmpty(1).Max();
+        for (int c = lastUsedColBeforeTrim; c >= 1; c--)
+        {
+            if (!keepCols.Contains(c))
+                ws.Column(c).Delete();
+        }
+
+        // 3) Po przycięciu odbuduj mapę i JEDNORAZOWO dodaj kolumnę statusu
+        headers = ExcelCommon.BuildHeaderMap(ws, headerRow);
         var lastDataCol = ws.LastColumnUsed()?.ColumnNumber() ?? headers.Values.DefaultIfEmpty(1).Max();
         var statusCol = lastDataCol + 1;
 
         ws.Cell(headerRow, statusCol).Value = "STATUS WALIDACJI";
         ws.Cell(headerRow, statusCol).Style.Font.Bold = true;
 
-        if (missing.Count > 0)
-        {
-            var infoCell = ws.Cell(headerRow, statusCol + 1);
-            infoCell.Value = $"Brak nagłówków: {string.Join(", ", missing)}";
-            infoCell.Style.Font.Bold = true;
-            infoCell.Style.Font.FontColor = XLColor.White;
-            infoCell.Style.Fill.BackgroundColor = XLColor.Red;
-
-            FinalizeSheet(ws, headerRow, statusCol);
-            wb.SaveAs(output); output.Position = 0;
-
-            return new ExcelValidationSummary(headerRow, 0, 0, 0, missing, new Dictionary<string, int>());
-        }
-
-        // Mapy kolumn wymaganych
+        // 4) Mapy kolumn wymaganych (po przycięciu)
         var requiredCols = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         foreach (var name in requiredHeaders)
-            requiredCols[name] = headers[name];
+        {
+            if (!ExcelCommon.TryResolveColumn(headers, name, out var col))
+                throw new InvalidOperationException($"Nieoczekiwany błąd: brak kolumny po przycięciu: {name}");
+            requiredCols[name] = col;
+        }
 
         // Specyficzne kolumny
-        var peselCol = headers[peselHeader];
-        var stopienCol = headers.ContainsKey("Stopień") ? headers["Stopień"] : (int?)null;
-        var unitCol = headers.ContainsKey("Nazwa jednostki wojskowej") ? headers["Nazwa jednostki wojskowej"] : (int?)null;
+        if (!ExcelCommon.TryResolveColumn(headers, peselHeader, out var peselCol))
+            throw new InvalidOperationException("Brak kolumny PESEL po przycięciu.");
 
+        int? stopienCol = ExcelCommon.TryResolveColumn(headers, "Stopień", out var cStopien) ? cStopien : (int?)null;
+        int? unitCol = ExcelCommon.TryResolveColumn(headers, "Nazwa jednostki wojskowej", out var cUnit) ? cUnit : (int?)null;
+
+        // 5) Jeżeli brak wierszy danych – zapis i wyjście
         var lastRow = ws.LastRowUsed()?.RowNumber() ?? headerRow;
         if (lastRow <= headerRow)
         {
@@ -86,7 +132,7 @@ public static class ExcelSheetValidator
             return new ExcelValidationSummary(headerRow, 0, 0, 0, Array.Empty<string>(), new Dictionary<string, int>());
         }
 
-        // Zbiory referencyjne (case-insensitive, po Trim). Włączone tylko jeśli jest lista i flaga true.
+        // 6) Zbiory referencyjne (case-insensitive, po Trim). Włączone tylko jeśli jest lista i flaga true.
         HashSet<string>? rankSet = (validateRank && rankReferenceList is not null)
             ? new HashSet<string>(rankReferenceList.Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s.Trim()),
                                   StringComparer.OrdinalIgnoreCase)
@@ -97,7 +143,7 @@ public static class ExcelSheetValidator
                                   StringComparer.OrdinalIgnoreCase)
             : null;
 
-        // 1) Pierwszy przebieg – liczymy wiersze danych + PESEL-e (jeśli trzeba szukać duplikatów)
+        // 7) Pierwszy przebieg – liczymy wiersze danych + PESEL-e (na potrzeby duplikatów)
         Dictionary<string, int>? peselCounts = validatePeselDuplicates
             ? new Dictionary<string, int>(StringComparer.Ordinal)
             : null;
@@ -106,12 +152,12 @@ public static class ExcelSheetValidator
 
         for (int r = headerRow + 1; r <= lastRow; r++)
         {
-            if (IsRowEmpty(ws.Row(r), lastDataCol)) continue;
+            if (ExcelCommon.IsRowEmpty(ws.Row(r), lastDataCol)) continue;
             dataRowCount++;
 
             if (validatePeselDuplicates)
             {
-                var pesel = GetPesel(ws.Cell(r, peselCol));
+                var pesel = ExcelCommon.GetPesel(ws.Cell(r, peselCol));
                 if (pesel.Length > 0)
                     peselCounts![pesel] = peselCounts.TryGetValue(pesel, out var cnt) ? cnt + 1 : 1;
             }
@@ -122,12 +168,12 @@ public static class ExcelSheetValidator
                          .ToDictionary(kv => kv.Key, kv => kv.Value, StringComparer.Ordinal)
             : new Dictionary<string, int>(StringComparer.Ordinal);
 
-        // 2) Walidacja wierszy
+        // 8) Drugi przebieg – walidacja wierszy i nadawanie statusów
         int valid = 0, errors = 0;
 
         for (int r = headerRow + 1; r <= lastRow; r++)
         {
-            if (IsRowEmpty(ws.Row(r), lastDataCol)) continue;
+            if (ExcelCommon.IsRowEmpty(ws.Row(r), lastDataCol)) continue;
 
             var rowErrors = new List<string>();
 
@@ -136,16 +182,16 @@ public static class ExcelSheetValidator
             {
                 var name = kv.Key;
                 var col = kv.Value;
-                var val = GetTrimmed(ws.Cell(r, col));
+                var val = ExcelCommon.GetTrimmed(ws.Cell(r, col));
                 if (string.IsNullOrWhiteSpace(val))
                     rowErrors.Add($"Brak wartości w kolumnie '{name}'");
             }
 
             // Dodatkowa walidacja PESEL (jeśli włączona i wpisany)
-            var peselVal = GetPesel(ws.Cell(r, peselCol));
+            var peselVal = ExcelCommon.GetPesel(ws.Cell(r, peselCol));
             if (validatePesel && !string.IsNullOrWhiteSpace(peselVal))
             {
-                if (!TryValidatePesel(peselVal, out var peselReason))
+                if (!ExcelCommon.TryValidatePesel(peselVal, out var peselReason))
                     rowErrors.Add($"PESEL niepoprawny: {peselReason}");
             }
 
@@ -159,23 +205,24 @@ public static class ExcelSheetValidator
             // Walidacja referencyjna STOPIEŃ
             if (validateRank && rankSet is not null && stopienCol is not null)
             {
-                var stopienVal = GetTrimmed(ws.Cell(r, stopienCol.Value));
+                var stopienVal = ExcelCommon.GetTrimmed(ws.Cell(r, stopienCol.Value));
                 if (!string.IsNullOrWhiteSpace(stopienVal) && !rankSet.Contains(stopienVal))
-                    rowErrors.Add($"Nieznany 'Stopień'");
+                    rowErrors.Add("Nieznany 'Stopień'");
             }
 
             // Walidacja referencyjna NAZWA JEDNOSTKI
             if (validateUnitName && unitSet is not null && unitCol is not null)
             {
-                var unitVal = GetTrimmed(ws.Cell(r, unitCol.Value));
+                var unitVal = ExcelCommon.GetTrimmed(ws.Cell(r, unitCol.Value));
                 if (!string.IsNullOrWhiteSpace(unitVal) && !unitSet.Contains(unitVal))
-                    rowErrors.Add($"Nieznana 'Nazwa jednostki wojskowej'");
+                    rowErrors.Add("Nieznana 'Nazwa jednostki wojskowej'");
             }
 
             ws.Cell(r, statusCol).Value = rowErrors.Count == 0 ? "POPRAWNY" : string.Join("; ", rowErrors);
             if (rowErrors.Count == 0) valid++; else errors++;
         }
 
+        // 9) Formatowanie warunkowe (NoColor dla „POPRAWNY”, czerwone dla błędnych)
         ApplyConditionalFormatting(ws, headerRow, statusCol, lastRow);
         FinalizeSheet(ws, headerRow, statusCol);
 
@@ -185,57 +232,7 @@ public static class ExcelSheetValidator
             Array.Empty<string>(), duplicatedPesels);
     }
 
-    
     // --- helpers ---
-
-    private static Dictionary<string, int> BuildHeaderMap(IXLWorksheet ws, int headerRow)
-    {
-        var map = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-        var lastCol = ws.LastColumnUsed()?.ColumnNumber() ?? ws.Row(headerRow).LastCellUsed()?.Address.ColumnNumber ?? 0;
-
-        for (int c = 1; c <= lastCol; c++)
-        {
-            var name = GetTrimmed(ws.Cell(headerRow, c));
-            if (!string.IsNullOrEmpty(name) && !map.ContainsKey(name))
-                map[name] = c;
-        }
-        return map;
-    }
-
-    private static bool IsRowEmpty(IXLRow row, int lastDataCol)
-    {
-        for (int c = 1; c <= lastDataCol; c++)
-            if (!string.IsNullOrWhiteSpace(row.Cell(c).GetString()))
-                return false;
-        return true;
-    }
-
-    private static string GetTrimmed(IXLCell cell)
-        => cell.IsEmpty() ? "" : cell.GetString().Trim();
-
-    private static string GetPesel(IXLCell cell)
-    {
-        if (cell.IsEmpty()) return "";
-
-        // Jeśli to liczba – Excel mógł „zjeść” leading zero
-        if (cell.DataType == XLDataType.Number)
-        {
-            // rzut do long i bezformatowy zapis
-            var asLong = (long)Math.Truncate(cell.GetDouble());
-            var s = asLong.ToString("0", CultureInfo.InvariantCulture);
-            // dopaduj do 11 (przywraca wiodące zera)
-            return s.Length < 11 ? s.PadLeft(11, '0') : s;
-        }
-
-        // Tekst – bierz jak jest, tylko przytnij
-        var txt = cell.GetString().Trim();
-        // Jeśli to czyste cyfry i ma mniej niż 11, to dopaduj leading zeros
-        if (txt.Length > 0 && txt.All(char.IsDigit) && txt.Length < 11)
-            txt = txt.PadLeft(11, '0');
-
-        return txt;
-    }
-
 
     private static void ApplyConditionalFormatting(IXLWorksheet ws, int headerRow, int statusCol, int lastRow)
     {
@@ -244,18 +241,32 @@ public static class ExcelSheetValidator
         string statusLetter = ws.Cell(headerRow, statusCol).Address.ColumnLetter;
         int firstDataRow = headerRow + 1;
 
+        // Zakresy
         var rowsRange = ws.Range(firstDataRow, 1, lastRow, statusCol);
-        rowsRange.AddConditionalFormat()
-                 .WhenIsTrue($"${statusLetter}{firstDataRow}<>\"POPRAWNY\"")
-                 .Fill.SetBackgroundColor(XLColor.LightPink);
-
         var statusRange = ws.Range(firstDataRow, statusCol, lastRow, statusCol);
-        statusRange.AddConditionalFormat()
-                   .WhenIsTrue($"${statusLetter}{firstDataRow}<>\"POPRAWNY\"")
-                   .Fill.SetBackgroundColor(XLColor.Red)
-                   .Font.SetFontColor(XLColor.White)
-                   .Font.SetBold();
+
+        // Reset bezpośrednich teł — żeby kolejne przebiegi zawsze startowały „na czysto”
+        rowsRange.Style.Fill.SetBackgroundColor(XLColor.NoColor);
+        statusRange.Style.Fill.SetBackgroundColor(XLColor.NoColor);
+
+        // --- Wiersze BŁĘDNE: różowe tło ---
+        var cfBadRows = rowsRange
+            .AddConditionalFormat()
+            .WhenIsTrue($"${statusLetter}{firstDataRow}<>\"POPRAWNY\"");
+        cfBadRows.Fill.SetBackgroundColor(XLColor.LightPink);
+
+        // --- Kolumna STATUS: BŁĘDY na czerwono + biała pogrubiona czcionka ---
+        var cfStatusBad = statusRange
+            .AddConditionalFormat()
+            .WhenIsTrue($"${statusLetter}{firstDataRow}<>\"POPRAWNY\"");
+        cfStatusBad.Fill.SetBackgroundColor(XLColor.Red);
+        cfStatusBad.Font.SetFontColor(XLColor.White);
+        cfStatusBad.Font.SetBold();
+
+        // Nie dodajemy reguł „POPRAWNY” — zostaje NoColor (czytelne i niezawodne).
     }
+
+
 
     private static void FinalizeSheet(IXLWorksheet ws, int headerRow, int statusCol)
     {
@@ -267,34 +278,5 @@ public static class ExcelSheetValidator
             ws.Range(headerRow, 1, lastRow, statusCol).SetAutoFilter();
 
         ws.Columns(1, statusCol).AdjustToContents();
-    }
-
-    // PESEL: 11 cyfr, checksum + poprawna data YYMMDD z zakodowanym stuleciem
-    private static bool TryValidatePesel(string pesel, out string reason)
-    {
-        reason = string.Empty;
-        if (pesel.Length != 11 || !pesel.All(char.IsDigit)) { reason = "musi mieć 11 cyfr"; return false; }
-
-        int[] w = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
-        int sum = 0; for (int i = 0; i < 10; i++) sum += (pesel[i] - '0') * w[i];
-        int check = (10 - (sum % 10)) % 10;
-        if (check != (pesel[10] - '0')) { reason = "błędna suma kontrolna"; return false; }
-
-        int year = (pesel[0] - '0') * 10 + (pesel[1] - '0');
-        int month = (pesel[2] - '0') * 10 + (pesel[3] - '0');
-        int day = (pesel[4] - '0') * 10 + (pesel[5] - '0');
-
-        int century;
-        if (month is >= 1 and <= 12) { century = 1900; }
-        else if (month is >= 21 and <= 32) { century = 2000; month -= 20; }
-        else if (month is >= 41 and <= 52) { century = 2100; month -= 40; }
-        else if (month is >= 61 and <= 72) { century = 2200; month -= 60; }
-        else if (month is >= 81 and <= 92) { century = 1800; month -= 80; }
-        else { reason = "nieprawidłowy miesiąc w dacie"; return false; }
-
-        try { _ = new DateTime(century + year, month, day); }
-        catch { reason = "nieprawidłowa data urodzenia"; return false; }
-
-        return true;
     }
 }
