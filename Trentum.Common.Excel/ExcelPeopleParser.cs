@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ClosedXML.Excel;
 
-namespace IntegrationHub.Common.Tools.Excel;
+namespace Trentum.Common.Excel;
 
 public static class ExcelPeopleParser
 {

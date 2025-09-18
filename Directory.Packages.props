@@ -42,14 +42,17 @@
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.4" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.4" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Filters" Version="9.0.0" />
-	
-	<!--Obróbka plików Excel-->
-	<PackageVersion Include="ClosedXML" Version="0.105.0" />
-	<PackageVersion Include="DocumentFormat.OpenXml" Version="3.3.0" />
+	  
+	  <!--Obróbka plików Excel-->
+	  <PackageVersion Include="ClosedXML" Version="0.105.0" />
+	  <PackageVersion Include="DocumentFormat.OpenXml" Version="3.3.0" />
 
 	  <!-- Dapper i SQLClient -->
-	<PackageVersion Include="Dapper" Version="2.1.35" />
-	<PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.0" />
+	  <PackageVersion Include="Dapper" Version="2.1.35" />
+	  <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.0" />
+	
+
+
   </ItemGroup>
 </Project>
 

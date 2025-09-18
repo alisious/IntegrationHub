@@ -1,6 +1,6 @@
 ﻿using IntegrationHub.Api.Contracts.Excel;
-using IntegrationHub.Common.Data;
-using IntegrationHub.Common.Tools.Excel;
+using Trentum.Common.Excel;
+using Trentum.Horkos;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.IO.Compression;

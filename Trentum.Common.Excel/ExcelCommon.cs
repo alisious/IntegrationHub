@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using ClosedXML.Excel;
 
-namespace IntegrationHub.Common.Tools.Excel;
+namespace Trentum.Common.Excel;
 
 public static class ExcelCommon
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
 
-namespace IntegrationHub.Common.Tools.Excel;
+namespace Trentum.Common.Excel;
 
 public sealed record ExcelValidationSummary(
     int HeaderRow,

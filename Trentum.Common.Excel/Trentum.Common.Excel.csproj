@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	  <LangVersion>latest</LangVersion>
+	  <Nullable>enable</Nullable>
+	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	  <AssemblyName>Trentum.Common.Excel</AssemblyName>
+	  <RootNamespace>Trentum.Common.Excel</RootNamespace>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" />
+		<PackageReference Include="DocumentFormat.OpenXml" />
+	</ItemGroup>	
+
+</Project>
